@@ -1,7 +1,7 @@
 # JDLayout
 超简易的约束布局
 
-![Alt text](/path/to/img.jpg "Optional title")
+![demo png](https://github.com/wangjindong/JDLayout/blob/master/demo.png "demo")
 
 只有一个类，以下是所有方法，支持绝大多数场景。
 
