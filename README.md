@@ -1,11 +1,41 @@
 # JDLayout
 超简易的约束布局
 
-# 一、更新现有的约束
+只有一个类，以下是所有方法，支持绝大多数场景。
+
+@interface UIView (JDAutolayout)
+- (UIView *(^)(void))function(reset);
+- (JDRelation *(^)(UIView *view))function(left);
+- (JDRelation *(^)(UIView *view))function(top);
+- (JDRelation *(^)(UIView *view))function(right);
+- (JDRelation *(^)(UIView *view))function(bottom);
+- (JDRelation *(^)(UIView *view))function(centerX);
+- (JDRelation *(^)(UIView *view))function(centerY);
+- (JDRelation *(^)(void))function(width);
+- (JDRelation *(^)(void))function(height);
+- (void(^)(void))function(layout);
+- (void(^)(void))function(reload);
+
+- (UIView *(^)(UIView *view))function(equalWidth);
+- (UIView *(^)(UIView *view))function(equalHeight);
+
+@end
+
+@interface JDRelation : NSObject
+//对齐
+- (JDRelation *(^)(void))function(align);
+
+- (UIView *(^)(CGFloat constant))function(equal);
+- (UIView *(^)(CGFloat constant))function(lessThanOrEqual);
+- (UIView *(^)(CGFloat constant))function(greaterThanOrEqual);
+@end
+
+
+## 一、更新现有的约束
 
  self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
 
-# 二、垂直平分
+## 二、垂直平分
 
  //垂直平分
     UILabel *label1 = [[UILabel alloc] init];
@@ -32,7 +62,7 @@
     .jd_equalHeight(label1)
     .jd_layout();
 
-# 三、水平平分
+## 三、水平平分
 
     //水平平分
     UILabel *label11 = [[UILabel alloc] init];
@@ -58,7 +88,7 @@
     .jd_equalWidth(label11)
     .jd_layout();
     
-# 四、对齐
+## 四、对齐
 
    //水平平分
     UILabel *label11 = [[UILabel alloc] init];
@@ -78,4 +108,7 @@
     //与label11左对齐
     label21.jd_left(label11).jd_align().jd_equal(0)
     .jd_top(label11).jd_equal(10).jd_layout();
+    
     
+
+##五、支持lessThanOrEqual、greaterThanOrEqual、equal等
