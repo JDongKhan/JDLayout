@@ -1,11 +1,11 @@
 # JDLayout
 超简易的约束布局
 
-一、更新现有的约束
+# 一、更新现有的约束
 
  self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
 
-二、垂直平分
+# 二、垂直平分
 
  //垂直平分
     UILabel *label1 = [[UILabel alloc] init];
@@ -32,8 +32,7 @@
     .jd_equalHeight(label1)
     .jd_layout();
 
-三、水平平分
-
+# 三、水平平分
 
     //水平平分
     UILabel *label11 = [[UILabel alloc] init];
@@ -59,8 +58,9 @@
     .jd_equalWidth(label11)
     .jd_layout();
     
-四、对齐
- //水平平分
+# 四、对齐
+
+   //水平平分
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是1";
     label11.backgroundColor = [UIColor redColor];
