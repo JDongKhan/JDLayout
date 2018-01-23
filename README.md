@@ -3,41 +3,41 @@
 
 只有一个类，以下是所有方法，支持绝大多数场景。
 
-@interface UIView (JDAutolayout)
-- (UIView *(^)(void))function(reset);
-- (JDRelation *(^)(UIView *view))function(left);
-- (JDRelation *(^)(UIView *view))function(top);
-- (JDRelation *(^)(UIView *view))function(right);
-- (JDRelation *(^)(UIView *view))function(bottom);
-- (JDRelation *(^)(UIView *view))function(centerX);
-- (JDRelation *(^)(UIView *view))function(centerY);
-- (JDRelation *(^)(void))function(width);
-- (JDRelation *(^)(void))function(height);
-- (void(^)(void))function(layout);
-- (void(^)(void))function(reload);
+    @interface UIView (JDAutolayout)
+    - (UIView *(^)(void))function(reset);
+    - (JDRelation *(^)(UIView *view))function(left);
+    - (JDRelation *(^)(UIView *view))function(top);
+    - (JDRelation *(^)(UIView *view))function(right);
+    - (JDRelation *(^)(UIView *view))function(bottom);
+    - (JDRelation *(^)(UIView *view))function(centerX);
+    - (JDRelation *(^)(UIView *view))function(centerY);
+    - (JDRelation *(^)(void))function(width);
+    - (JDRelation *(^)(void))function(height);
+    - (void(^)(void))function(layout);
+    - (void(^)(void))function(reload);
 
-- (UIView *(^)(UIView *view))function(equalWidth);
-- (UIView *(^)(UIView *view))function(equalHeight);
+    - (UIView *(^)(UIView *view))function(equalWidth);
+    - (UIView *(^)(UIView *view))function(equalHeight);
 
-@end
+    @end
 
-@interface JDRelation : NSObject
-//对齐
-- (JDRelation *(^)(void))function(align);
+    @interface JDRelation : NSObject
+    //对齐
+    - (JDRelation *(^)(void))function(align);
 
-- (UIView *(^)(CGFloat constant))function(equal);
-- (UIView *(^)(CGFloat constant))function(lessThanOrEqual);
-- (UIView *(^)(CGFloat constant))function(greaterThanOrEqual);
-@end
+    - (UIView *(^)(CGFloat constant))function(equal);
+    - (UIView *(^)(CGFloat constant))function(lessThanOrEqual);
+    - (UIView *(^)(CGFloat constant))function(greaterThanOrEqual);
+    @end
 
 
 ## 一、更新现有的约束
 
- self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
+    self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
 
 ## 二、垂直平分
 
- //垂直平分
+    //垂直平分
     UILabel *label1 = [[UILabel alloc] init];
     label1.text = @"我是垂直平分1";
     label1.backgroundColor = [UIColor redColor];
@@ -90,7 +90,7 @@
     
 ## 四、对齐
 
-   //水平平分
+    //水平平分
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是1";
     label11.backgroundColor = [UIColor redColor];
