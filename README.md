@@ -1,7 +1,7 @@
 # JDLayout
 超简易的约束布局
 
-![demo png](https://github.com/wangjindong/JDLayout/blob/master/demo.png "demo")
+![demo png](https://github.com/wangjindong/JDLayout/blob/master/demo.gif "demo")
 
 ## 一、更新现有的约束
 
