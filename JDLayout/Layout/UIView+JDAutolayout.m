@@ -104,14 +104,13 @@
 
 - (void)install {
     _constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
-    _installedView = self.firstItem;
     if (self.secondItem) {
         UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
         NSAssert(closestCommonSuperview,
                  @"couldn't find a common superview for %@ and %@",
                  self.firstItem, self.secondItem);
         _installedView = closestCommonSuperview;
-    } else if (self.firstItem) {
+    } else {
         _installedView = self.firstItem;
     }
     [_installedView addConstraint:_constraint];
