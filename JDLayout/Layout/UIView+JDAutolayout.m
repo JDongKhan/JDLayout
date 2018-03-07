@@ -106,7 +106,7 @@
     _constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
     _installedView = self.firstItem;
     if (self.secondItem) {
-        UIView *closestCommonSuperview = [self.firstItem mas_closestCommonSuperview:self.secondItem];
+        UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
         NSAssert(closestCommonSuperview,
                  @"couldn't find a common superview for %@ and %@",
                  self.firstItem, self.secondItem);
@@ -122,7 +122,7 @@
 - (void)update {
     if (_constraint == nil) {
         if (self.secondItem) {
-            UIView *closestCommonSuperview = [self.firstItem mas_closestCommonSuperview:self.secondItem];
+            UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
             NSAssert(closestCommonSuperview,
                      @"couldn't find a common superview for %@ and %@",
                      self.firstItem, self.secondItem);
@@ -499,7 +499,7 @@
     };
 }
 
-- (instancetype)mas_closestCommonSuperview:(UIView *)view {
+- (instancetype)jd_closestCommonSuperview:(UIView *)view {
     UIView *closestCommonSuperview = nil;
     UIView *secondViewSuperview = view;
     while (!closestCommonSuperview && secondViewSuperview) {
