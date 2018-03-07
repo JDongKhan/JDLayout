@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
 @property (weak, nonatomic) IBOutlet UIView *view3;
+@property (weak, nonatomic) IBOutlet UIView *view4;
+@property (weak, nonatomic) IBOutlet UIView *view5;
 
 @end
 
@@ -26,7 +28,7 @@
     //更新约束
     self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
     
-    //垂直平分
+    //自己处理垂直平分
     UILabel *label1 = [[UILabel alloc] init];
     label1.text = @"我是垂直平分1";
     label1.backgroundColor = [UIColor redColor];
@@ -51,7 +53,7 @@
     .jd_equalHeight(label1)
     .jd_layout();
 
-    //水平平分
+    //自己处理水平平分
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是水平平分1";
     label11.backgroundColor = [UIColor redColor];
@@ -77,7 +79,8 @@
     
     //代码布局
     [self codeLayout];
-    
+    [self codeLayoutHorizontal];
+    [self codeLayoutVertical];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -100,6 +103,53 @@
     //与label11左对齐
     label21.jd_left(label11).jd_align().jd_equal(0)
     .jd_top(label11).jd_equal(10).jd_layout();
+}
+//简易的水平平分
+- (void)codeLayoutHorizontal {
+    //水平平分
+    UILabel *label11 = [[UILabel alloc] init];
+    label11.text = @"我是11";
+    label11.backgroundColor = [UIColor redColor];
+    label11.textAlignment = NSTextAlignmentCenter;
+    [self.view4 addSubview:label11];
+    
+    UILabel *label21 = [[UILabel alloc] init];
+    label21.text = @"我是21";
+    label21.backgroundColor = [UIColor blueColor];
+    label21.textAlignment = NSTextAlignmentCenter;
+    [self.view4 addSubview:label21];
+    
+    UILabel *label31 = [[UILabel alloc] init];
+    label31.text = @"我是31";
+    label31.backgroundColor = [UIColor orangeColor];
+    label31.textAlignment = NSTextAlignmentCenter;
+    [self.view4 addSubview:label31];
+    
+    //与label11左对齐
+    self.view4.jd_equalWidthSubViews(@[label11,label21,label31]);
+}
+//简易的垂直平分
+- (void)codeLayoutVertical {
+    //水平平分
+    UILabel *label11 = [[UILabel alloc] init];
+    label11.text = @"我是11";
+    label11.backgroundColor = [UIColor redColor];
+    label11.textAlignment = NSTextAlignmentCenter;
+    [self.view5 addSubview:label11];
+    
+    UILabel *label21 = [[UILabel alloc] init];
+    label21.text = @"我是21";
+    label21.backgroundColor = [UIColor blueColor];
+    label21.textAlignment = NSTextAlignmentCenter;
+    [self.view5 addSubview:label21];
+    
+    UILabel *label31 = [[UILabel alloc] init];
+    label31.text = @"我是31";
+    label31.backgroundColor = [UIColor orangeColor];
+    label31.textAlignment = NSTextAlignmentCenter;
+    [self.view5 addSubview:label31];
+    //与label11左对齐
+    self.view5.jd_equalHeightSubViews(@[label11,label21,label31]);
 }
 
 - (void)didReceiveMemoryWarning {

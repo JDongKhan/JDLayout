@@ -30,6 +30,13 @@
 
 @end
 
+@interface UIView (JDAutolayoutExtention)
+
+- (void(^)(NSArray *subViews))function(equalWidthSubViews);
+- (void(^)(NSArray *subViews))function(equalHeightSubViews);
+
+@end
+
 @interface JDRelation : NSObject
 //对齐
 - (JDRelation *(^)(void))function(align);

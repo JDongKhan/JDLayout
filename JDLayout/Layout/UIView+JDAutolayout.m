@@ -392,4 +392,60 @@
 
 @end
 
+@implementation UIView(JDAutolayoutExtention)
+
+- (void(^)(NSArray *subViews))function(equalWidthSubViews) {
+    __weak UIView *weaskSelf = self;
+    return ^(NSArray *subViews){
+        __strong UIView *strongSelf = weaskSelf;
+        UIView *lastView = nil;
+        for(UIView *view in subViews) {
+            if (lastView == nil) {
+                view
+                .jd_left(strongSelf).jd_equal(0)
+                .jd_centerY(strongSelf).jd_equal(0)
+                .jd_layout();
+            } else {
+                view
+                .jd_left(lastView).jd_equal(0)
+                .jd_centerY(lastView).jd_equal(0)
+                .jd_equalWidth(lastView)
+                .jd_layout();
+            }
+            lastView = view;
+        }
+        lastView
+        .jd_right(strongSelf).jd_equal(0)
+        .jd_layout();
+    };
+}
+
+- (void(^)(NSArray *subViews))function(equalHeightSubViews) {
+    __weak UIView *weaskSelf = self;
+    return ^(NSArray *subViews){
+        __strong UIView *strongSelf = weaskSelf;
+        UIView *lastView = nil;
+        for(UIView *view in subViews) {
+            if (lastView == nil) {
+                view
+                .jd_top(strongSelf).jd_equal(0)
+                .jd_centerX(strongSelf).jd_equal(0)
+                .jd_layout();
+            } else {
+                view
+                .jd_top(lastView).jd_equal(0)
+                .jd_centerX(lastView).jd_equal(0)
+                .jd_equalHeight(lastView)
+                .jd_layout();
+            }
+            lastView = view;
+        }
+        lastView
+        .jd_bottom(strongSelf).jd_equal(0)
+        .jd_layout();
+    };
+}
+
+@end
+
 
