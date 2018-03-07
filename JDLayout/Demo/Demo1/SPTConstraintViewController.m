@@ -25,11 +25,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    //代码布局
+    [self codeLayout0];
+    [self codeLayout1];
+    [self codeLayout2];
+    [self codeLayout3];
+    [self codeLayout4];
+    [self codeLayout5];
+    // Do any additional setup after loading the view from its nib.
+}
+//代码更改xib约束
+- (void)codeLayout0 {
     //更新约束
     self.button2
     .jd_left(self.button1).jd_equal(100).jd_reload();
-    
-    //自己处理垂直平分
+}
+//自己处理垂直平分
+- (void)codeLayout1 {
     UILabel *label1 = [[UILabel alloc] init];
     label1.text = @"我是垂直平分1";
     label1.backgroundColor = [UIColor redColor];
@@ -53,8 +65,9 @@
     .jd_bottom(self.view1).jd_equal(0)
     .jd_equalHeight(label1)
     .jd_layout();
-
-    //自己处理水平平分
+}
+ //自己处理水平平分
+- (void)codeLayout2 {
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是水平平分1";
     label11.backgroundColor = [UIColor redColor];
@@ -65,7 +78,7 @@
     label21.backgroundColor = [UIColor blueColor];
     label21.textAlignment = NSTextAlignmentCenter;
     [self.view2 addSubview:label21];
-
+    
     label11
     .jd_left(self.view2).jd_equal(0)
     .jd_centerY(self.view2).jd_equal(0)
@@ -77,16 +90,9 @@
     .jd_right(self.view2).jd_equal(0)
     .jd_equalWidth(label11)
     .jd_layout();
-    
-    //代码布局
-    [self codeLayout];
-    [self codeLayoutHorizontal];
-    [self codeLayoutVertical];
-    // Do any additional setup after loading the view from its nib.
 }
-
-- (void)codeLayout {
-    //水平平分
+//对齐
+- (void)codeLayout3 {
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是1";
     label11.backgroundColor = [UIColor redColor];
@@ -110,7 +116,7 @@
     .jd_layout();
 }
 //简易的水平平分
-- (void)codeLayoutHorizontal {
+- (void)codeLayout4 {
     //水平平分
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是11";
@@ -133,7 +139,7 @@
     self.view4.jd_equalWidthSubViews(@[label11,label21,label31]);
 }
 //简易的垂直平分
-- (void)codeLayoutVertical {
+- (void)codeLayout5 {
     //水平平分
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是11";

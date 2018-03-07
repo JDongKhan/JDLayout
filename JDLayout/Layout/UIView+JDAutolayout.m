@@ -19,8 +19,12 @@
 @property (nonatomic, assign) NSLayoutRelation relation;
 @property (nonatomic, assign) CGFloat constant;
 @property (nonatomic, assign) CGFloat multiplier;
+- (void)install;
 @end
-@implementation JDRelation
+@implementation JDRelation {
+    UIView *_installedView;
+    NSLayoutConstraint *_constraint;
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -96,6 +100,45 @@
         __strong JDRelation *strongSelf = weaskSelf;
         return strongSelf.firstItem.jd_reload();
     };
+}
+
+- (void)install {
+    _constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
+    _installedView = self.firstItem;
+    if (self.secondItem) {
+        UIView *closestCommonSuperview = [self.firstItem mas_closestCommonSuperview:self.secondItem];
+        NSAssert(closestCommonSuperview,
+                 @"couldn't find a common superview for %@ and %@",
+                 self.firstItem, self.secondItem);
+        _installedView = closestCommonSuperview;
+    } else if (self.firstItem) {
+        _installedView = self.firstItem;
+    }
+    [_installedView addConstraint:_constraint];
+}
+- (void)uninstall {
+    [_installedView removeConstraint:_constraint];
+}
+- (void)update {
+    if (_constraint == nil) {
+        if (self.secondItem) {
+            UIView *closestCommonSuperview = [self.firstItem mas_closestCommonSuperview:self.secondItem];
+            NSAssert(closestCommonSuperview,
+                     @"couldn't find a common superview for %@ and %@",
+                     self.firstItem, self.secondItem);
+            _installedView = closestCommonSuperview;
+        } else if (self.firstItem) {
+            _installedView = self.firstItem;
+        }
+        NSArray *constraints = _installedView.constraints;
+        for (NSLayoutConstraint *c in constraints) {
+            if (c.firstAttribute == self.firstAttribute && c.firstItem == self.firstItem) {
+                _constraint = c;
+                break;
+            }
+        }
+    }
+    _constraint.constant = self.constant;
 }
 
 @end
@@ -340,6 +383,37 @@
     return tmpAttribute;
 }
 
+- (NSArray *)allAttributes {
+    //将多个方向的参数放入数组，统一配置
+    JDAttribute *attribute = [self tmpAttribute];
+    NSMutableArray *allAttributes = [NSMutableArray array];
+    if (attribute.left) {
+        [allAttributes addObject:attribute.left];
+    }
+    if (attribute.top) {
+        [allAttributes addObject:attribute.top];
+    }
+    if (attribute.right) {
+        [allAttributes addObject:attribute.right];
+    }
+    if (attribute.bottom) {
+        [allAttributes addObject:attribute.bottom];
+    }
+    if (attribute.centerX) {
+        [allAttributes addObject:attribute.centerX];
+    }
+    if (attribute.centerY) {
+        [allAttributes addObject:attribute.centerY];
+    }
+    if (attribute.width) {
+        [allAttributes addObject:attribute.width];
+    }
+    if (attribute.height) {
+        [allAttributes addObject:attribute.height];
+    }
+    return allAttributes;
+}
+
 - (void(^)(void))jd_layout {
     __weak UIView *weaskSelf = self;
     return ^(void){
@@ -348,62 +422,11 @@
             return;
         }
         strongSelf.translatesAutoresizingMaskIntoConstraints = NO;
-        //将多个方向的参数放入数组，统一配置
-        JDAttribute *attribute = [strongSelf tmpAttribute];
-        NSMutableArray *allAttributes = [NSMutableArray array];
-        if (attribute.left) {
-            [allAttributes addObject:attribute.left];
-        }
-        if (attribute.top) {
-            [allAttributes addObject:attribute.top];
-        }
-        if (attribute.right) {
-            [allAttributes addObject:attribute.right];
-        }
-        if (attribute.bottom) {
-            [allAttributes addObject:attribute.bottom];
-        }
-        if (attribute.centerX) {
-            [allAttributes addObject:attribute.centerX];
-        }
-        if (attribute.centerY) {
-            [allAttributes addObject:attribute.centerY];
-        }
-        NSArray *constrains = strongSelf.constraints;
-        //清理约束
-        for (NSLayoutConstraint *constraint in constrains) {
-            if ([constraint isMemberOfClass:[NSLayoutConstraint class]]){
-                [strongSelf removeConstraint:constraint];
-            }
-        }
-        constrains = strongSelf.superview.constraints;
-        for (NSLayoutConstraint *constraint in constrains) {
-            if ([constraint isMemberOfClass:[NSLayoutConstraint class]]) {
-                if (constraint.firstItem == strongSelf) {
-                    [strongSelf removeConstraint:constraint];
-                }
-            }
-        }
+        NSArray *allAttributes = [strongSelf allAttributes];
         //开始约束布局
         for (JDRelation *relation in allAttributes) {
-            [strongSelf.superview addConstraint:[NSLayoutConstraint constraintWithItem:relation.firstItem attribute:relation.firstAttribute relatedBy:relation.relation toItem:relation.secondItem attribute:relation.secondAttribute multiplier:relation.multiplier constant:relation.constant]];
-        }
-        //因宽、高的约束特殊，需要特殊处理
-        if (attribute.width) {
-            NSLayoutConstraint *widthConstrant = [NSLayoutConstraint constraintWithItem:attribute.width.firstItem attribute:attribute.width.firstAttribute relatedBy:attribute.width.relation toItem:attribute.width.secondItem attribute:attribute.width.secondAttribute multiplier:attribute.width.multiplier constant:attribute.width.constant];
-            if (attribute.width.secondItem != nil) {
-                [strongSelf.superview addConstraint:widthConstrant];
-            } else {
-                [strongSelf addConstraint:widthConstrant];
-            }
-        }
-        if (attribute.height) {
-            NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:attribute.height.firstItem attribute:attribute.height.firstAttribute relatedBy:attribute.height.relation toItem:attribute.height.secondItem attribute:attribute.height.secondAttribute multiplier:attribute.height.multiplier constant:attribute.height.constant];
-            if (attribute.height.secondItem != nil) {
-                [strongSelf.superview addConstraint:heightConstraint];
-            } else {
-                [strongSelf addConstraint:heightConstraint];
-            }
+            [relation uninstall];
+            [relation install];
         }
     };
 }
@@ -412,41 +435,13 @@
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
-        JDAttribute *attribute = [strongSelf tmpAttribute];
-        NSArray *constrains = strongSelf.constraints;
-        //更新自身的约束
-        for (NSLayoutConstraint *constraint in constrains) {
-            if ([constraint isMemberOfClass:[NSLayoutConstraint class]]){
-                if (constraint.firstAttribute == NSLayoutAttributeWidth) {
-                    constraint.constant = attribute.width.constant;
-                } else if (constraint.firstAttribute == NSLayoutAttributeHeight) {
-                    constraint.constant = attribute.height.constant;
-                }
-            }
-        }
-        constrains = strongSelf.superview.constraints;
-        //更新父view中有关自己的view
-        //只能处理由当前view建立的约束，即firstItem是当前view
-        for (NSLayoutConstraint *constraint in constrains) {
-            if ([constraint isMemberOfClass:[NSLayoutConstraint class]]) {
-                if (constraint.firstAttribute == NSLayoutAttributeLeading && constraint.firstItem == strongSelf) {
-                    constraint.constant = attribute.left.constant;
-                } else if (constraint.firstAttribute == NSLayoutAttributeTop && constraint.firstItem == strongSelf) {
-                    constraint.constant = attribute.top.constant;
-                } else if (constraint.firstAttribute == NSLayoutAttributeTrailing && constraint.firstItem == strongSelf) {
-                    constraint.constant = attribute.right.constant;
-                } else if (constraint.firstAttribute == NSLayoutAttributeBottom && constraint.firstItem == strongSelf) {
-                    constraint.constant = attribute.bottom.constant;
-                } else if (constraint.firstAttribute == NSLayoutAttributeCenterX && constraint.firstItem == strongSelf) {
-                    constraint.constant = attribute.centerX.constant;
-                } else if (constraint.firstAttribute == NSLayoutAttributeCenterY && constraint.firstItem == strongSelf) {
-                    constraint.constant = attribute.centerY.constant;
-                }
-            }
+        NSArray *allAttributes = [strongSelf allAttributes];
+        //开始更新约束布局
+        for (JDRelation *relation in allAttributes) {
+            [relation update];
         }
     };
 }
-
 
 @end
 
@@ -502,6 +497,22 @@
         .jd_bottom(strongSelf).jd_equal(0)
         .jd_layout();
     };
+}
+
+- (instancetype)mas_closestCommonSuperview:(UIView *)view {
+    UIView *closestCommonSuperview = nil;
+    UIView *secondViewSuperview = view;
+    while (!closestCommonSuperview && secondViewSuperview) {
+        UIView *firstViewSuperview = self;
+        while (!closestCommonSuperview && firstViewSuperview) {
+            if (secondViewSuperview == firstViewSuperview) {
+                closestCommonSuperview = secondViewSuperview;
+            }
+            firstViewSuperview = firstViewSuperview.superview;
+        }
+        secondViewSuperview = secondViewSuperview.superview;
+    }
+    return closestCommonSuperview;
 }
 
 @end

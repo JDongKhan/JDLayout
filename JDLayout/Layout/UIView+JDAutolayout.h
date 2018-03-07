@@ -56,6 +56,8 @@
 - (void(^)(NSArray *subViews))jd_equalWidthSubViews;
 - (void(^)(NSArray *subViews))jd_equalHeightSubViews;
 
+- (instancetype)mas_closestCommonSuperview:(UIView *)view;
+
 @end
 
 @interface JDRelation : NSObject
