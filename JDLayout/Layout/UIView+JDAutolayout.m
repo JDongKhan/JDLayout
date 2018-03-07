@@ -103,7 +103,7 @@
 
 - (void)jd_install {
     [_installedView removeConstraint:_constraint];
-    _constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
     if (self.secondItem) {
         UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
         NSAssert(closestCommonSuperview,
@@ -113,6 +113,7 @@
     } else {
         _installedView = self.firstItem;
     }
+    _constraint = constraint;
     [_installedView addConstraint:_constraint];
 }
 
