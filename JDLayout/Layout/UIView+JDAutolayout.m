@@ -9,7 +9,99 @@
 #import "UIView+JDAutolayout.h"
 #import <objc/runtime.h>
 
+#pragma mark ---------------JDRelation------------------------
+//单个约束基本参数的模型
+@interface JDRelation()
+@property (nonatomic, weak) UIView *firstItem;
+@property (nonatomic, weak) UIView *secondItem;
+@property (nonatomic, assign) NSLayoutAttribute firstAttribute;
+@property (nonatomic, assign) NSLayoutAttribute secondAttribute;
+@property (nonatomic, assign) NSLayoutRelation relation;
+@property (nonatomic, assign) CGFloat constant;
+@property (nonatomic, assign) CGFloat multiplier;
+@end
+@implementation JDRelation
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _multiplier = 1;
+    }
+    return self;
+}
+
+- (JDRelation *(^)(void))jd_align {
+    __weak JDRelation *weaskSelf = self;
+    return ^(void){
+        __strong JDRelation *strongSelf = weaskSelf;
+        strongSelf.secondAttribute = strongSelf.firstAttribute;
+        return strongSelf;
+    };
+}
+
+- (JDRelation *(^)(CGFloat multiplier))jd_multiplier {
+    __weak JDRelation *weaskSelf = self;
+    return ^(CGFloat multiplier){
+        __strong JDRelation *strongSelf = weaskSelf;
+        strongSelf.multiplier = multiplier;
+        return strongSelf;
+    };
+}
+
+- (UIView *(^)(CGFloat constant))jd_equal {
+    __weak JDRelation *weaskSelf = self;
+    return ^(CGFloat constant){
+        __strong JDRelation *strongSelf = weaskSelf;
+        strongSelf.relation = NSLayoutRelationEqual;
+        strongSelf.constant = constant;
+        return strongSelf.firstItem;
+    };
+}
+- (UIView *(^)(CGFloat constant))jd_lessThanOrEqual {
+    __weak JDRelation *weaskSelf = self;
+    return ^(CGFloat constant){
+        __strong JDRelation *strongSelf = weaskSelf;
+        strongSelf.relation = NSLayoutRelationLessThanOrEqual;
+        strongSelf.constant = constant;
+        return strongSelf.firstItem;
+    };
+}
+- (UIView *(^)(CGFloat constant))jd_greaterThanOrEqual {
+    __weak JDRelation *weaskSelf = self;
+    return ^(CGFloat constant){
+        __strong JDRelation *strongSelf = weaskSelf;
+        strongSelf.relation = NSLayoutRelationGreaterThanOrEqual;
+        strongSelf.constant = constant;
+        return strongSelf.firstItem;
+    };
+}
+
+- (UIView *(^)(void))jd_and {
+    __weak JDRelation *weaskSelf = self;
+    return ^(void){
+        __strong JDRelation *strongSelf = weaskSelf;
+        return strongSelf.firstItem;
+    };
+}
+
+- (void(^)(void))jd_layout {
+    __weak JDRelation *weaskSelf = self;
+    return ^(void){
+        __strong JDRelation *strongSelf = weaskSelf;
+        return strongSelf.firstItem.jd_layout();
+    };
+}
+- (void(^)(void))jd_reload {
+    __weak JDRelation *weaskSelf = self;
+    return ^(void){
+        __strong JDRelation *strongSelf = weaskSelf;
+        return strongSelf.firstItem.jd_reload();
+    };
+}
+
+@end
+
 #pragma mark ---------------JDAttribute------------------------
+//一个控件布局基本参数的模型
 @interface JDAttribute : NSObject
 @property (nonatomic, strong) JDRelation *left;
 @property (nonatomic, strong) JDRelation *top;
@@ -32,59 +124,11 @@
     self.centerY = nil;
 }
 @end
-#pragma mark ---------------JDRelation------------------------
-@interface JDRelation()
-@property (nonatomic, weak) UIView *firstItem;
-@property (nonatomic, weak) UIView *secondItem;
-@property (nonatomic, assign) NSLayoutAttribute firstAttribute;
-@property (nonatomic, assign) NSLayoutAttribute secondAttribute;
-@property (nonatomic, assign) NSLayoutRelation relation;
-@property (nonatomic, assign) CGFloat constant;
-@end
-@implementation JDRelation
-
-- (JDRelation *(^)(void))function(align) {
-    __weak JDRelation *weaskSelf = self;
-    return ^(void){
-        __strong JDRelation *strongSelf = weaskSelf;
-        strongSelf.secondAttribute = strongSelf.firstAttribute;
-        return strongSelf;
-    };
-}
-
-- (UIView *(^)(CGFloat constant))function(equal) {
-    __weak JDRelation *weaskSelf = self;
-    return ^(CGFloat constant){
-         __strong JDRelation *strongSelf = weaskSelf;
-        strongSelf.relation = NSLayoutRelationEqual;
-        strongSelf.constant = constant;
-        return strongSelf.firstItem;
-    };
-}
-- (UIView *(^)(CGFloat constant))function(lessThanOrEqual) {
-    __weak JDRelation *weaskSelf = self;
-    return ^(CGFloat constant){
-        __strong JDRelation *strongSelf = weaskSelf;
-        strongSelf.relation = NSLayoutRelationLessThanOrEqual;
-        strongSelf.constant = constant;
-        return strongSelf.firstItem;
-    };
-}
-- (UIView *(^)(CGFloat constant))function(greaterThanOrEqual) {
-    __weak JDRelation *weaskSelf = self;
-    return ^(CGFloat constant){
-        __strong JDRelation *strongSelf = weaskSelf;
-        strongSelf.relation = NSLayoutRelationGreaterThanOrEqual;
-        strongSelf.constant = constant;
-        return strongSelf.firstItem;
-    };
-}
-@end
 
 #pragma mark ---------------JDAutolayout------------------------
 
 @implementation UIView (JDAutolayout)
-- (UIView *(^)(void))function(reset) {
+- (UIView *(^)(void))jd_reset {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
@@ -93,7 +137,7 @@
         return strongSelf;
     };
 }
-- (JDRelation *(^)(UIView *view))function(left) {
+- (JDRelation *(^)(UIView *view))jd_left {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -114,7 +158,7 @@
         return target;
     };
 }
-- (JDRelation *(^)(UIView *view))function(top) {
+- (JDRelation *(^)(UIView *view))jd_top {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -135,7 +179,7 @@
         return target;
     };
 }
-- (JDRelation *(^)(UIView *view))function(right) {
+- (JDRelation *(^)(UIView *view))jd_right {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -156,7 +200,7 @@
         return target;
     };
 }
-- (JDRelation *(^)(UIView *view))function(bottom) {
+- (JDRelation *(^)(UIView *view))jd_bottom {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -177,7 +221,7 @@
         return target;
     };
 }
-- (JDRelation *(^)(UIView *view))function(centerX) {
+- (JDRelation *(^)(UIView *view))jd_centerX {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -193,7 +237,7 @@
         return target;
     };
 }
-- (JDRelation *(^)(UIView *view))function(centerY) {
+- (JDRelation *(^)(UIView *view))jd_centerY {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -209,7 +253,7 @@
         return target;
     };
 }
-- (JDRelation *(^)(void))function(width){
+- (JDRelation *(^)(void))jd_width {
     __weak UIView *weaskSelf = self;
     return ^(){
         __strong UIView *strongSelf = weaskSelf;
@@ -224,7 +268,7 @@
         return target;
     };
 }
-- (JDRelation *(^)(void))function(height) {
+- (JDRelation *(^)(void))jd_height {
     __weak UIView *weaskSelf = self;
     return ^(){
         __strong UIView *strongSelf = weaskSelf;
@@ -240,7 +284,18 @@
     };
 }
 
-- (UIView *(^)(UIView *view))function(equalWidth) {
+- (UIView *(^)(CGFloat width,CGFloat height))jd_size {
+    __weak UIView *weaskSelf = self;
+    return ^(CGFloat width,CGFloat height){
+        __strong UIView *strongSelf = weaskSelf;
+        return strongSelf
+        .jd_width().jd_equal(width)
+        .jd_height().jd_equal(height);
+    };
+}
+
+
+- (UIView *(^)(UIView *view))jd_equalWidth {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -257,7 +312,7 @@
         return strongSelf;
     };
 }
-- (UIView *(^)(UIView *view))function(equalHeight) {
+- (UIView *(^)(UIView *view))jd_equalHeight {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
@@ -285,7 +340,7 @@
     return tmpAttribute;
 }
 
-- (void(^)(void))function(layout) {
+- (void(^)(void))jd_layout {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
@@ -293,6 +348,7 @@
             return;
         }
         strongSelf.translatesAutoresizingMaskIntoConstraints = NO;
+        //将多个方向的参数放入数组，统一配置
         JDAttribute *attribute = [strongSelf tmpAttribute];
         NSMutableArray *allAttributes = [NSMutableArray array];
         if (attribute.left) {
@@ -330,10 +386,11 @@
         }
         //开始约束布局
         for (JDRelation *relation in allAttributes) {
-            [strongSelf.superview addConstraint:[NSLayoutConstraint constraintWithItem:relation.firstItem attribute:relation.firstAttribute relatedBy:relation.relation toItem:relation.secondItem attribute:relation.secondAttribute multiplier:1 constant:relation.constant]];
+            [strongSelf.superview addConstraint:[NSLayoutConstraint constraintWithItem:relation.firstItem attribute:relation.firstAttribute relatedBy:relation.relation toItem:relation.secondItem attribute:relation.secondAttribute multiplier:relation.multiplier constant:relation.constant]];
         }
+        //因宽、高的约束特殊，需要特殊处理
         if (attribute.width) {
-            NSLayoutConstraint *widthConstrant = [NSLayoutConstraint constraintWithItem:attribute.width.firstItem attribute:attribute.width.firstAttribute relatedBy:attribute.width.relation toItem:attribute.width.secondItem attribute:attribute.width.secondAttribute multiplier:1.0 constant:attribute.width.constant];
+            NSLayoutConstraint *widthConstrant = [NSLayoutConstraint constraintWithItem:attribute.width.firstItem attribute:attribute.width.firstAttribute relatedBy:attribute.width.relation toItem:attribute.width.secondItem attribute:attribute.width.secondAttribute multiplier:attribute.width.multiplier constant:attribute.width.constant];
             if (attribute.width.secondItem != nil) {
                 [strongSelf.superview addConstraint:widthConstrant];
             } else {
@@ -341,7 +398,7 @@
             }
         }
         if (attribute.height) {
-            NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:attribute.height.firstItem attribute:attribute.height.firstAttribute relatedBy:attribute.height.relation toItem:attribute.height.secondItem attribute:attribute.height.secondAttribute multiplier:1.0 constant:attribute.height.constant];
+            NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:attribute.height.firstItem attribute:attribute.height.firstAttribute relatedBy:attribute.height.relation toItem:attribute.height.secondItem attribute:attribute.height.secondAttribute multiplier:attribute.height.multiplier constant:attribute.height.constant];
             if (attribute.height.secondItem != nil) {
                 [strongSelf.superview addConstraint:heightConstraint];
             } else {
@@ -351,7 +408,7 @@
     };
 }
 
-- (void(^)(void))function(reload) {
+- (void(^)(void))jd_reload {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
@@ -395,7 +452,7 @@
 
 @implementation UIView(JDAutolayoutExtention)
 
-- (void(^)(NSArray *subViews))function(equalWidthSubViews) {
+- (void(^)(NSArray *subViews))jd_equalWidthSubViews {
     __weak UIView *weaskSelf = self;
     return ^(NSArray *subViews){
         __strong UIView *strongSelf = weaskSelf;
@@ -421,7 +478,7 @@
     };
 }
 
-- (void(^)(NSArray *subViews))function(equalHeightSubViews) {
+- (void(^)(NSArray *subViews))jd_equalHeightSubViews {
     __weak UIView *weaskSelf = self;
     return ^(NSArray *subViews){
         __strong UIView *strongSelf = weaskSelf;

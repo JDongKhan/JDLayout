@@ -26,7 +26,8 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     //更新约束
-    self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
+    self.button2
+    .jd_left(self.button1).jd_equal(100).jd_reload();
     
     //自己处理垂直平分
     UILabel *label1 = [[UILabel alloc] init];
@@ -92,8 +93,10 @@
     label11.textAlignment = NSTextAlignmentCenter;
     [self.view3 addSubview:label11];
     
-    label11.jd_left(self.view3).jd_equal(10)
-    .jd_top(self.view3).jd_equal(10).jd_layout();
+    label11
+    .jd_left(self.view3).jd_equal(10)
+    .jd_top(self.view3).jd_equal(10)
+    .jd_layout();
     
     UILabel *label21 = [[UILabel alloc] init];
     label21.text = @"我是2";
@@ -101,8 +104,10 @@
     label21.textAlignment = NSTextAlignmentCenter;
     [self.view3 addSubview:label21];
     //与label11左对齐
-    label21.jd_left(label11).jd_align().jd_equal(0)
-    .jd_top(label11).jd_equal(10).jd_layout();
+    label21
+    .jd_left(label11).jd_align().jd_equal(0)
+    .jd_top(label11).jd_equal(10)
+    .jd_layout();
 }
 //简易的水平平分
 - (void)codeLayoutHorizontal {
