@@ -177,6 +177,69 @@
         return target;
     };
 }
+- (JDRelation *(^)(UIView *view))function(centerX) {
+    __weak UIView *weaskSelf = self;
+    return ^(UIView *view){
+        __strong UIView *strongSelf = weaskSelf;
+        JDRelation *target = [strongSelf tmpAttribute].centerX;
+        if (target == nil) {
+            target = [[JDRelation alloc] init];
+            [strongSelf tmpAttribute].centerX = target;
+        }
+        target.firstItem = strongSelf;
+        target.secondItem = view;
+        target.firstAttribute = NSLayoutAttributeCenterX;
+        target.secondAttribute = NSLayoutAttributeCenterX;
+        return target;
+    };
+}
+- (JDRelation *(^)(UIView *view))function(centerY) {
+    __weak UIView *weaskSelf = self;
+    return ^(UIView *view){
+        __strong UIView *strongSelf = weaskSelf;
+        JDRelation *target = [strongSelf tmpAttribute].centerY;
+        if (target == nil) {
+            target = [[JDRelation alloc] init];
+            [strongSelf tmpAttribute].centerY = target;
+        }
+        target.firstItem = strongSelf;
+        target.secondItem = view;
+        target.firstAttribute = NSLayoutAttributeCenterY;
+        target.secondAttribute = NSLayoutAttributeCenterY;
+        return target;
+    };
+}
+- (JDRelation *(^)(void))function(width){
+    __weak UIView *weaskSelf = self;
+    return ^(){
+        __strong UIView *strongSelf = weaskSelf;
+        JDRelation *target = [strongSelf tmpAttribute].width;
+        if (target == nil) {
+            target = [[JDRelation alloc] init];
+            [strongSelf tmpAttribute].width = target;
+        }
+        target.firstItem = strongSelf;
+        target.firstAttribute = NSLayoutAttributeWidth;
+        target.secondAttribute = NSLayoutAttributeNotAnAttribute;
+        return target;
+    };
+}
+- (JDRelation *(^)(void))function(height) {
+    __weak UIView *weaskSelf = self;
+    return ^(){
+        __strong UIView *strongSelf = weaskSelf;
+        JDRelation *target = [strongSelf tmpAttribute].height;
+        if (target == nil) {
+            target = [[JDRelation alloc] init];
+            [strongSelf tmpAttribute].height = target;
+        }
+        target.firstItem = strongSelf;
+        target.firstAttribute = NSLayoutAttributeHeight;
+        target.secondAttribute = NSLayoutAttributeNotAnAttribute;
+        return target;
+    };
+}
+
 - (UIView *(^)(UIView *view))function(equalWidth) {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -211,75 +274,13 @@
         return strongSelf;
     };
 }
-- (JDRelation *(^)(void))function(width){
-    __weak UIView *weaskSelf = self;
-    return ^(){
-        __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].width;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].width = target;
-        }
-        target.firstItem = strongSelf;
-        target.firstAttribute = NSLayoutAttributeWidth;
-        target.secondAttribute = NSLayoutAttributeNotAnAttribute;
-        return target;
-    };
-}
-- (JDRelation *(^)(void))function(height) {
-    __weak UIView *weaskSelf = self;
-    return ^(){
-        __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].height;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].height = target;
-        }
-        target.firstItem = strongSelf;
-        target.firstAttribute = NSLayoutAttributeHeight;
-        target.secondAttribute = NSLayoutAttributeNotAnAttribute;
-        return target;
-    };
-}
 
-- (JDRelation *(^)(UIView *view))function(centerX) {
-    __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
-        __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].centerX;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].centerX = target;
-        }
-        target.firstItem = strongSelf;
-        target.secondItem = view;
-        target.firstAttribute = NSLayoutAttributeCenterX;
-        target.secondAttribute = NSLayoutAttributeCenterX;
-        return target;
-    };
-}
-- (JDRelation *(^)(UIView *view))function(centerY) {
-    __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
-        __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].centerY;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].centerY = target;
-        }
-        target.firstItem = strongSelf;
-        target.secondItem = view;
-        target.firstAttribute = NSLayoutAttributeCenterY;
-        target.secondAttribute = NSLayoutAttributeCenterY;
-        return target;
-    };
-}
 /////////////////////////////////////////////////////
 - (JDAttribute *)tmpAttribute {
-    JDAttribute *tmpAttribute = objc_getAssociatedObject(self, @selector(tmpAttribute));
+    JDAttribute *tmpAttribute = objc_getAssociatedObject(self, _cmd);
     if (tmpAttribute == nil) {
         tmpAttribute = [[JDAttribute alloc] init];
-        objc_setAssociatedObject(self, @selector(tmpAttribute), tmpAttribute, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, _cmd, tmpAttribute, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return tmpAttribute;
 }
@@ -399,7 +400,7 @@
     return ^(NSArray *subViews){
         __strong UIView *strongSelf = weaskSelf;
         UIView *lastView = nil;
-        for(UIView *view in subViews) {
+        for (UIView *view in subViews) {
             if (lastView == nil) {
                 view
                 .jd_left(strongSelf).jd_equal(0)
@@ -425,7 +426,7 @@
     return ^(NSArray *subViews){
         __strong UIView *strongSelf = weaskSelf;
         UIView *lastView = nil;
-        for(UIView *view in subViews) {
+        for (UIView *view in subViews) {
             if (lastView == nil) {
                 view
                 .jd_top(strongSelf).jd_equal(0)

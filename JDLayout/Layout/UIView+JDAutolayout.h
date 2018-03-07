@@ -22,11 +22,12 @@
 - (JDRelation *(^)(UIView *view))function(centerY);
 - (JDRelation *(^)(void))function(width);
 - (JDRelation *(^)(void))function(height);
-- (void(^)(void))function(layout);
-- (void(^)(void))function(reload);
 
 - (UIView *(^)(UIView *view))function(equalWidth);
 - (UIView *(^)(UIView *view))function(equalHeight);
+
+- (void(^)(void))function(layout);
+- (void(^)(void))function(reload);
 
 @end
 
