@@ -26,11 +26,18 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     //代码布局
+    
+    //代码更改xib约束
     [self codeLayout0];
+    //自己处理垂直平分
     [self codeLayout1];
+     //自己处理水平平分
     [self codeLayout2];
+    //对齐
     [self codeLayout3];
+    //简易的水平平分
     [self codeLayout4];
+    //简易的垂直平分
     [self codeLayout5];
     // Do any additional setup after loading the view from its nib.
 }
