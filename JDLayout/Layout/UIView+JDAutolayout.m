@@ -116,9 +116,11 @@
     }
     [_installedView addConstraint:_constraint];
 }
+
 - (void)uninstall {
     [_installedView removeConstraint:_constraint];
 }
+
 - (void)update {
     if (_constraint == nil) {
         if (self.secondItem) {
@@ -154,8 +156,38 @@
 @property (nonatomic, strong) JDRelation *height;
 @property (nonatomic, strong) JDRelation *centerX;
 @property (nonatomic, strong) JDRelation *centerY;
+- (NSArray *)allAttributes;
 @end
 @implementation JDAttribute
+- (NSArray *)allAttributes {
+    //将多个方向的参数放入数组，统一配置
+    NSMutableArray *allAttributes = [NSMutableArray array];
+    if (self.left) {
+        [allAttributes addObject:self.left];
+    }
+    if (self.top) {
+        [allAttributes addObject:self.top];
+    }
+    if (self.right) {
+        [allAttributes addObject:self.right];
+    }
+    if (self.bottom) {
+        [allAttributes addObject:self.bottom];
+    }
+    if (self.centerX) {
+        [allAttributes addObject:self.centerX];
+    }
+    if (self.centerY) {
+        [allAttributes addObject:self.centerY];
+    }
+    if (self.width) {
+        [allAttributes addObject:self.width];
+    }
+    if (self.height) {
+        [allAttributes addObject:self.height];
+    }
+    return allAttributes;
+}
 - (void)clear {
     self.left = nil;
     self.top = nil;
@@ -383,37 +415,6 @@
     return tmpAttribute;
 }
 
-- (NSArray *)allAttributes {
-    //将多个方向的参数放入数组，统一配置
-    JDAttribute *attribute = [self tmpAttribute];
-    NSMutableArray *allAttributes = [NSMutableArray array];
-    if (attribute.left) {
-        [allAttributes addObject:attribute.left];
-    }
-    if (attribute.top) {
-        [allAttributes addObject:attribute.top];
-    }
-    if (attribute.right) {
-        [allAttributes addObject:attribute.right];
-    }
-    if (attribute.bottom) {
-        [allAttributes addObject:attribute.bottom];
-    }
-    if (attribute.centerX) {
-        [allAttributes addObject:attribute.centerX];
-    }
-    if (attribute.centerY) {
-        [allAttributes addObject:attribute.centerY];
-    }
-    if (attribute.width) {
-        [allAttributes addObject:attribute.width];
-    }
-    if (attribute.height) {
-        [allAttributes addObject:attribute.height];
-    }
-    return allAttributes;
-}
-
 - (void(^)(void))jd_layout {
     __weak UIView *weaskSelf = self;
     return ^(void){
@@ -422,7 +423,7 @@
             return;
         }
         strongSelf.translatesAutoresizingMaskIntoConstraints = NO;
-        NSArray *allAttributes = [strongSelf allAttributes];
+        NSArray *allAttributes = [[strongSelf tmpAttribute] allAttributes];
         //开始约束布局
         for (JDRelation *relation in allAttributes) {
             [relation uninstall];
@@ -435,7 +436,7 @@
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
-        NSArray *allAttributes = [strongSelf allAttributes];
+        NSArray *allAttributes = [[strongSelf tmpAttribute] allAttributes];
         //开始更新约束布局
         for (JDRelation *relation in allAttributes) {
             [relation update];
