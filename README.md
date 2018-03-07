@@ -3,36 +3,6 @@
 
 ![demo png](https://github.com/wangjindong/JDLayout/blob/master/demo.png "demo")
 
-只有一个类，以下是所有方法，支持绝大多数场景。
-
-    @interface UIView (JDAutolayout)
-    - (UIView *(^)(void))function(reset);
-    - (JDRelation *(^)(UIView *view))function(left);
-    - (JDRelation *(^)(UIView *view))function(top);
-    - (JDRelation *(^)(UIView *view))function(right);
-    - (JDRelation *(^)(UIView *view))function(bottom);
-    - (JDRelation *(^)(UIView *view))function(centerX);
-    - (JDRelation *(^)(UIView *view))function(centerY);
-    - (JDRelation *(^)(void))function(width);
-    - (JDRelation *(^)(void))function(height);
-    - (void(^)(void))function(layout);
-    - (void(^)(void))function(reload);
-
-    - (UIView *(^)(UIView *view))function(equalWidth);
-    - (UIView *(^)(UIView *view))function(equalHeight);
-
-    @end
-
-    @interface JDRelation : NSObject
-    //对齐
-    - (JDRelation *(^)(void))function(align);
-
-    - (UIView *(^)(CGFloat constant))function(equal);
-    - (UIView *(^)(CGFloat constant))function(lessThanOrEqual);
-    - (UIView *(^)(CGFloat constant))function(greaterThanOrEqual);
-    @end
-
-
 ## 一、更新现有的约束
 
     self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
@@ -63,6 +33,10 @@
     .jd_bottom(self.view1).jd_equal(0)
     .jd_equalHeight(label1)
     .jd_layout();
+    
+   简易的写法：
+   
+    self.view1.jd_equalHeightSubViews(@[label1,label2]);
 
 ## 三、水平平分
 
@@ -90,6 +64,10 @@
     .jd_equalWidth(label11)
     .jd_layout();
     
+   简易的写法
+    
+    self.view2.jd_equalWidthSubViews(@[label1,label21]);
+    
 ## 四、对齐
 
     //水平平分
@@ -114,3 +92,84 @@
     
 
 ## 五、支持lessThanOrEqual、greaterThanOrEqual、equal等
+
+
+
+# 只有一个类，以下是所有方法，支持绝大多数场景。
+
+    @interface UIView (JDAutolayout)
+
+    /**
+       约束基本设置
+    */
+    - (JDRelation *(^)(UIView *view))jd_left;
+    - (JDRelation *(^)(UIView *view))jd_top;
+    - (JDRelation *(^)(UIView *view))jd_right;
+    - (JDRelation *(^)(UIView *view))jd_bottom;
+    - (JDRelation *(^)(UIView *view))jd_centerX;
+    - (JDRelation *(^)(UIView *view))jd_centerY;
+    - (JDRelation *(^)(void))jd_width;
+    - (JDRelation *(^)(void))jd_height;
+
+    /**
+    对width和height的封装
+    */
+    - (UIView *(^)(CGFloat width,CGFloat height))jd_size;
+
+    /**
+    等宽、等高
+    */
+    - (UIView *(^)(UIView *view))jd_equalWidth;
+    - (UIView *(^)(UIView *view))jd_equalHeight;
+
+    /**
+    重置约束
+    */
+    - (UIView *(^)(void))jd_reset;
+
+    /**
+    约束布局
+    */
+    - (void(^)(void))jd_layout;
+    - (void(^)(void))jd_reload;
+
+    @end
+
+    @interface UIView (JDAutolayoutExtention)
+
+    /**
+    子view等宽、等高
+    */
+    - (void(^)(NSArray *subViews))jd_equalWidthSubViews;
+    - (void(^)(NSArray *subViews))jd_equalHeightSubViews;
+
+    @end
+
+    @interface JDRelation : NSObject
+    //对齐
+    - (JDRelation *(^)(void))jd_align;
+
+    /**
+     倍数
+     */
+    - (JDRelation *(^)(CGFloat multiplier))jd_multiplier;
+
+    /**
+    约束关系
+    */
+    - (UIView *(^)(CGFloat constant))jd_equal;
+    - (UIView *(^)(CGFloat constant))jd_lessThanOrEqual;
+    - (UIView *(^)(CGFloat constant))jd_greaterThanOrEqual;
+
+    /**
+    连接方法，用于逻辑上连接下一个语句
+    */
+    - (UIView *(^)(void))jd_and;
+
+    /**
+     约束布局
+    */
+    - (void(^)(void))jd_layout;
+    - (void(^)(void))jd_reload;
+
+    @end
