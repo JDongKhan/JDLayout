@@ -101,7 +101,7 @@
     };
 }
 
-- (void)install {
+- (void)jd_install {
     [_installedView removeConstraint:_constraint];
     _constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
     if (self.secondItem) {
@@ -116,7 +116,7 @@
     [_installedView addConstraint:_constraint];
 }
 
-- (void)update {
+- (void)jd_update {
     if (_constraint == nil) {
         if (self.secondItem) {
             UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
@@ -151,10 +151,10 @@
 @property (nonatomic, strong) JDRelation *height;
 @property (nonatomic, strong) JDRelation *centerX;
 @property (nonatomic, strong) JDRelation *centerY;
-- (NSArray *)allAttributes;
+- (NSArray *)jd_allAttributes;
 @end
 @implementation JDAttribute
-- (NSArray *)allAttributes {
+- (NSArray *)jd_allAttributes {
     //将多个方向的参数放入数组，统一配置
     NSMutableArray *allAttributes = [NSMutableArray array];
     if (self.left) {
@@ -183,7 +183,7 @@
     }
     return allAttributes;
 }
-- (void)clear {
+- (void)jd_clear {
     self.left = nil;
     self.top = nil;
     self.right = nil;
@@ -202,8 +202,8 @@
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
-        JDAttribute *attribute = [strongSelf tmpAttribute];
-        [attribute clear];
+        JDAttribute *attribute = [strongSelf jd_tmpAttribute];
+        [attribute jd_clear];
         return strongSelf;
     };
 }
@@ -211,10 +211,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].left;
+        JDRelation *target = [strongSelf jd_tmpAttribute].left;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].left = target;
+            [strongSelf jd_tmpAttribute].left = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -232,10 +232,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].top;
+        JDRelation *target = [strongSelf jd_tmpAttribute].top;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].top = target;
+            [strongSelf jd_tmpAttribute].top = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -253,10 +253,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].right;
+        JDRelation *target = [strongSelf jd_tmpAttribute].right;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].right = target;
+            [strongSelf jd_tmpAttribute].right = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -274,10 +274,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].bottom;
+        JDRelation *target = [strongSelf jd_tmpAttribute].bottom;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].bottom = target;
+            [strongSelf jd_tmpAttribute].bottom = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -295,10 +295,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].centerX;
+        JDRelation *target = [strongSelf jd_tmpAttribute].centerX;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].centerX = target;
+            [strongSelf jd_tmpAttribute].centerX = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -311,10 +311,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].centerY;
+        JDRelation *target = [strongSelf jd_tmpAttribute].centerY;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].centerY = target;
+            [strongSelf jd_tmpAttribute].centerY = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -327,10 +327,10 @@
     __weak UIView *weaskSelf = self;
     return ^(){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].width;
+        JDRelation *target = [strongSelf jd_tmpAttribute].width;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].width = target;
+            [strongSelf jd_tmpAttribute].width = target;
         }
         target.firstItem = strongSelf;
         target.firstAttribute = NSLayoutAttributeWidth;
@@ -342,10 +342,10 @@
     __weak UIView *weaskSelf = self;
     return ^(){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].height;
+        JDRelation *target = [strongSelf jd_tmpAttribute].height;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].height = target;
+            [strongSelf jd_tmpAttribute].height = target;
         }
         target.firstItem = strongSelf;
         target.firstAttribute = NSLayoutAttributeHeight;
@@ -369,10 +369,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].width;
+        JDRelation *target = [strongSelf jd_tmpAttribute].width;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].width = target;
+            [strongSelf jd_tmpAttribute].width = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -386,10 +386,10 @@
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
         __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf tmpAttribute].height;
+        JDRelation *target = [strongSelf jd_tmpAttribute].height;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf tmpAttribute].height = target;
+            [strongSelf jd_tmpAttribute].height = target;
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
@@ -401,7 +401,7 @@
 }
 
 /////////////////////////////////////////////////////
-- (JDAttribute *)tmpAttribute {
+- (JDAttribute *)jd_tmpAttribute {
     JDAttribute *tmpAttribute = objc_getAssociatedObject(self, _cmd);
     if (tmpAttribute == nil) {
         tmpAttribute = [[JDAttribute alloc] init];
@@ -418,10 +418,10 @@
             return;
         }
         strongSelf.translatesAutoresizingMaskIntoConstraints = NO;
-        NSArray *allAttributes = [[strongSelf tmpAttribute] allAttributes];
+        NSArray *allAttributes = [[strongSelf jd_tmpAttribute] jd_allAttributes];
         //开始约束布局
         for (JDRelation *relation in allAttributes) {
-            [relation install];
+            [relation jd_install];
         }
     };
 }
@@ -430,10 +430,10 @@
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
-        NSArray *allAttributes = [[strongSelf tmpAttribute] allAttributes];
+        NSArray *allAttributes = [[strongSelf jd_tmpAttribute] jd_allAttributes];
         //开始更新约束布局
         for (JDRelation *relation in allAttributes) {
-            [relation update];
+            [relation jd_update];
         }
     };
 }
