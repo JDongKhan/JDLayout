@@ -130,9 +130,11 @@
         }
         NSArray *constraints = _installedView.constraints;
         for (NSLayoutConstraint *c in constraints) {
-            if (c.firstAttribute == self.firstAttribute && c.firstItem == self.firstItem) {
-                _constraint = c;
-                break;
+            if ([c isMemberOfClass:[NSLayoutConstraint class]]) {
+                if (c.firstAttribute == self.firstAttribute && c.firstItem == self.firstItem) {
+                    _constraint = c;
+                    break;
+                }
             }
         }
     }
