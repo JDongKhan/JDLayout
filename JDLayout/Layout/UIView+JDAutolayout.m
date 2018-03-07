@@ -19,7 +19,6 @@
 @property (nonatomic, assign) NSLayoutRelation relation;
 @property (nonatomic, assign) CGFloat constant;
 @property (nonatomic, assign) CGFloat multiplier;
-- (void)install;
 @end
 @implementation JDRelation {
     UIView *_installedView;
@@ -103,6 +102,7 @@
 }
 
 - (void)install {
+    [_installedView removeConstraint:_constraint];
     _constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
     if (self.secondItem) {
         UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
@@ -114,10 +114,6 @@
         _installedView = self.firstItem;
     }
     [_installedView addConstraint:_constraint];
-}
-
-- (void)uninstall {
-    [_installedView removeConstraint:_constraint];
 }
 
 - (void)update {
@@ -425,7 +421,6 @@
         NSArray *allAttributes = [[strongSelf tmpAttribute] allAttributes];
         //开始约束布局
         for (JDRelation *relation in allAttributes) {
-            [relation uninstall];
             [relation install];
         }
     };
