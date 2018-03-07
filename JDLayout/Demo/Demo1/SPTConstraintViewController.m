@@ -130,7 +130,6 @@
     label31.textAlignment = NSTextAlignmentCenter;
     [self.view4 addSubview:label31];
     
-    //与label11左对齐
     self.view4.jd_equalWidthSubViews(@[label11,label21,label31]);
 }
 //简易的垂直平分
@@ -153,7 +152,7 @@
     label31.backgroundColor = [UIColor orangeColor];
     label31.textAlignment = NSTextAlignmentCenter;
     [self.view5 addSubview:label31];
-    //与label11左对齐
+    
     self.view5.jd_equalHeightSubViews(@[label11,label21,label31]);
 }
 
