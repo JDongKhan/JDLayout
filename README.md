@@ -77,8 +77,10 @@
     label11.textAlignment = NSTextAlignmentCenter;
     [self.view3 addSubview:label11];
     
-    label11.jd_left(self.view3).jd_equal(10)
-    .jd_top(self.view3).jd_equal(10).jd_layout();
+    label11
+    .jd_left(self.view3).jd_equal(10)
+    .jd_top(self.view3).jd_equal(10)
+    .jd_layout();
     
     UILabel *label21 = [[UILabel alloc] init];
     label21.text = @"我是2";
@@ -86,8 +88,10 @@
     label21.textAlignment = NSTextAlignmentCenter;
     [self.view3 addSubview:label21];
     //与label11左对齐
-    label21.jd_left(label11).jd_align().jd_equal(0)
-    .jd_top(label11).jd_equal(10).jd_layout();
+    label21
+    .jd_left(label11).jd_align().jd_equal(0)
+    .jd_top(label11).jd_equal(10)
+    .jd_layout();
     
     
 
