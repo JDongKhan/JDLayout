@@ -38,6 +38,11 @@
 - (UIView *(^)(UIView *view))jd_equalHeight;
 
 /**
+ 连接方法，用于逻辑上连接下一个语句
+ */
+- (UIView *(^)(void))jd_and;
+
+/**
  重置约束
  */
 - (UIView *(^)(void))jd_reset;

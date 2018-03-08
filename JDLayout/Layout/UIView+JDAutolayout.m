@@ -263,7 +263,7 @@
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
-        if (view == strongSelf.superview) {
+        if ([strongSelf isDescendantOfView:view]) {
             target.firstAttribute = NSLayoutAttributeLeading;
             target.secondAttribute = NSLayoutAttributeLeading;
         } else {
@@ -286,7 +286,7 @@
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
-        if (view == strongSelf.superview) {
+        if ([strongSelf isDescendantOfView:view]) {
             target.firstAttribute = NSLayoutAttributeTop;
             target.secondAttribute = NSLayoutAttributeTop;
         } else {
@@ -309,7 +309,7 @@
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
-        if (view == strongSelf.superview) {
+        if ([strongSelf isDescendantOfView:view]) {
             target.firstAttribute = NSLayoutAttributeTrailing;
             target.secondAttribute = NSLayoutAttributeTrailing;
         } else {
@@ -332,7 +332,7 @@
         }
         target.firstItem = strongSelf;
         target.secondItem = view;
-        if (view == strongSelf.superview) {
+        if ([strongSelf isDescendantOfView:view]) {
             target.firstAttribute = NSLayoutAttributeBottom;
             target.secondAttribute = NSLayoutAttributeBottom;
         } else {
@@ -494,6 +494,14 @@
         objc_setAssociatedObject(self, _cmd, tmpAttribute, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return tmpAttribute;
+}
+
+- (UIView *(^)(void))jd_and {
+    __weak UIView *weaskSelf = self;
+    return ^(void){
+        __strong UIView *strongSelf = weaskSelf;
+        return strongSelf;
+    };
 }
 
 - (void(^)(void))jd_layout {
