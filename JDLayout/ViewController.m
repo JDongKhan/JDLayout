@@ -27,7 +27,11 @@
     
     self.itemsArray = [NSMutableArray array];
     [self.itemsArray addObject:@{
-                                 @"title" : @"Normal",
+                                 @"title" : @"纯代码布局",
+                                 @"VC" : @"Demo0ViewController"
+                                 }];
+    [self.itemsArray addObject:@{
+                                 @"title" : @"配合xib",
                                  @"VC" : @"SPTConstraintViewController"
                                  }];
     // Do any additional setup after loading the view, typically from a nib.

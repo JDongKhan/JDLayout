@@ -39,14 +39,20 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGQ-nY-jIV">
-                                    <rect key="frame" x="20" y="50" width="46" height="30"/>
+                                    <rect key="frame" x="20" y="50" width="31" height="30"/>
                                     <color key="backgroundColor" red="0.38823529410000002" green="0.56078431370000004" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
-                                    <state key="normal" title="Button"/>
+                                    <state key="normal" title="恢复"/>
+                                    <connections>
+                                        <action selector="click0:" destination="-1" eventType="touchUpInside" id="hoO-ag-H2j"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zt-Bg-kpd">
-                                    <rect key="frame" x="76" y="50" width="254.5" height="30"/>
+                                    <rect key="frame" x="61" y="50" width="269.5" height="30"/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal" title="Button2"/>
+                                    <state key="normal" title="点我改变间隙吧"/>
+                                    <connections>
+                                        <action selector="click:" destination="-1" eventType="touchUpInside" id="bXV-pX-2EB"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>

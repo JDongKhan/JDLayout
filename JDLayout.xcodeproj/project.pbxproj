@@ -18,6 +18,7 @@
 		694E830B2016C10900BB8C92 /* UIView+JDAutolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E83092016C10600BB8C92 /* UIView+JDAutolayout.m */; };
 		694E83112016C14E00BB8C92 /* SPTConstraintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E830E2016C14500BB8C92 /* SPTConstraintViewController.m */; };
 		694E83122016C14E00BB8C92 /* SPTConstraintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 694E830F2016C14A00BB8C92 /* SPTConstraintViewController.xib */; };
+		69FC0BFE205151AE00C6009D /* Demo0ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC0BFD205151AE00C6009D /* Demo0ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		694E830E2016C14500BB8C92 /* SPTConstraintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTConstraintViewController.m; sourceTree = "<group>"; };
 		694E830F2016C14A00BB8C92 /* SPTConstraintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPTConstraintViewController.xib; sourceTree = "<group>"; };
 		694E83102016C14E00BB8C92 /* SPTConstraintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTConstraintViewController.h; sourceTree = "<group>"; };
+		69FC0BFC205151AE00C6009D /* Demo0ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Demo0ViewController.h; sourceTree = "<group>"; };
+		69FC0BFD205151AE00C6009D /* Demo0ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo0ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,7 @@
 		694E830C2016C12200BB8C92 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				69FC0BFB2051519400C6009D /* Demo0 */,
 				694E830D2016C13400BB8C92 /* Demo1 */,
 			);
 			path = Demo;
@@ -167,6 +171,15 @@
 				694E830F2016C14A00BB8C92 /* SPTConstraintViewController.xib */,
 			);
 			path = Demo1;
+			sourceTree = "<group>";
+		};
+		69FC0BFB2051519400C6009D /* Demo0 */ = {
+			isa = PBXGroup;
+			children = (
+				69FC0BFC205151AE00C6009D /* Demo0ViewController.h */,
+				69FC0BFD205151AE00C6009D /* Demo0ViewController.m */,
+			);
+			path = Demo0;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +318,7 @@
 			files = (
 				694E82DB2016C0D000BB8C92 /* ViewController.m in Sources */,
 				694E830B2016C10900BB8C92 /* UIView+JDAutolayout.m in Sources */,
+				69FC0BFE205151AE00C6009D /* Demo0ViewController.m in Sources */,
 				694E83112016C14E00BB8C92 /* SPTConstraintViewController.m in Sources */,
 				694E82E62016C0D000BB8C92 /* main.m in Sources */,
 				694E82D82016C0D000BB8C92 /* AppDelegate.m in Sources */,

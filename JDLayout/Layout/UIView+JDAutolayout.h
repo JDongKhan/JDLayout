@@ -27,7 +27,9 @@
 /**
  对width和height的封装
  */
-- (UIView *(^)(CGFloat width,CGFloat height))jd_size;
+- (UIView *(^)(CGFloat width, CGFloat height))jd_size;
+- (UIView *(^)(CGRect frame))jd_frame;
+- (UIView *(^)(UIEdgeInsets insets))jd_insets;
 
 /**
  等宽、等高
@@ -59,6 +61,7 @@
 - (instancetype)jd_closestCommonSuperview:(UIView *)view;
 
 @end
+
 
 @interface JDRelation : NSObject
 //对齐

@@ -119,25 +119,29 @@
 }
 
 - (void)jd_install {
-    if (!_installed) {
-        [_installedView removeConstraint:_constraint];
-        NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
-        if (self.secondItem) {
-            UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
-            NSAssert(closestCommonSuperview,
-                     @"couldn't find a common superview for %@ and %@",
-                     self.firstItem, self.secondItem);
-            _installedView = closestCommonSuperview;
-        } else {
-            _installedView = self.firstItem;
-        }
-        _constraint = constraint;
-        [_installedView addConstraint:_constraint];
-        _installed = YES;
+    if (_installed) {
+        return;
     }
+    [_installedView removeConstraint:_constraint];
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
+    if (self.secondItem) {
+        UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
+        NSAssert(closestCommonSuperview,
+                 @"couldn't find a common superview for %@ and %@",
+                 self.firstItem, self.secondItem);
+        _installedView = closestCommonSuperview;
+    } else {
+        _installedView = self.firstItem;
+    }
+    _constraint = constraint;
+    [_installedView addConstraint:_constraint];
+    _installed = YES;
 }
 
 - (void)jd_update {
+    if (_installed) {
+        return;
+    }
     if (_constraint == nil) {
         if (self.secondItem) {
             UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
@@ -159,6 +163,7 @@
         }
     }
     _constraint.constant = self.constant;
+    _installed = YES;
 }
 
 @end
@@ -416,6 +421,29 @@
         return strongSelf
         .jd_width().jd_equal(width)
         .jd_height().jd_equal(height);
+    };
+}
+
+- (UIView *(^)(CGRect frame))jd_frame {
+    __weak UIView *weaskSelf = self;
+    return ^(CGRect frame){
+        __strong UIView *strongSelf = weaskSelf;
+        return strongSelf
+        .jd_left(strongSelf.superview).jd_equal(frame.origin.x)
+        .jd_top(strongSelf.superview).jd_equal(frame.origin.y)
+        .jd_size(frame.size.width,frame.size.height);
+    };
+}
+
+- (UIView *(^)(UIEdgeInsets insets))jd_insets; {
+     __weak UIView *weaskSelf = self;
+    return ^(UIEdgeInsets insets){
+        __strong UIView *strongSelf = weaskSelf;
+        return strongSelf
+        .jd_left(strongSelf.superview).jd_equal(insets.left)
+        .jd_top(strongSelf.superview).jd_equal(insets.top)
+        .jd_right(strongSelf.superview).jd_equal(insets.right)
+        .jd_bottom(strongSelf.superview).jd_equal(insets.bottom);
     };
 }
 

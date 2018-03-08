@@ -26,7 +26,6 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     //代码布局
-    
     //代码更改xib约束
     [self codeLayout0];
     //自己处理垂直平分
@@ -41,11 +40,29 @@
     [self codeLayout5];
     // Do any additional setup after loading the view from its nib.
 }
-//代码更改xib约束
-- (void)codeLayout0 {
+
+- (IBAction)click0:(id)sender {
+    //更新约束
+    self.button2
+    .jd_left(self.button1).jd_equal(10).jd_update();
+    [UIView animateWithDuration:1.0f delay:0 usingSpringWithDamping:0.4 initialSpringVelocity:10 options:0 animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (IBAction)click:(id)sender {
     //更新约束
     self.button2
     .jd_left(self.button1).jd_equal(100).jd_update();
+    [UIView animateWithDuration:1.0f delay:0 usingSpringWithDamping:0.4 initialSpringVelocity:10 options:0 animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+    }];
+}
+//代码更改xib约束
+- (void)codeLayout0 {
+    
 }
 //自己处理垂直平分
 - (void)codeLayout1 {
