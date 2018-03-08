@@ -3,6 +3,10 @@
 
 ![demo png](https://github.com/wangjindong/JDLayout/blob/master/demo.gif "demo")
 
+## cocoapods使用
+
+    pod 'JDLayout', '~> 1.1.0'
+
 ## 一、更新现有的约束
 
     self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
