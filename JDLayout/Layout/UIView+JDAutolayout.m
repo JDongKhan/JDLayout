@@ -10,17 +10,30 @@
 #import <objc/runtime.h>
 
 #pragma mark ---------------JDRelation------------------------
+
 //单个约束基本参数的模型
 @interface JDRelation()
+
 @property (nonatomic, weak) UIView *firstItem;
+
 @property (nonatomic, weak) UIView *secondItem;
+
 @property (nonatomic, assign) NSLayoutAttribute firstAttribute;
+
 @property (nonatomic, assign) NSLayoutAttribute secondAttribute;
+
 @property (nonatomic, assign) NSLayoutRelation relation;
+
 @property (nonatomic, assign) CGFloat constant;
+
 @property (nonatomic, assign) CGFloat multiplier;
+
 @end
+
 @implementation JDRelation {
+    @public
+    BOOL _installed;
+    @private
     UIView *_installedView;
     NSLayoutConstraint *_constraint;
 }
@@ -28,6 +41,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         _multiplier = 1;
+        _installed = NO;
     }
     return self;
 }
@@ -59,6 +73,7 @@
         return strongSelf.firstItem;
     };
 }
+
 - (UIView *(^)(CGFloat constant))jd_lessThanOrEqual {
     __weak JDRelation *weaskSelf = self;
     return ^(CGFloat constant){
@@ -68,6 +83,7 @@
         return strongSelf.firstItem;
     };
 }
+
 - (UIView *(^)(CGFloat constant))jd_greaterThanOrEqual {
     __weak JDRelation *weaskSelf = self;
     return ^(CGFloat constant){
@@ -93,6 +109,7 @@
         return strongSelf.firstItem.jd_layout();
     };
 }
+
 - (void(^)(void))jd_reload {
     __weak JDRelation *weaskSelf = self;
     return ^(void){
@@ -102,19 +119,22 @@
 }
 
 - (void)jd_install {
-    [_installedView removeConstraint:_constraint];
-    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
-    if (self.secondItem) {
-        UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
-        NSAssert(closestCommonSuperview,
-                 @"couldn't find a common superview for %@ and %@",
-                 self.firstItem, self.secondItem);
-        _installedView = closestCommonSuperview;
-    } else {
-        _installedView = self.firstItem;
+    if (!_installed) {
+        [_installedView removeConstraint:_constraint];
+        NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
+        if (self.secondItem) {
+            UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
+            NSAssert(closestCommonSuperview,
+                     @"couldn't find a common superview for %@ and %@",
+                     self.firstItem, self.secondItem);
+            _installedView = closestCommonSuperview;
+        } else {
+            _installedView = self.firstItem;
+        }
+        _constraint = constraint;
+        [_installedView addConstraint:_constraint];
+        _installed = YES;
     }
-    _constraint = constraint;
-    [_installedView addConstraint:_constraint];
 }
 
 - (void)jd_update {
@@ -144,19 +164,32 @@
 @end
 
 #pragma mark ---------------JDAttribute------------------------
+
 //一个控件布局基本参数的模型
 @interface JDAttribute : NSObject
+
 @property (nonatomic, strong) JDRelation *left;
+
 @property (nonatomic, strong) JDRelation *top;
+
 @property (nonatomic, strong) JDRelation *right;
+
 @property (nonatomic, strong) JDRelation *bottom;
+
 @property (nonatomic, strong) JDRelation *width;
+
 @property (nonatomic, strong) JDRelation *height;
+
 @property (nonatomic, strong) JDRelation *centerX;
+
 @property (nonatomic, strong) JDRelation *centerY;
+
 - (NSArray *)jd_allAttributes;
+
 @end
+
 @implementation JDAttribute
+
 - (NSArray *)jd_allAttributes {
     //将多个方向的参数放入数组，统一配置
     NSMutableArray *allAttributes = [NSMutableArray array];
@@ -186,6 +219,7 @@
     }
     return allAttributes;
 }
+
 - (void)jd_clear {
     self.left = nil;
     self.top = nil;
@@ -196,11 +230,13 @@
     self.centerX = nil;
     self.centerY = nil;
 }
+
 @end
 
 #pragma mark ---------------JDAutolayout------------------------
 
 @implementation UIView (JDAutolayout)
+
 - (UIView *(^)(void))jd_reset {
     __weak UIView *weaskSelf = self;
     return ^(void){
@@ -210,6 +246,7 @@
         return strongSelf;
     };
 }
+
 - (JDRelation *(^)(UIView *view))jd_left {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -228,9 +265,11 @@
             target.firstAttribute = NSLayoutAttributeLeading;
             target.secondAttribute = NSLayoutAttributeTrailing;
         }
+        target->_installed = NO;
         return target;
     };
 }
+
 - (JDRelation *(^)(UIView *view))jd_top {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -249,9 +288,11 @@
             target.firstAttribute = NSLayoutAttributeTop;
             target.secondAttribute = NSLayoutAttributeBottom;
         }
+        target->_installed = NO;
         return target;
     };
 }
+
 - (JDRelation *(^)(UIView *view))jd_right {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -270,9 +311,11 @@
             target.firstAttribute = NSLayoutAttributeTrailing;
             target.secondAttribute = NSLayoutAttributeLeading;
         }
+        target->_installed = NO;
         return target;
     };
 }
+
 - (JDRelation *(^)(UIView *view))jd_bottom {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -291,9 +334,11 @@
             target.firstAttribute = NSLayoutAttributeBottom;
             target.secondAttribute = NSLayoutAttributeTop;
         }
+        target->_installed = NO;
         return target;
     };
 }
+
 - (JDRelation *(^)(UIView *view))jd_centerX {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -307,9 +352,11 @@
         target.secondItem = view;
         target.firstAttribute = NSLayoutAttributeCenterX;
         target.secondAttribute = NSLayoutAttributeCenterX;
+        target->_installed = NO;
         return target;
     };
 }
+
 - (JDRelation *(^)(UIView *view))jd_centerY {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -323,9 +370,11 @@
         target.secondItem = view;
         target.firstAttribute = NSLayoutAttributeCenterY;
         target.secondAttribute = NSLayoutAttributeCenterY;
+        target->_installed = NO;
         return target;
     };
 }
+
 - (JDRelation *(^)(void))jd_width {
     __weak UIView *weaskSelf = self;
     return ^(){
@@ -338,9 +387,11 @@
         target.firstItem = strongSelf;
         target.firstAttribute = NSLayoutAttributeWidth;
         target.secondAttribute = NSLayoutAttributeNotAnAttribute;
+        target->_installed = NO;
         return target;
     };
 }
+
 - (JDRelation *(^)(void))jd_height {
     __weak UIView *weaskSelf = self;
     return ^(){
@@ -353,6 +404,7 @@
         target.firstItem = strongSelf;
         target.firstAttribute = NSLayoutAttributeHeight;
         target.secondAttribute = NSLayoutAttributeNotAnAttribute;
+        target->_installed = NO;
         return target;
     };
 }
@@ -366,7 +418,6 @@
         .jd_height().jd_equal(height);
     };
 }
-
 
 - (UIView *(^)(UIView *view))jd_equalWidth {
     __weak UIView *weaskSelf = self;
@@ -382,9 +433,11 @@
         target.relation = NSLayoutRelationEqual;
         target.firstAttribute = NSLayoutAttributeWidth;
         target.secondAttribute = NSLayoutAttributeWidth;
+        target->_installed = NO;
         return strongSelf;
     };
 }
+
 - (UIView *(^)(UIView *view))jd_equalHeight {
     __weak UIView *weaskSelf = self;
     return ^(UIView *view){
@@ -399,11 +452,13 @@
         target.relation = NSLayoutRelationEqual;
         target.firstAttribute = NSLayoutAttributeHeight;
         target.secondAttribute = NSLayoutAttributeHeight;
+        target->_installed = NO;
         return strongSelf;
     };
 }
 
 /////////////////////////////////////////////////////
+
 - (JDAttribute *)jd_tmpAttribute {
     JDAttribute *tmpAttribute = objc_getAssociatedObject(self, _cmd);
     if (tmpAttribute == nil) {
