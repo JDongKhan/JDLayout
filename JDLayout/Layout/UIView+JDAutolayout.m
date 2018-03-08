@@ -114,7 +114,7 @@
     __weak JDRelation *weaskSelf = self;
     return ^(void){
         __strong JDRelation *strongSelf = weaskSelf;
-        return strongSelf.firstItem.jd_reload();
+        return strongSelf.firstItem.jd_update();
     };
 }
 
@@ -484,7 +484,7 @@
     };
 }
 
-- (void(^)(void))jd_reload {
+- (void(^)(void))jd_update {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;

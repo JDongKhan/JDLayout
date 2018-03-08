@@ -45,7 +45,7 @@
 - (void)codeLayout0 {
     //更新约束
     self.button2
-    .jd_left(self.button1).jd_equal(100).jd_reload();
+    .jd_left(self.button1).jd_equal(100).jd_update();
 }
 //自己处理垂直平分
 - (void)codeLayout1 {

@@ -44,7 +44,7 @@
  约束布局
  */
 - (void(^)(void))jd_layout;
-- (void(^)(void))jd_reload;
+- (void(^)(void))jd_update;
 
 @end
 
