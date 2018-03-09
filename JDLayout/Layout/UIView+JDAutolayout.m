@@ -110,7 +110,7 @@
     };
 }
 
-- (void(^)(void))jd_reload {
+- (void(^)(void))jd_jd_update {
     __weak JDRelation *weaskSelf = self;
     return ^(void){
         __strong JDRelation *strongSelf = weaskSelf;

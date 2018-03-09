@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "JDLayout-Swift.h"
 
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -33,6 +34,10 @@
     [self.itemsArray addObject:@{
                                  @"title" : @"配合xib",
                                  @"VC" : @"SPTConstraintViewController"
+                                 }];
+    [self.itemsArray addObject:@{
+                                 @"title" : @"swift",
+                                 @"VC" : @"JDLayout.Demo2ViewController"
                                  }];
     // Do any additional setup after loading the view, typically from a nib.
 }
