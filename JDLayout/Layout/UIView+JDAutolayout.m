@@ -414,13 +414,13 @@
     };
 }
 
-- (UIView *(^)(CGFloat width,CGFloat height))jd_size {
+- (UIView *(^)(CGSize size))jd_size {
     __weak UIView *weaskSelf = self;
-    return ^(CGFloat width,CGFloat height){
+    return ^(CGSize size){
         __strong UIView *strongSelf = weaskSelf;
         return strongSelf
-        .jd_width().jd_equal(width)
-        .jd_height().jd_equal(height);
+        .jd_width().jd_equal(size.width)
+        .jd_height().jd_equal(size.height);
     };
 }
 
@@ -431,7 +431,7 @@
         return strongSelf
         .jd_left(strongSelf.superview).jd_equal(frame.origin.x)
         .jd_top(strongSelf.superview).jd_equal(frame.origin.y)
-        .jd_size(frame.size.width,frame.size.height);
+        .jd_size(frame.size);
     };
 }
 

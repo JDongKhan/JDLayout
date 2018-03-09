@@ -27,7 +27,7 @@
 /**
  对width和height的封装
  */
-- (UIView *(^)(CGFloat width, CGFloat height))jd_size;
+- (UIView *(^)(CGSize size))jd_size;
 - (UIView *(^)(CGRect frame))jd_frame;
 - (UIView *(^)(UIEdgeInsets insets))jd_insets;
 
@@ -69,6 +69,7 @@
 
 
 @interface JDRelation : NSObject
+
 //对齐
 - (JDRelation *(^)(void))jd_align;
 
