@@ -181,3 +181,10 @@
     - (void(^)(void))jd_reload;
 
     @end
+    
+ #  支持swift调用
+     //swift封装的布局类
+     self.view1 = UIView.init()
+     self.view1.backgroundColor = UIColor.red
+     self.view.addSubview(self.view1)
+     self.view1.sf_frame(CGRect(x: 50, y: 300, width: 100, height: 100)).sf_layout()
