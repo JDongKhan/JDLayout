@@ -36,7 +36,7 @@ public class Demo2ViewController: UIViewController {
         self.view1 = UIView.init()
         self.view1.backgroundColor = UIColor.red
         self.view.addSubview(self.view1)
-        self.view1.swift_frame(CGRect(x: 50, y: 300, width: 100, height: 100)).swift_layout()
+        self.view1.sf_frame(CGRect(x: 50, y: 300, width: 100, height: 100)).sf_layout()
     }
     
 }
