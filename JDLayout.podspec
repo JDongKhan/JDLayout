@@ -3,7 +3,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "JDLayout"
-  s.version      = "1.1.6"
+  s.version      = "1.1.7"
   s.summary      = "JDLayout"
 
   s.description  = <<-DESC
@@ -28,9 +28,9 @@ Pod::Spec.new do |s|
     cp.public_header_files = 'JDLayout/JDLayout/*.h'
   end
 
-  s.subspec "Swfit" do |cp|
-    cp.source_files = 'JDLayout/Layout Swift/*.{h,m}'
-    cp.public_header_files = 'JDLayout/Layout Swift/*.h'
+  s.subspec "Swift" do |cp|
+    cp.source_files = 'JDLayout/Layout Swift/*.swift'
+    cp.dependency 'JDLayout/ObjectC'
   end
  
 end
