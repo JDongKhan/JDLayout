@@ -32,10 +32,10 @@
     [self.view addSubview:self.view0];
     
     self.view0
-    .jd_top(self.view).jd_equal(80)
-    .jd_left(self.view).jd_equal(80)
-    .jd_width(nil).jd_equal(100)
-    .jd_height(nil).jd_equal(100)
+    .jd_top(self.view).jd_equal(80).jd_and()
+    .jd_left(self.view).jd_equal(80).jd_and()
+    .jd_width(@(100)).jd_and()
+    .jd_height(@(100))
     .jd_layout();
     //简写
     //self.view0.jd_frame(CGRectMake(80, 0, 100, 100)).jd_layout();
@@ -47,12 +47,12 @@
     [self.view addSubview:self.view1];
     //下面2个都对top布局了，但是只有最后一个生效
     self.view1
-    .jd_frame(CGRectMake(80, 200, 100, 100))
-    .jd_left(self.view0).jd_equal(5)
+    .jd_frame(CGRectMake(80, 200, 100, 100)).jd_and()
+    .jd_left(self.view0).jd_equal(5).jd_and()
     .jd_layout();
     //改写对top的布局，也是最后一个生效
     self.view1
-    .jd_left(self.view0.jd_leftAttribute).jd_equal(0)
+    .jd_left(self.view0.jd_leftAttribute).jd_equal(0).jd_and()
     .jd_layout();
     
     self.view2 = [[UIButton alloc] init];
@@ -67,9 +67,9 @@
     self.view3.backgroundColor = [UIColor blueColor];
     [self.view addSubview:self.view3];
     self.view3
-    .jd_right(self.view).jd_equal(-20)
-    .jd_top(self.view).jd_equal(100)
-    .jd_width(nil).jd_equal(100)
+    .jd_right(self.view).jd_equal(-20).jd_and()
+    .jd_top(self.view).jd_equal(100).jd_and()
+    .jd_width(nil).jd_equal(100).jd_and()
     .jd_aspectRatio(2)
     .jd_layout();
     
@@ -87,7 +87,7 @@
         offset = -10;
     }
     _changeValue = _changeValue + offset;
-    self.view3.jd_width(@(_changeValue)).jd_layout();
+    self.view3.jd_width(@(_changeValue)).jd_update();
 }
   
 - (void)click0:(UIView *)sender {

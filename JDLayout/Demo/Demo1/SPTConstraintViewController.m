@@ -79,14 +79,14 @@
     [self.view1 addSubview:label2];
     
     label1
-    .jd_top(self.view1).jd_equal(0)
+    .jd_top(self.view1).jd_equal(0).jd_and()
     .jd_centerX(self.view1).jd_equal(0)
     .jd_layout();
     
     label2
-    .jd_top(label1).jd_equal(0)
-    .jd_centerX(label1).jd_equal(0)
-    .jd_bottom(self.view1).jd_equal(0)
+    .jd_top(label1).jd_equal(0).jd_and()
+    .jd_centerX(label1).jd_equal(0).jd_and()
+    .jd_bottom(self.view1).jd_equal(0).jd_and()
     .jd_height(label1)
     .jd_layout();
 }
@@ -104,14 +104,14 @@
     [self.view2 addSubview:label21];
     
     label11
-    .jd_left(self.view2).jd_equal(0)
-    .jd_centerY(self.view2).jd_equal(0)
+    .jd_left(self.view2).jd_equal(0).jd_and()
+    .jd_centerY(self.view2).jd_equal(0).jd_and()
     .jd_layout();
     
     label21
-    .jd_left(label11).jd_equal(0)
-    .jd_centerY(label11).jd_equal(0)
-    .jd_right(self.view2).jd_equal(0)
+    .jd_left(label11).jd_equal(0).jd_and()
+    .jd_centerY(label11).jd_equal(0).jd_and()
+    .jd_right(self.view2).jd_equal(0).jd_and()
     .jd_width(label11)
     .jd_layout();
 }
@@ -124,8 +124,8 @@
     [self.view3 addSubview:label11];
     
     label11
-    .jd_left(self.view3).jd_equal(10)
-    .jd_width(nil).jd_equal(200)
+    .jd_left(self.view3).jd_equal(10).jd_and()
+    .jd_width(nil).jd_equal(200).jd_and()
     .jd_top(self.view3).jd_equal(10)
     .jd_layout();
     
@@ -136,8 +136,8 @@
     [self.view3 addSubview:label21];
     //与label11左对齐
     label21
-    .jd_left(label11.jd_leftAttribute).jd_equal(0)
-    .jd_width(label11.jd_widthAttribute).jd_equal(0)
+    .jd_left(label11.jd_leftAttribute).jd_equal(0).jd_and()
+    .jd_width(label11.jd_widthAttribute).jd_equal(0).jd_and()
     .jd_top(label11).jd_equal(10)
     .jd_layout();
 }
