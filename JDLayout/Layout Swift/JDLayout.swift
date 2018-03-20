@@ -9,28 +9,28 @@
 import Foundation
 
 extension UIView {
-    public func sf_left(_ view:UIView)->JDSwiftRelation {
+    public func sf_left(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_left()(view)!)
     }
-    public func sf_top(_ view:UIView)->JDSwiftRelation {
+    public func sf_top(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_top()(view)!)
     }
-    public func sf_right(_ view:UIView)->JDSwiftRelation {
+    public func sf_right(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_right()(view)!)
     }
-    public func sf_bottom(_ view:UIView)->JDSwiftRelation {
+    public func sf_bottom(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_bottom()(view)!)
     }
-    public func sf_centerX(_ view:UIView)->JDSwiftRelation {
+    public func sf_centerX(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_centerX()(view)!)
     }
-    public func sf_centerY(_ view:UIView)->JDSwiftRelation {
+    public func sf_centerY(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_centerY()(view)!)
     }
-    public func sf_width(_ view:UIView)->JDSwiftRelation {
+    public func sf_width(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_width()(view)!)
     }
-    public func sf_height(_ view:UIView)->JDSwiftRelation {
+    public func sf_height(_ view:Any)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_height()(view)!)
     }
     
