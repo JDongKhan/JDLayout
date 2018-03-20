@@ -35,7 +35,7 @@
     .jd_top(label1).jd_equal(0)
     .jd_centerX(label1).jd_equal(0)
     .jd_bottom(self.view1).jd_equal(0)
-    .jd_equalHeight(label1)
+    .jd_height(label1)
     .jd_layout();
     
    简易的写法：
@@ -65,7 +65,7 @@
     .jd_left(label11).jd_equal(0)
     .jd_centerY(label11).jd_equal(0)
     .jd_right(self.view2).jd_equal(0)
-    .jd_equalWidth(label11)
+    .jd_width(label11)
     .jd_layout();
     
    简易的写法
@@ -93,7 +93,7 @@
     [self.view3 addSubview:label21];
     //与label11左对齐
     label21
-    .jd_left(label11).jd_align().jd_equal(0)
+    .jd_left(label11.jd_leftAttribute).jd_equal(0)
     .jd_top(label11).jd_equal(10)
     .jd_layout();
     
@@ -110,26 +110,24 @@
     /**
        约束基本设置
     */
-    - (JDRelation *(^)(UIView *view))jd_left;
-    - (JDRelation *(^)(UIView *view))jd_top;
-    - (JDRelation *(^)(UIView *view))jd_right;
-    - (JDRelation *(^)(UIView *view))jd_bottom;
-    - (JDRelation *(^)(UIView *view))jd_centerX;
-    - (JDRelation *(^)(UIView *view))jd_centerY;
-    - (JDRelation *(^)(void))jd_width;
-    - (JDRelation *(^)(void))jd_height;
-
+    - (JDRelation *(^)(id attr))jd_left;
+    - (JDRelation *(^)(id attr))jd_top;
+    - (JDRelation *(^)(id attr))jd_right;
+    - (JDRelation *(^)(id attr))jd_bottom;
+    - (JDRelation *(^)(id attr))jd_centerX;
+    - (JDRelation *(^)(id attr))jd_centerY;
+    - (JDRelation *(^)(id attr))jd_width;
+    - (JDRelation *(^)(id attr))jd_height;
     /**
-    对width和height的封装
-    */
-    - (UIView *(^)(CGFloat width,CGFloat height))jd_size;
-
+     宽高比
+     */
+    - (UIView *(^)(CGFloat ratio))jd_aspectRatio;
+    
     /**
-    等宽、等高
-    */
-    - (UIView *(^)(UIView *view))jd_equalWidth;
-    - (UIView *(^)(UIView *view))jd_equalHeight;
-
+     连接方法，用于逻辑上连接下一个语句
+     */
+    - (UIView *(^)(void))jd_and;
+    
     /**
     重置约束
     */
@@ -146,6 +144,13 @@
     @interface UIView (JDAutolayoutExtention)
 
     /**
+     对width和height的封装
+     */
+    - (UIView *(^)(CGSize size))jd_size;
+    - (UIView *(^)(CGRect frame))jd_frame;
+    - (UIView *(^)(UIEdgeInsets insets))jd_insets;
+    
+    /**
     子view等宽、等高
     */
     - (void(^)(NSArray *subViews))jd_equalWidthSubViews;
@@ -154,8 +159,6 @@
     @end
 
     @interface JDRelation : NSObject
-    //对齐
-    - (JDRelation *(^)(void))jd_align;
 
     /**
      倍数
