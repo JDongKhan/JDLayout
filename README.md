@@ -1,11 +1,11 @@
-# JDLayout
+# JDAutoLayout
 超简易的约束布局
 
 ![demo png](https://github.com/wangjindong/JDLayout/blob/master/demo.gif "demo")
 
 ## cocoapods使用
 
-    pod 'JDLayout', '~> 1.1.7'
+    pod 'JDAutoLayout', '~> 1.1.7'
 
 ## 一、更新现有的约束
 

@@ -2,9 +2,9 @@
 
 Pod::Spec.new do |s|
 
-  s.name         = "JDLayout"
-  s.version      = "1.2.1"
-  s.summary      = "JDLayout"
+  s.name         = "JDAutoLayout"
+  s.version      = "1.2.2"
+  s.summary      = "JDAutoLayout"
 
   s.description  = <<-DESC
 			JDRouter
@@ -24,14 +24,14 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.subspec "ObjectC" do |cp|
-    cp.source_files = 'JDLayout/Layout/*.{h,m}'
-    cp.public_header_files = 'JDLayout/Layout/*.h'
+    cp.source_files = 'JDAutoLayout/Layout/*.{h,m}'
+    cp.public_header_files = 'JDAutoLayout/Layout/*.h'
   end
 
   s.subspec "Swift" do |cp|
-    cp.source_files = 'JDLayout/Layout Swift/*.swift'
-    cp.public_header_files = 'JDLayout/Layout Swift/*.h'
-    cp.dependency 'JDLayout/ObjectC'
+    cp.source_files = 'JDAutoLayout/Layout Swift/*.{h,swift}'
+    cp.public_header_files = 'JDAutoLayout/Layout Swift/*.h'
+    cp.dependency 'JDAutoLayout/ObjectC'
   end
  
 end

@@ -15,12 +15,11 @@
 		694E82E62016C0D000BB8C92 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E82E52016C0D000BB8C92 /* main.m */; };
 		694E82F02016C0D000BB8C92 /* JDLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E82EF2016C0D000BB8C92 /* JDLayoutTests.m */; };
 		694E82FB2016C0D000BB8C92 /* JDLayoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E82FA2016C0D000BB8C92 /* JDLayoutUITests.m */; };
-		694E830B2016C10900BB8C92 /* UIView+JDAutolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E83092016C10600BB8C92 /* UIView+JDAutolayout.m */; };
 		694E83112016C14E00BB8C92 /* SPTConstraintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E830E2016C14500BB8C92 /* SPTConstraintViewController.m */; };
 		694E83122016C14E00BB8C92 /* SPTConstraintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 694E830F2016C14A00BB8C92 /* SPTConstraintViewController.xib */; };
 		69FC0BFE205151AE00C6009D /* Demo0ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC0BFD205151AE00C6009D /* Demo0ViewController.m */; };
 		69FC0C022052116600C6009D /* Demo2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC0C012052116600C6009D /* Demo2ViewController.swift */; };
-		69FC0C052052164900C6009D /* JDLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC0C042052164900C6009D /* JDLayout.swift */; };
+		93C53D3087BD0128B041EBD1 /* Pods_JDLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67372A21F5CCF45DCDEB0B /* Pods_JDLayout.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6925C3DB2060E9E400057C36 /* JDLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JDLayout.h; sourceTree = "<group>"; };
+		33BF90243D3C4B73826B8C02 /* Pods-JDLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDLayout.release.xcconfig"; path = "Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout.release.xcconfig"; sourceTree = "<group>"; };
 		694E82D32016C0D000BB8C92 /* JDLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JDLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		694E82D62016C0D000BB8C92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		694E82D72016C0D000BB8C92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -58,8 +57,6 @@
 		694E82F62016C0D000BB8C92 /* JDLayoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JDLayoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		694E82FA2016C0D000BB8C92 /* JDLayoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JDLayoutUITests.m; sourceTree = "<group>"; };
 		694E82FC2016C0D000BB8C92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		694E83092016C10600BB8C92 /* UIView+JDAutolayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JDAutolayout.m"; sourceTree = "<group>"; };
-		694E830A2016C10900BB8C92 /* UIView+JDAutolayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JDAutolayout.h"; sourceTree = "<group>"; };
 		694E830E2016C14500BB8C92 /* SPTConstraintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTConstraintViewController.m; sourceTree = "<group>"; };
 		694E830F2016C14A00BB8C92 /* SPTConstraintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPTConstraintViewController.xib; sourceTree = "<group>"; };
 		694E83102016C14E00BB8C92 /* SPTConstraintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTConstraintViewController.h; sourceTree = "<group>"; };
@@ -67,7 +64,8 @@
 		69FC0BFD205151AE00C6009D /* Demo0ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo0ViewController.m; sourceTree = "<group>"; };
 		69FC0C002052116600C6009D /* JDLayout-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JDLayout-Bridging-Header.h"; sourceTree = "<group>"; };
 		69FC0C012052116600C6009D /* Demo2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Demo2ViewController.swift; sourceTree = "<group>"; };
-		69FC0C042052164900C6009D /* JDLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JDLayout.swift; sourceTree = "<group>"; };
+		6AF538BDAAB67311DBFDE32E /* Pods-JDLayout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDLayout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout.debug.xcconfig"; sourceTree = "<group>"; };
+		FD67372A21F5CCF45DCDEB0B /* Pods_JDLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JDLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93C53D3087BD0128B041EBD1 /* Pods_JDLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0452D87C1520A487DC863F2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD67372A21F5CCF45DCDEB0B /* Pods_JDLayout.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		694E82CA2016C0D000BB8C92 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +109,8 @@
 				694E82EE2016C0D000BB8C92 /* JDLayoutTests */,
 				694E82F92016C0D000BB8C92 /* JDLayoutUITests */,
 				694E82D42016C0D000BB8C92 /* Products */,
+				B844EF1DD5AF41FF37488DC7 /* Pods */,
+				0452D87C1520A487DC863F2F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,9 +127,7 @@
 		694E82D52016C0D000BB8C92 /* JDLayout */ = {
 			isa = PBXGroup;
 			children = (
-				69FC0C032052163200C6009D /* Layout Swift */,
 				694E830C2016C12200BB8C92 /* Demo */,
-				694E83082016C0D900BB8C92 /* Layout */,
 				694E82D62016C0D000BB8C92 /* AppDelegate.h */,
 				694E82D72016C0D000BB8C92 /* AppDelegate.m */,
 				694E82D92016C0D000BB8C92 /* ViewController.h */,
@@ -150,15 +157,6 @@
 				694E82FC2016C0D000BB8C92 /* Info.plist */,
 			);
 			path = JDLayoutUITests;
-			sourceTree = "<group>";
-		};
-		694E83082016C0D900BB8C92 /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				694E830A2016C10900BB8C92 /* UIView+JDAutolayout.h */,
-				694E83092016C10600BB8C92 /* UIView+JDAutolayout.m */,
-			);
-			path = Layout;
 			sourceTree = "<group>";
 		};
 		694E830C2016C12200BB8C92 /* Demo */ = {
@@ -199,13 +197,13 @@
 			path = Demo2;
 			sourceTree = "<group>";
 		};
-		69FC0C032052163200C6009D /* Layout Swift */ = {
+		B844EF1DD5AF41FF37488DC7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				69FC0C042052164900C6009D /* JDLayout.swift */,
-				6925C3DB2060E9E400057C36 /* JDLayout.h */,
+				6AF538BDAAB67311DBFDE32E /* Pods-JDLayout.debug.xcconfig */,
+				33BF90243D3C4B73826B8C02 /* Pods-JDLayout.release.xcconfig */,
 			);
-			path = "Layout Swift";
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,9 +213,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 694E82FF2016C0D000BB8C92 /* Build configuration list for PBXNativeTarget "JDLayout" */;
 			buildPhases = (
+				2365DECAC914F61AA7B84A0F /* [CP] Check Pods Manifest.lock */,
 				694E82CF2016C0D000BB8C92 /* Sources */,
 				694E82D02016C0D000BB8C92 /* Frameworks */,
 				694E82D12016C0D000BB8C92 /* Resources */,
+				BE83AD5C7E0B2F2CFD1D2342 /* [CP] Embed Pods Frameworks */,
+				D7D06F0E2E5C75ADFC602CD8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -338,17 +339,69 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2365DECAC914F61AA7B84A0F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JDLayout-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BE83AD5C7E0B2F2CFD1D2342 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/JDAutoLayout/JDAutoLayout.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDAutoLayout.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7D06F0E2E5C75ADFC602CD8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		694E82CF2016C0D000BB8C92 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				694E82DB2016C0D000BB8C92 /* ViewController.m in Sources */,
-				694E830B2016C10900BB8C92 /* UIView+JDAutolayout.m in Sources */,
 				69FC0BFE205151AE00C6009D /* Demo0ViewController.m in Sources */,
 				694E83112016C14E00BB8C92 /* SPTConstraintViewController.m in Sources */,
 				694E82E62016C0D000BB8C92 /* main.m in Sources */,
-				69FC0C052052164900C6009D /* JDLayout.swift in Sources */,
 				694E82D82016C0D000BB8C92 /* AppDelegate.m in Sources */,
 				69FC0C022052116600C6009D /* Demo2ViewController.swift in Sources */,
 			);
@@ -511,6 +564,7 @@
 		};
 		694E83002016C0D000BB8C92 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AF538BDAAB67311DBFDE32E /* Pods-JDLayout.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -528,6 +582,7 @@
 		};
 		694E83012016C0D000BB8C92 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33BF90243D3C4B73826B8C02 /* Pods-JDLayout.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

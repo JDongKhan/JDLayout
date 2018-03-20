@@ -6,10 +6,10 @@
 //  Copyright © 2018年 Suning. All rights reserved.
 //
 
-#ifndef JDLayout_h
-#define JDLayout_h
+#ifndef JDAutoLayout_h
+#define JDAutoLayout_h
 
-#import <JDLayout/UIView+JDAutolayout.h>
+#import <JDAutoLayout/UIView+JDAutolayout.h>
 
 
 #endif /* JDLayout_h */
