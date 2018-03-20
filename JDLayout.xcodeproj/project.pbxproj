@@ -41,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6925C3DB2060E9E400057C36 /* JDLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JDLayout.h; sourceTree = "<group>"; };
 		694E82D32016C0D000BB8C92 /* JDLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JDLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		694E82D62016C0D000BB8C92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		694E82D72016C0D000BB8C92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -202,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				69FC0C042052164900C6009D /* JDLayout.swift */,
+				6925C3DB2060E9E400057C36 /* JDLayout.h */,
 			);
 			path = "Layout Swift";
 			sourceTree = "<group>";
