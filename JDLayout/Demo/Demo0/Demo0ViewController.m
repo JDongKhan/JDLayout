@@ -17,7 +17,9 @@
 @property (nonatomic, strong) UIButton *view3;
 @end
 
-@implementation Demo0ViewController
+@implementation Demo0ViewController {
+    CGFloat _changeValue;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,8 +72,24 @@
     .jd_width(nil).jd_equal(100)
     .jd_aspectRatio(2)
     .jd_layout();
+    
+    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(action) userInfo:nil repeats:YES];
     // Do any additional setup after loading the view.
 }
+    
+- (void)action{
+    static CGFloat offset;
+    if(_changeValue <= 60){//最小宽度
+        _changeValue = 60;
+        offset = 10;
+    }else if(_changeValue >= 200 ){//最大宽度
+        _changeValue = 200;
+        offset = -10;
+    }
+    _changeValue = _changeValue + offset;
+    self.view3.jd_width(@(_changeValue)).jd_layout();
+}
+  
 - (void)click0:(UIView *)sender {
     self.view0
     .jd_top(self.view).jd_equal(200)

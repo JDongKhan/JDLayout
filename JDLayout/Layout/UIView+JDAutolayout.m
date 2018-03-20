@@ -431,6 +431,8 @@
         } else if ([attr isKindOfClass:[UIView class]]) {
             view = attr;
             secondAttribute = NSLayoutAttributeWidth;
+        } else if ([attr isKindOfClass:[NSNumber class]]) {
+            target.constant = [attr floatValue];
         }
         target.secondItem = view;
         target.secondAttribute = secondAttribute;
@@ -460,6 +462,8 @@
         } else if ([attr isKindOfClass:[UIView class]]) {
             view = attr;
             secondAttribute = NSLayoutAttributeHeight;
+        } else if ([attr isKindOfClass:[NSNumber class]]) {
+            target.constant = [attr floatValue];
         }
         target.secondItem = view;
         target.secondAttribute = secondAttribute;
