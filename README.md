@@ -5,7 +5,7 @@
 
 ## cocoapods使用
 
-    pod 'JDLayout', '~> 1.1.0'
+    pod 'JDLayout', '~> 1.1.7'
 
 ## 一、更新现有的约束
 
