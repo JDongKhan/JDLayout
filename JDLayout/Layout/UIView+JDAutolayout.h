@@ -109,7 +109,7 @@
 
 
 @interface JDViewAttribute : NSObject
-@property (nonatomic, weak) UIView *view;
+@property (nonatomic, weak)   UIView *view;
 @property (nonatomic, assign) NSLayoutAttribute attribute;
 @end
 
