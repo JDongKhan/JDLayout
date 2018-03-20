@@ -13,23 +13,14 @@
 
 //单个约束基本参数的模型
 @interface JDRelation()
-
 @property (nonatomic, weak) UIView *firstItem;
-
 @property (nonatomic, weak) UIView *secondItem;
-
 @property (nonatomic, assign) NSLayoutAttribute firstAttribute;
-
 @property (nonatomic, assign) NSLayoutAttribute secondAttribute;
-
 @property (nonatomic, assign) NSLayoutRelation relation;
-
 @property (nonatomic, assign) CGFloat constant;
-
 @property (nonatomic, assign) CGFloat multiplier;
-
 @end
-
 
 @implementation JDRelation {
     @public
@@ -164,27 +155,16 @@
 
 //一个控件布局基本参数的模型
 @interface JDAttribute : NSObject
-
 @property (nonatomic, strong) JDRelation *left;
-
 @property (nonatomic, strong) JDRelation *top;
-
 @property (nonatomic, strong) JDRelation *right;
-
 @property (nonatomic, strong) JDRelation *bottom;
-
 @property (nonatomic, strong) JDRelation *width;
-
 @property (nonatomic, strong) JDRelation *height;
-    
 @property (nonatomic, strong) JDRelation *aspectRatio;
-
 @property (nonatomic, strong) JDRelation *centerX;
-
 @property (nonatomic, strong) JDRelation *centerY;
-
 - (NSArray *)jd_allAttributes;
-
 @end
 
 @implementation JDAttribute
