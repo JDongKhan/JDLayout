@@ -87,7 +87,7 @@
     .jd_top(label1).jd_equal(0)
     .jd_centerX(label1).jd_equal(0)
     .jd_bottom(self.view1).jd_equal(0)
-    .jd_equalHeight(label1)
+    .jd_height(label1)
     .jd_layout();
 }
  //自己处理水平平分
@@ -112,7 +112,7 @@
     .jd_left(label11).jd_equal(0)
     .jd_centerY(label11).jd_equal(0)
     .jd_right(self.view2).jd_equal(0)
-    .jd_equalWidth(label11)
+    .jd_width(label11)
     .jd_layout();
 }
 //对齐
@@ -125,6 +125,7 @@
     
     label11
     .jd_left(self.view3).jd_equal(10)
+    .jd_width(nil).jd_equal(200)
     .jd_top(self.view3).jd_equal(10)
     .jd_layout();
     
@@ -135,7 +136,8 @@
     [self.view3 addSubview:label21];
     //与label11左对齐
     label21
-    .jd_left(label11).jd_align().jd_equal(0)
+    .jd_left(label11.jd_leftAttribute).jd_equal(0)
+    .jd_width(label11.jd_widthAttribute).jd_equal(0)
     .jd_top(label11).jd_equal(10)
     .jd_layout();
 }

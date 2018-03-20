@@ -27,11 +27,15 @@ extension UIView {
     public func sf_centerY(_ view:UIView)->JDSwiftRelation {
         return JDSwiftRelation(self.jd_centerY()(view)!)
     }
-    public func sf_width()->JDSwiftRelation {
-        return JDSwiftRelation(self.jd_width()()!)
+    public func sf_width(_ view:UIView)->JDSwiftRelation {
+        return JDSwiftRelation(self.jd_width()(view)!)
     }
-    public func sf_height()->JDSwiftRelation {
-        return JDSwiftRelation(self.jd_height()()!)
+    public func sf_height(_ view:UIView)->JDSwiftRelation {
+        return JDSwiftRelation(self.jd_height()(view)!)
+    }
+    
+    public func sf_aspectRatio(_ ration:CGFloat)->UIView {
+        return self.jd_aspectRatio()(ration)!
     }
     
     public func sf_size(_ size:CGSize)->UIView {
@@ -44,14 +48,6 @@ extension UIView {
     
     public func sf_insets(_ insets:UIEdgeInsets)->UIView {
         return self.jd_insets()(insets)!
-    }
-    
-    public func sf_equalWidth(_ view:UIView)->UIView {
-        return self.jd_equalWidth()(view)!
-    }
-    
-    public func sf_equalHeight(_ view:UIView)->UIView {
-        return self.jd_equalHeight()(view)!
     }
     
     public func sf_and()->UIView {
@@ -73,11 +69,6 @@ public class JDSwiftRelation {
     
     public init(_ relation:JDRelation) {
         self.relation = relation
-    }
-    //对齐
-    public func sf_align()->JDSwiftRelation {
-        self.relation.jd_align()
-        return self
     }
     
     /**

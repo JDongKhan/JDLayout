@@ -30,6 +30,7 @@
 
 @end
 
+
 @implementation JDRelation {
     @public
     BOOL _installed;
@@ -44,15 +45,6 @@
         _installed = NO;
     }
     return self;
-}
-
-- (JDRelation *(^)(void))jd_align {
-    __weak JDRelation *weaskSelf = self;
-    return ^(void){
-        __strong JDRelation *strongSelf = weaskSelf;
-        strongSelf.secondAttribute = strongSelf.firstAttribute;
-        return strongSelf;
-    };
 }
 
 - (JDRelation *(^)(CGFloat multiplier))jd_multiplier {
@@ -110,7 +102,7 @@
     };
 }
 
-- (void(^)(void))jd_jd_update {
+- (void(^)(void))jd_update {
     __weak JDRelation *weaskSelf = self;
     return ^(void){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -118,7 +110,7 @@
     };
 }
 
-- (void)jd_install {
+- (void)jd_installConstraint {
     if (_installed) {
         return;
     }
@@ -138,7 +130,7 @@
     _installed = YES;
 }
 
-- (void)jd_update {
+- (void)jd_updateConstraint {
     if (_installed) {
         return;
     }
@@ -184,6 +176,8 @@
 @property (nonatomic, strong) JDRelation *width;
 
 @property (nonatomic, strong) JDRelation *height;
+    
+@property (nonatomic, strong) JDRelation *aspectRatio;
 
 @property (nonatomic, strong) JDRelation *centerX;
 
@@ -222,6 +216,9 @@
     if (self.height) {
         [allAttributes addObject:self.height];
     }
+    if (self.aspectRatio) {
+        [allAttributes addObject:self.aspectRatio];
+    }
     return allAttributes;
 }
 
@@ -234,6 +231,7 @@
     self.height = nil;
     self.centerX = nil;
     self.centerY = nil;
+    self.aspectRatio = nil;
 }
 
 @end
@@ -252,9 +250,9 @@
     };
 }
 
-- (JDRelation *(^)(UIView *view))jd_left {
+- (JDRelation *(^)(id attr))jd_left {
     __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].left;
         if (target == nil) {
@@ -262,22 +260,31 @@
             [strongSelf jd_tmpAttribute].left = target;
         }
         target.firstItem = strongSelf;
+        target.firstAttribute = NSLayoutAttributeLeading;
+        
+        UIView *view = attr;
+        NSLayoutAttribute secondAttribute = 0;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        }
         target.secondItem = view;
         if ([strongSelf isDescendantOfView:view]) {
-            target.firstAttribute = NSLayoutAttributeLeading;
-            target.secondAttribute = NSLayoutAttributeLeading;
-        } else {
-            target.firstAttribute = NSLayoutAttributeLeading;
-            target.secondAttribute = NSLayoutAttributeTrailing;
+            secondAttribute = NSLayoutAttributeLeading;
+        } else if (secondAttribute == 0) {
+            secondAttribute = NSLayoutAttributeTrailing;
         }
+        target.secondAttribute = secondAttribute;
+        
         target->_installed = NO;
         return target;
     };
 }
 
-- (JDRelation *(^)(UIView *view))jd_top {
+- (JDRelation *(^)(id attr))jd_top {
     __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].top;
         if (target == nil) {
@@ -285,22 +292,31 @@
             [strongSelf jd_tmpAttribute].top = target;
         }
         target.firstItem = strongSelf;
+        target.firstAttribute = NSLayoutAttributeTop;
+        
+        UIView *view = attr;
+        NSLayoutAttribute secondAttribute = 0;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        }
         target.secondItem = view;
         if ([strongSelf isDescendantOfView:view]) {
-            target.firstAttribute = NSLayoutAttributeTop;
-            target.secondAttribute = NSLayoutAttributeTop;
-        } else {
-            target.firstAttribute = NSLayoutAttributeTop;
-            target.secondAttribute = NSLayoutAttributeBottom;
+            secondAttribute = NSLayoutAttributeTop;
+        } else if (secondAttribute == 0) {
+            secondAttribute = NSLayoutAttributeBottom;
         }
+        target.secondAttribute = secondAttribute;
+        
         target->_installed = NO;
         return target;
     };
 }
 
-- (JDRelation *(^)(UIView *view))jd_right {
+- (JDRelation *(^)(id attr))jd_right {
     __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].right;
         if (target == nil) {
@@ -308,22 +324,31 @@
             [strongSelf jd_tmpAttribute].right = target;
         }
         target.firstItem = strongSelf;
+        target.firstAttribute = NSLayoutAttributeTrailing;
+        
+        UIView *view = attr;
+        NSLayoutAttribute secondAttribute = 0;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        }
         target.secondItem = view;
         if ([strongSelf isDescendantOfView:view]) {
-            target.firstAttribute = NSLayoutAttributeTrailing;
-            target.secondAttribute = NSLayoutAttributeTrailing;
-        } else {
-            target.firstAttribute = NSLayoutAttributeTrailing;
-            target.secondAttribute = NSLayoutAttributeLeading;
+            secondAttribute = NSLayoutAttributeTrailing;
+        } else if (secondAttribute == 0) {
+            secondAttribute = NSLayoutAttributeLeading;
         }
+        target.secondAttribute = secondAttribute;
+        
         target->_installed = NO;
         return target;
     };
 }
 
-- (JDRelation *(^)(UIView *view))jd_bottom {
+- (JDRelation *(^)(id attr))jd_bottom {
     __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].bottom;
         if (target == nil) {
@@ -331,22 +356,31 @@
             [strongSelf jd_tmpAttribute].bottom = target;
         }
         target.firstItem = strongSelf;
+        target.firstAttribute = NSLayoutAttributeBottom;
+        
+        UIView *view = attr;
+        NSLayoutAttribute secondAttribute = 0;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        }
         target.secondItem = view;
         if ([strongSelf isDescendantOfView:view]) {
-            target.firstAttribute = NSLayoutAttributeBottom;
-            target.secondAttribute = NSLayoutAttributeBottom;
-        } else {
-            target.firstAttribute = NSLayoutAttributeBottom;
-            target.secondAttribute = NSLayoutAttributeTop;
+            secondAttribute = NSLayoutAttributeBottom;
+        } else if (secondAttribute == 0) {
+            secondAttribute = NSLayoutAttributeTop;
         }
+        target.secondAttribute = secondAttribute;
+        
         target->_installed = NO;
         return target;
     };
 }
 
-- (JDRelation *(^)(UIView *view))jd_centerX {
+- (JDRelation *(^)(id attr))jd_centerX {
     __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].centerX;
         if (target == nil) {
@@ -354,17 +388,25 @@
             [strongSelf jd_tmpAttribute].centerX = target;
         }
         target.firstItem = strongSelf;
-        target.secondItem = view;
         target.firstAttribute = NSLayoutAttributeCenterX;
-        target.secondAttribute = NSLayoutAttributeCenterX;
+        
+        UIView *view = attr;
+        NSLayoutAttribute secondAttribute = NSLayoutAttributeCenterX;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        }
+        target.secondItem = view;
+        target.secondAttribute = secondAttribute;
         target->_installed = NO;
         return target;
     };
 }
 
-- (JDRelation *(^)(UIView *view))jd_centerY {
+- (JDRelation *(^)(id attr))jd_centerY {
     __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].centerY;
         if (target == nil) {
@@ -372,17 +414,25 @@
             [strongSelf jd_tmpAttribute].centerY = target;
         }
         target.firstItem = strongSelf;
-        target.secondItem = view;
         target.firstAttribute = NSLayoutAttributeCenterY;
-        target.secondAttribute = NSLayoutAttributeCenterY;
+        
+        UIView *view = attr;
+        NSLayoutAttribute secondAttribute = NSLayoutAttributeCenterY;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        }
+        target.secondItem = view;
+        target.secondAttribute = secondAttribute;
         target->_installed = NO;
         return target;
     };
 }
 
-- (JDRelation *(^)(void))jd_width {
+- (JDRelation *(^)(id attr))jd_width {
     __weak UIView *weaskSelf = self;
-    return ^(){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].width;
         if (target == nil) {
@@ -391,15 +441,27 @@
         }
         target.firstItem = strongSelf;
         target.firstAttribute = NSLayoutAttributeWidth;
-        target.secondAttribute = NSLayoutAttributeNotAnAttribute;
+        
+        UIView *view = nil;
+        NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        } else if ([attr isKindOfClass:[UIView class]]) {
+            view = attr;
+            secondAttribute = NSLayoutAttributeWidth;
+        }
+        target.secondItem = view;
+        target.secondAttribute = secondAttribute;
         target->_installed = NO;
         return target;
     };
 }
 
-- (JDRelation *(^)(void))jd_height {
+- (JDRelation *(^)(id attr))jd_height {
     __weak UIView *weaskSelf = self;
-    return ^(){
+    return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
         JDRelation *target = [strongSelf jd_tmpAttribute].height;
         if (target == nil) {
@@ -408,83 +470,43 @@
         }
         target.firstItem = strongSelf;
         target.firstAttribute = NSLayoutAttributeHeight;
-        target.secondAttribute = NSLayoutAttributeNotAnAttribute;
+        
+        UIView *view = nil;
+        NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;
+        if ([attr isKindOfClass:[JDViewAttribute class]]) {
+            JDViewAttribute *secondRelation = attr;
+            view = secondRelation.view;
+            secondAttribute = secondRelation.attribute;
+        } else if ([attr isKindOfClass:[UIView class]]) {
+            view = attr;
+            secondAttribute = NSLayoutAttributeHeight;
+        }
+        target.secondItem = view;
+        target.secondAttribute = secondAttribute;
         target->_installed = NO;
         return target;
     };
 }
-
-- (UIView *(^)(CGSize size))jd_size {
+    
+- (UIView *(^)(CGFloat ratio))jd_aspectRatio {
     __weak UIView *weaskSelf = self;
-    return ^(CGSize size){
+    return ^(CGFloat ratio){
         __strong UIView *strongSelf = weaskSelf;
-        return strongSelf
-        .jd_width().jd_equal(size.width)
-        .jd_height().jd_equal(size.height);
-    };
-}
-
-- (UIView *(^)(CGRect frame))jd_frame {
-    __weak UIView *weaskSelf = self;
-    return ^(CGRect frame){
-        __strong UIView *strongSelf = weaskSelf;
-        return strongSelf
-        .jd_left(strongSelf.superview).jd_equal(frame.origin.x)
-        .jd_top(strongSelf.superview).jd_equal(frame.origin.y)
-        .jd_size(frame.size);
-    };
-}
-
-- (UIView *(^)(UIEdgeInsets insets))jd_insets; {
-     __weak UIView *weaskSelf = self;
-    return ^(UIEdgeInsets insets){
-        __strong UIView *strongSelf = weaskSelf;
-        return strongSelf
-        .jd_left(strongSelf.superview).jd_equal(insets.left)
-        .jd_top(strongSelf.superview).jd_equal(insets.top)
-        .jd_right(strongSelf.superview).jd_equal(insets.right)
-        .jd_bottom(strongSelf.superview).jd_equal(insets.bottom);
-    };
-}
-
-- (UIView *(^)(UIView *view))jd_equalWidth {
-    __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
-        __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf jd_tmpAttribute].width;
+        JDRelation *target = [strongSelf jd_tmpAttribute].aspectRatio;
         if (target == nil) {
             target = [[JDRelation alloc] init];
-            [strongSelf jd_tmpAttribute].width = target;
+            [strongSelf jd_tmpAttribute].aspectRatio = target;
         }
         target.firstItem = strongSelf;
-        target.secondItem = view;
-        target.relation = NSLayoutRelationEqual;
         target.firstAttribute = NSLayoutAttributeWidth;
-        target.secondAttribute = NSLayoutAttributeWidth;
-        target->_installed = NO;
-        return strongSelf;
-    };
-}
-
-- (UIView *(^)(UIView *view))jd_equalHeight {
-    __weak UIView *weaskSelf = self;
-    return ^(UIView *view){
-        __strong UIView *strongSelf = weaskSelf;
-        JDRelation *target = [strongSelf jd_tmpAttribute].height;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [strongSelf jd_tmpAttribute].height = target;
-        }
-        target.firstItem = strongSelf;
-        target.secondItem = view;
-        target.relation = NSLayoutRelationEqual;
-        target.firstAttribute = NSLayoutAttributeHeight;
+        target.secondItem = strongSelf;
         target.secondAttribute = NSLayoutAttributeHeight;
+        target.multiplier = ratio;
         target->_installed = NO;
         return strongSelf;
     };
 }
-
+    
 /////////////////////////////////////////////////////
 
 - (JDAttribute *)jd_tmpAttribute {
@@ -515,7 +537,7 @@
         NSArray *allAttributes = [[strongSelf jd_tmpAttribute] jd_allAttributes];
         //开始约束布局
         for (JDRelation *relation in allAttributes) {
-            [relation jd_install];
+            [relation jd_installConstraint];
         }
     };
 }
@@ -527,14 +549,47 @@
         NSArray *allAttributes = [[strongSelf jd_tmpAttribute] jd_allAttributes];
         //开始更新约束布局
         for (JDRelation *relation in allAttributes) {
-            [relation jd_update];
+            [relation jd_updateConstraint];
         }
     };
 }
-
+    
 @end
-
+#pragma mark ------一 些简写的功能 ----------
 @implementation UIView(JDAutolayoutExtention)
+
+- (UIView *(^)(CGSize size))jd_size {
+    __weak UIView *weaskSelf = self;
+    return ^(CGSize size){
+        __strong UIView *strongSelf = weaskSelf;
+        return strongSelf
+        .jd_width(nil).jd_equal(size.width)
+        .jd_height(nil).jd_equal(size.height);
+    };
+}
+    
+- (UIView *(^)(CGRect frame))jd_frame {
+    __weak UIView *weaskSelf = self;
+    return ^(CGRect frame){
+        __strong UIView *strongSelf = weaskSelf;
+        return strongSelf
+        .jd_left(strongSelf.superview).jd_equal(frame.origin.x)
+        .jd_top(strongSelf.superview).jd_equal(frame.origin.y)
+        .jd_size(frame.size);
+    };
+}
+    
+- (UIView *(^)(UIEdgeInsets insets))jd_insets; {
+    __weak UIView *weaskSelf = self;
+    return ^(UIEdgeInsets insets){
+        __strong UIView *strongSelf = weaskSelf;
+        return strongSelf
+        .jd_left(strongSelf.superview).jd_equal(insets.left)
+        .jd_top(strongSelf.superview).jd_equal(insets.top)
+        .jd_right(strongSelf.superview).jd_equal(insets.right)
+        .jd_bottom(strongSelf.superview).jd_equal(insets.bottom);
+    };
+}
 
 - (void(^)(NSArray *subViews))jd_equalWidthSubViews {
     __weak UIView *weaskSelf = self;
@@ -551,7 +606,7 @@
                 view
                 .jd_left(lastView).jd_equal(0)
                 .jd_centerY(lastView).jd_equal(0)
-                .jd_equalWidth(lastView)
+                .jd_width(lastView).jd_equal(0)
                 .jd_layout();
             }
             lastView = view;
@@ -561,7 +616,7 @@
         .jd_layout();
     };
 }
-
+    
 - (void(^)(NSArray *subViews))jd_equalHeightSubViews {
     __weak UIView *weaskSelf = self;
     return ^(NSArray *subViews){
@@ -577,7 +632,7 @@
                 view
                 .jd_top(lastView).jd_equal(0)
                 .jd_centerX(lastView).jd_equal(0)
-                .jd_equalHeight(lastView)
+                .jd_height(lastView).jd_equal(0)
                 .jd_layout();
             }
             lastView = view;
@@ -587,7 +642,7 @@
         .jd_layout();
     };
 }
-
+    
 - (instancetype)jd_closestCommonSuperview:(UIView *)view {
     UIView *closestCommonSuperview = nil;
     UIView *secondViewSuperview = view;
@@ -603,7 +658,58 @@
     }
     return closestCommonSuperview;
 }
+    
+@end
 
+
+@implementation JDViewAttribute
++ (instancetype)initWithView:(UIView *)view attribute:(NSLayoutAttribute)attribute {
+    JDViewAttribute *instance = [[JDViewAttribute alloc] init];
+    instance.view = view;
+    instance.attribute = attribute;
+    return instance;
+}
+@end
+
+@implementation UIView(JDViewAttribute)
+@dynamic jd_leftAttribute;
+@dynamic jd_topAttribute;
+@dynamic jd_rightAttribute;
+@dynamic jd_bottomAttribute;
+@dynamic jd_centerXAttribute;
+@dynamic jd_centerYAttribute;
+@dynamic jd_baselineAttribute;
+@dynamic jd_widthAttribute;
+@dynamic jd_heightAttribute;
+    
+#pragma mark ---------- 获取属性 -------------
+- (JDViewAttribute *)jd_leftAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeLeading];
+}
+- (JDViewAttribute *)jd_topAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeTop];
+}
+- (JDViewAttribute *)jd_rightAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeTrailing];
+}
+- (JDViewAttribute *)jd_bottomAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeBottom];
+}
+- (JDViewAttribute *)jd_widthAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeWidth];
+}
+- (JDViewAttribute *)jd_heightAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeHeight];
+}
+- (JDViewAttribute *)jd_centerXAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeCenterX];
+}
+- (JDViewAttribute *)jd_centerYAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeCenterY];
+}
+- (JDViewAttribute *)jd_baselineAttribute {
+    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeBaseline];
+}
 @end
 
 

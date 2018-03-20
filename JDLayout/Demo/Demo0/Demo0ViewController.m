@@ -14,7 +14,7 @@
 @property (nonatomic, strong) UIButton *view0;
 @property (nonatomic, strong) UIButton *view1;
 @property (nonatomic, strong) UIButton *view2;
-
+@property (nonatomic, strong) UIButton *view3;
 @end
 
 @implementation Demo0ViewController
@@ -32,8 +32,8 @@
     self.view0
     .jd_top(self.view).jd_equal(80)
     .jd_left(self.view).jd_equal(80)
-    .jd_width().jd_equal(100)
-    .jd_height().jd_equal(100)
+    .jd_width(nil).jd_equal(100)
+    .jd_height(nil).jd_equal(100)
     .jd_layout();
     //简写
     //self.view0.jd_frame(CGRectMake(80, 0, 100, 100)).jd_layout();
@@ -50,7 +50,7 @@
     .jd_layout();
     //改写对top的布局，也是最后一个生效
     self.view1
-    .jd_left(self.view0).jd_align().jd_equal(0)
+    .jd_left(self.view0.jd_leftAttribute).jd_equal(0)
     .jd_layout();
     
     self.view2 = [[UIButton alloc] init];
@@ -58,9 +58,18 @@
     self.view2.backgroundColor = [UIColor redColor];
     [self.view2 addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.view2];
-    
     self.view2.jd_insets(UIEdgeInsetsMake(350, 80, -100, -100)).jd_layout();
     
+    self.view3 = [[UIButton alloc] init];
+    [self.view3 setTitle:@"宽高比" forState:UIControlStateNormal];
+    self.view3.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:self.view3];
+    self.view3
+    .jd_right(self.view).jd_equal(-20)
+    .jd_top(self.view).jd_equal(100)
+    .jd_width(nil).jd_equal(100)
+    .jd_aspectRatio(2)
+    .jd_layout();
     // Do any additional setup after loading the view.
 }
 - (void)click0:(UIView *)sender {
