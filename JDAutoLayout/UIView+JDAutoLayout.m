@@ -1,12 +1,12 @@
 //
-//  UIView+Autolayout.m
+//  UIView+AutoLayout.m
 //  AutoLayout
 //
 //  Created by JD on 2017/12/21.
 //  Copyright © 2017年 . All rights reserved.
 //
 
-#import "UIView+JDAutolayout.h"
+#import "UIView+JDAutoLayout.h"
 #import <objc/runtime.h>
 
 #pragma mark ---------------JDRelation------------------------
@@ -38,7 +38,7 @@
     return self;
 }
 
-- (JDRelation *(^)(CGFloat multiplier))jd_multiplier {
+- (JDRelationFloatBlock)jd_multiplier {
     __weak JDRelation *weaskSelf = self;
     return ^(CGFloat multiplier){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -47,7 +47,7 @@
     };
 }
 
-- (UIView *(^)(CGFloat constant))jd_equal {
+- (JDViewFloatBlock)jd_equal {
     __weak JDRelation *weaskSelf = self;
     return ^(CGFloat constant){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -57,7 +57,7 @@
     };
 }
 
-- (UIView *(^)(CGFloat constant))jd_lessThanOrEqual {
+- (JDViewFloatBlock)jd_lessThanOrEqual {
     __weak JDRelation *weaskSelf = self;
     return ^(CGFloat constant){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -67,7 +67,7 @@
     };
 }
 
-- (UIView *(^)(CGFloat constant))jd_greaterThanOrEqual {
+- (JDViewFloatBlock)jd_greaterThanOrEqual {
     __weak JDRelation *weaskSelf = self;
     return ^(CGFloat constant){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -77,7 +77,7 @@
     };
 }
 
-- (UIView *(^)(void))jd_and {
+- (JDViewVoidBlock)jd_and {
     __weak JDRelation *weaskSelf = self;
     return ^(void){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -85,7 +85,7 @@
     };
 }
 
-- (void(^)(void))jd_layout {
+- (JDVoidBlock)jd_layout {
     __weak JDRelation *weaskSelf = self;
     return ^(void){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -93,7 +93,7 @@
     };
 }
 
-- (void(^)(void))jd_update {
+- (JDVoidBlock)jd_update {
     __weak JDRelation *weaskSelf = self;
     return ^(void){
         __strong JDRelation *strongSelf = weaskSelf;
@@ -216,21 +216,11 @@
 
 @end
 
-#pragma mark ---------------JDAutolayout------------------------
+#pragma mark ---------------JDAutoLayout------------------------
 
-@implementation UIView (JDAutolayout)
+@implementation UIView (JDAutoLayout)
 
-- (UIView *(^)(void))jd_reset {
-    __weak UIView *weaskSelf = self;
-    return ^(void){
-        __strong UIView *strongSelf = weaskSelf;
-        JDAttribute *attribute = [strongSelf jd_tmpAttribute];
-        [attribute jd_clear];
-        return strongSelf;
-    };
-}
-
-- (JDRelation *(^)(id attr))jd_left {
+- (JDRelationAttrBlock)jd_left {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -262,7 +252,7 @@
     };
 }
 
-- (JDRelation *(^)(id attr))jd_top {
+- (JDRelationAttrBlock)jd_top {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -294,7 +284,7 @@
     };
 }
 
-- (JDRelation *(^)(id attr))jd_right {
+- (JDRelationAttrBlock)jd_right {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -326,7 +316,7 @@
     };
 }
 
-- (JDRelation *(^)(id attr))jd_bottom {
+- (JDRelationAttrBlock)jd_bottom {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -358,7 +348,7 @@
     };
 }
 
-- (JDRelation *(^)(id attr))jd_centerX {
+- (JDRelationAttrBlock)jd_centerX {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -384,7 +374,7 @@
     };
 }
 
-- (JDRelation *(^)(id attr))jd_centerY {
+- (JDRelationAttrBlock)jd_centerY {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -410,7 +400,7 @@
     };
 }
 
-- (JDRelation *(^)(id attr))jd_width {
+- (JDRelationAttrBlock)jd_width {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -441,7 +431,7 @@
     };
 }
 
-- (JDRelation *(^)(id attr))jd_height {
+- (JDRelationAttrBlock)jd_height {
     __weak UIView *weaskSelf = self;
     return ^(id attr){
         __strong UIView *strongSelf = weaskSelf;
@@ -472,7 +462,7 @@
     };
 }
     
-- (UIView *(^)(CGFloat ratio))jd_aspectRatio {
+- (JDViewFloatBlock)jd_aspectRatio {
     __weak UIView *weaskSelf = self;
     return ^(CGFloat ratio){
         __strong UIView *strongSelf = weaskSelf;
@@ -502,7 +492,7 @@
     return tmpAttribute;
 }
 
-- (UIView *(^)(void))jd_and {
+- (JDViewVoidBlock)jd_and {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
@@ -510,7 +500,18 @@
     };
 }
 
-- (void(^)(void))jd_layout {
+- (JDViewVoidBlock)jd_reset {
+    __weak UIView *weaskSelf = self;
+    return ^(void){
+        __strong UIView *strongSelf = weaskSelf;
+        JDAttribute *attribute = [strongSelf jd_tmpAttribute];
+        [attribute jd_clear];
+        return strongSelf;
+    };
+}
+
+
+- (JDVoidBlock)jd_layout {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
@@ -526,7 +527,7 @@
     };
 }
 
-- (void(^)(void))jd_update {
+- (JDVoidBlock)jd_update {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
@@ -542,7 +543,7 @@
 #pragma mark ------一 些简写的功能 ----------
 @implementation UIView(JDAutolayoutExtention)
 
-- (UIView *(^)(CGSize size))jd_size {
+- (JDViewSizeBlock)jd_size {
     __weak UIView *weaskSelf = self;
     return ^(CGSize size){
         __strong UIView *strongSelf = weaskSelf;
@@ -552,7 +553,7 @@
     };
 }
     
-- (UIView *(^)(CGRect frame))jd_frame {
+- (JDViewRectBlock)jd_frame {
     __weak UIView *weaskSelf = self;
     return ^(CGRect frame){
         __strong UIView *strongSelf = weaskSelf;
@@ -563,7 +564,7 @@
     };
 }
     
-- (UIView *(^)(UIEdgeInsets insets))jd_insets; {
+- (JDViewInsetsBlock)jd_insets; {
     __weak UIView *weaskSelf = self;
     return ^(UIEdgeInsets insets){
         __strong UIView *strongSelf = weaskSelf;
@@ -575,7 +576,7 @@
     };
 }
 
-- (void(^)(NSArray *subViews))jd_equalWidthSubViews {
+- (JDVoidArrayBlock)jd_equalWidthSubViews {
     __weak UIView *weaskSelf = self;
     return ^(NSArray *subViews){
         __strong UIView *strongSelf = weaskSelf;
@@ -601,7 +602,7 @@
     };
 }
     
-- (void(^)(NSArray *subViews))jd_equalHeightSubViews {
+- (JDVoidArrayBlock)jd_equalHeightSubViews {
     __weak UIView *weaskSelf = self;
     return ^(NSArray *subViews){
         __strong UIView *strongSelf = weaskSelf;
