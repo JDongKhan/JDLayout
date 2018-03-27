@@ -7,7 +7,7 @@
 //
 
 #import "Demo0ViewController.h"
-#import "UIView+JDAutolayout.h"
+#import "UIView+JDAutoLayout.h"
 
 @interface Demo0ViewController ()
 

@@ -7,7 +7,7 @@
 //
 
 #import "SPTConstraintViewController.h"
-#import "UIView+JDAutolayout.h"
+#import "UIView+JDAutoLayout.h"
 
 @interface SPTConstraintViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *button1;

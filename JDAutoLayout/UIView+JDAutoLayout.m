@@ -13,13 +13,14 @@
 
 //单个约束基本参数的模型
 @interface JDRelation()
-@property (nonatomic, weak) UIView *firstItem;
-@property (nonatomic, weak) UIView *secondItem;
+@property (nonatomic, weak)   UIView *firstItem;
+@property (nonatomic, weak)   UIView *secondItem;
 @property (nonatomic, assign) NSLayoutAttribute firstAttribute;
 @property (nonatomic, assign) NSLayoutAttribute secondAttribute;
 @property (nonatomic, assign) NSLayoutRelation relation;
 @property (nonatomic, assign) CGFloat constant;
 @property (nonatomic, assign) CGFloat multiplier;
+@property (nonatomic, assign) UILayoutPriority priority;
 @end
 
 @implementation JDRelation {
@@ -43,6 +44,15 @@
     return ^(CGFloat multiplier){
         __strong JDRelation *strongSelf = weaskSelf;
         strongSelf.multiplier = multiplier;
+        return strongSelf;
+    };
+}
+
+-  (JDRelationPriorityBlock)jd_priority {
+    __weak JDRelation *weaskSelf = self;
+    return ^(JDLayoutPriority priority){
+        __strong JDRelation *strongSelf = weaskSelf;
+        strongSelf.priority = priority;
         return strongSelf;
     };
 }
@@ -117,6 +127,7 @@
         _installedView = self.firstItem;
     }
     _constraint = constraint;
+    _constraint.priority = self.priority;
     [_installedView addConstraint:_constraint];
     _installed = YES;
 }
@@ -145,6 +156,7 @@
             }
         }
     }
+    _constraint.priority = self.priority;
     _constraint.constant = self.constant;
     _installed = YES;
 }

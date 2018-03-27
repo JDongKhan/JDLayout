@@ -11,13 +11,21 @@
 @class JDRelation;
 @class JDViewAttribute;
 
+typedef float JDLayoutPriority NS_TYPED_EXTENSIBLE_ENUM;
+static const JDLayoutPriority JDLayoutPriorityRequired = 1000; // A required constraint.  Do not exceed this.
+static const JDLayoutPriority JDLayoutPriorityDefaultHigh = 750; // This is the priority level with which a button resists compressing its content.
+static const JDLayoutPriority JDLayoutPriorityDefaultLow = 250; // This is the priority level at which a button hugs its contents horizontally.
+static const JDLayoutPriority JDLayoutPriorityFittingSizeLevel = 50; // When you send -[UIView s
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void         (^JDVoidBlock)(void);
 typedef UIView     * _Nonnull (^JDViewVoidBlock)(void);
 typedef void         (^JDVoidArrayBlock)(NSArray *subViews);
 typedef JDRelation * _Nonnull (^JDRelationAttrBlock)(id attr);
+typedef JDRelation * _Nonnull (^JDRelationNullableAttrBlock)(_Nullable id attr);
 typedef JDRelation * _Nonnull (^JDRelationFloatBlock)(CGFloat value);
+typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value);
 typedef UIView     * _Nonnull (^JDViewFloatBlock)(CGFloat value);
 typedef UIView     * _Nonnull (^JDViewRectBlock)(CGRect rect);
 typedef UIView     * _Nonnull (^JDViewSizeBlock)(CGSize size);
@@ -36,8 +44,8 @@ typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_bottom;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerX;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerY;
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_width;
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_height;
+@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_width;
+@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_height;
 
 /**
  宽高比
@@ -88,6 +96,7 @@ typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
  倍数
  */
 @property (nonatomic, copy, readonly) JDRelationFloatBlock jd_multiplier;
+@property (nonatomic, copy, readonly) JDRelationPriorityBlock jd_priority;
 
 /**
  约束关系
