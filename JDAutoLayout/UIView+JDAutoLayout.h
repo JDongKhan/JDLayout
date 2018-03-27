@@ -105,19 +105,25 @@ typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
 @property (nonatomic, copy, readonly) JDViewFloatBlock jd_lessThanOrEqual;
 @property (nonatomic, copy, readonly) JDViewFloatBlock jd_greaterThanOrEqual;
 
-/**
- 连接方法，用于逻辑上连接下一个语句
- */
-@property (nonatomic, copy, readonly) JDViewVoidBlock jd_and;
-
-/**
- 约束布局
- */
-@property (nonatomic, copy, readonly) JDVoidBlock jd_layout;
-@property (nonatomic, copy, readonly) JDVoidBlock jd_update;
-
 @end
 
+//为了保证语义的连贯而额外增加的方法
+@interface JDRelation (JDAutolayoutExtention)
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_left;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_top;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_right;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_bottom;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerX;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerY;
+@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_width;
+@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_height;
+@property (nonatomic, copy, readonly) JDViewFloatBlock jd_aspectRatio;
+@property (nonatomic, copy, readonly) JDViewVoidBlock jd_and;
+@property (nonatomic, copy, readonly) JDVoidBlock jd_layout;
+@property (nonatomic, copy, readonly) JDVoidBlock jd_update;
+@end
+
+//////////////////////////////////////////////////
 //获取view的属性
 @interface UIView (JDViewAttribute)
 @property (nonatomic, strong) JDViewAttribute *jd_leftAttribute;

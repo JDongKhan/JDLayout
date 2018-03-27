@@ -87,30 +87,6 @@
     };
 }
 
-- (JDViewVoidBlock)jd_and {
-    __weak JDRelation *weaskSelf = self;
-    return ^(void){
-        __strong JDRelation *strongSelf = weaskSelf;
-        return strongSelf.firstItem;
-    };
-}
-
-- (JDVoidBlock)jd_layout {
-    __weak JDRelation *weaskSelf = self;
-    return ^(void){
-        __strong JDRelation *strongSelf = weaskSelf;
-        return strongSelf.firstItem.jd_layout();
-    };
-}
-
-- (JDVoidBlock)jd_update {
-    __weak JDRelation *weaskSelf = self;
-    return ^(void){
-        __strong JDRelation *strongSelf = weaskSelf;
-        return strongSelf.firstItem.jd_update();
-    };
-}
-
 - (void)jd_installConstraint {
     if (_installed) {
         return;
@@ -160,6 +136,43 @@
     _constraint.constant = self.constant;
     _installed = YES;
 }
+
+@end
+
+
+
+@implementation JDRelation(JDAutolayoutExtention)
+
+#define JD_DEFINE_ATTR_METHOD(_return,_method,_paramsType) \
+- (_return)_method { \
+    __weak JDRelation *weaskSelf = self; \
+    return ^(_paramsType attr){ \
+        __strong JDRelation *strongSelf = weaskSelf; \
+        return strongSelf.firstItem._method(attr); \
+    };\
+} \
+
+#define JD_DEFINE_ATTR_METHOD1(_return,_method) \
+- (_return)_method { \
+    __weak JDRelation *weaskSelf = self; \
+    return ^(void){ \
+        __strong JDRelation *strongSelf = weaskSelf; \
+        return strongSelf.firstItem._method(); \
+    };\
+} \
+
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_left,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_top,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_right,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_bottom,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_centerX,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_centerY,id)
+JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,jd_width,id)
+JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,jd_height,id)
+JD_DEFINE_ATTR_METHOD(JDViewFloatBlock,jd_aspectRatio,CGFloat)
+JD_DEFINE_ATTR_METHOD1(JDViewVoidBlock,jd_and)
+JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_layout)
+JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_update)
 
 @end
 
