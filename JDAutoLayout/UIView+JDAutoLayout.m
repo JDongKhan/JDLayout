@@ -35,6 +35,7 @@
     if (self = [super init]) {
         _multiplier = 1;
         _installed = NO;
+        _priority = JDLayoutPriorityRequired;
     }
     return self;
 }
@@ -137,6 +138,12 @@
     _installed = YES;
 }
 
+- (void)jd_clearConstraint {
+    if (_constraint && _installedView) {
+        [_installedView removeConstraint:_constraint];
+    }
+}
+
 @end
 
 
@@ -228,14 +235,23 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_update)
 }
 
 - (void)jd_clear {
+    [self.left jd_clearConstraint];
     self.left = nil;
+    [self.top jd_clearConstraint];
     self.top = nil;
+    [self.right jd_clearConstraint];
     self.right = nil;
+    [self.bottom jd_clearConstraint];
     self.bottom = nil;
+    [self.width jd_clearConstraint];
     self.width = nil;
+    [self.height jd_clearConstraint];
     self.height = nil;
+    [self.centerX jd_clearConstraint];
     self.centerX = nil;
+    [self.centerY jd_clearConstraint];
     self.centerY = nil;
+    [self.aspectRatio jd_clearConstraint];
     self.aspectRatio = nil;
 }
 
@@ -535,14 +551,11 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_update)
     };
 }
 
-
 - (JDVoidBlock)jd_layout {
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
-        if (strongSelf.superview == nil) {
-            return;
-        }
+        NSAssert(strongSelf.superview, @"未添加到父视图");
         strongSelf.translatesAutoresizingMaskIntoConstraints = NO;
         NSArray *allAttributes = [[strongSelf jd_tmpAttribute] jd_allAttributes];
         //开始约束布局
@@ -556,6 +569,7 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_update)
     __weak UIView *weaskSelf = self;
     return ^(void){
         __strong UIView *strongSelf = weaskSelf;
+        NSAssert(strongSelf.superview, @"未添加到父视图");
         NSArray *allAttributes = [[strongSelf jd_tmpAttribute] jd_allAttributes];
         //开始更新约束布局
         for (JDRelation *relation in allAttributes) {
