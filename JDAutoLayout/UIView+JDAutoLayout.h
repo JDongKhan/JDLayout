@@ -1,6 +1,6 @@
 //
-//  UIView+Autolayout.h
-//  AutoLayout
+//  UIView+JDAutoLayout.h
+//  JDAutoLayout
 //
 //  Created by JD on 2017/12/21.
 //  Copyright © 2017年 . All rights reserved.
@@ -19,18 +19,17 @@ static const JDLayoutPriority JDLayoutPriorityFittingSizeLevel = 50; // When you
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void         (^JDVoidBlock)(void);
+typedef void                  (^JDVoidBlock)(void);
+typedef void                  (^JDVoidArrayBlock)(NSArray *subViews);
 typedef UIView     * _Nonnull (^JDViewVoidBlock)(void);
-typedef void         (^JDVoidArrayBlock)(NSArray *subViews);
-typedef JDRelation * _Nonnull (^JDRelationAttrBlock)(id attr);
-typedef JDRelation * _Nonnull (^JDRelationNullableAttrBlock)(_Nullable id attr);
-typedef JDRelation * _Nonnull (^JDRelationFloatBlock)(CGFloat value);
-typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value);
 typedef UIView     * _Nonnull (^JDViewFloatBlock)(CGFloat value);
 typedef UIView     * _Nonnull (^JDViewRectBlock)(CGRect rect);
 typedef UIView     * _Nonnull (^JDViewSizeBlock)(CGSize size);
 typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
-
+typedef JDRelation * _Nonnull (^JDRelationAttrBlock)(id attr);
+typedef JDRelation * _Nonnull (^JDRelationNullableAttrBlock)(_Nullable id attr);
+typedef JDRelation * _Nonnull (^JDRelationFloatBlock)(CGFloat value);
+typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value);
 
 
 @interface UIView (JDAutoLayout)
@@ -70,7 +69,7 @@ typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
 
 @end
 
-@interface UIView (JDAutolayoutExtention)
+@interface UIView (JDAutoLayoutExtention)
 
 /**
  对width和height的封装
@@ -108,7 +107,7 @@ typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
 @end
 
 //为了保证语义的连贯而额外增加的方法
-@interface JDRelation (JDAutolayoutExtention)
+@interface JDRelation (JDAutoLayoutExtention)
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_left;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_top;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_right;

@@ -1,6 +1,6 @@
 //
-//  UIView+AutoLayout.m
-//  AutoLayout
+//  UIView+JDAutoLayout.m
+//  JDAutoLayout
 //
 //  Created by JD on 2017/12/21.
 //  Copyright © 2017年 . All rights reserved.
@@ -138,34 +138,34 @@
 
 
 
-@implementation JDRelation(JDAutolayoutExtention)
+@implementation JDRelation(JDAutoLayoutExtention)
 
 #define JD_DEFINE_ATTR_METHOD(_return,_method,_paramsType) \
-- (_return)_method { \
+- (_return)jd_##_method { \
     return ^(_paramsType attr){ \
-        return self.firstItem._method(attr); \
+        return self.firstItem.jd_##_method(attr); \
     };\
 } \
 
 #define JD_DEFINE_ATTR_METHOD1(_return,_method) \
-- (_return)_method { \
+- (_return)jd_##_method { \
     return ^(void){ \
-        return self.firstItem._method(); \
+        return self.firstItem.jd_##_method(); \
     };\
 } \
 
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_left,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_top,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_right,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_bottom,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_centerX,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,jd_centerY,id)
-JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,jd_width,id)
-JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,jd_height,id)
-JD_DEFINE_ATTR_METHOD(JDViewFloatBlock,jd_aspectRatio,CGFloat)
-JD_DEFINE_ATTR_METHOD1(JDViewVoidBlock,jd_and)
-JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_layout)
-JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_update)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,left,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,top,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,right,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,bottom,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerX,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerY,id)
+JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,width,id)
+JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,height,id)
+JD_DEFINE_ATTR_METHOD(JDViewFloatBlock,aspectRatio,CGFloat)
+JD_DEFINE_ATTR_METHOD1(JDViewVoidBlock,and)
+JD_DEFINE_ATTR_METHOD1(JDVoidBlock,layout)
+JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 @end
 
@@ -540,7 +540,7 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,jd_update)
     
 @end
 #pragma mark ------一 些简写的功能 ----------
-@implementation UIView(JDAutolayoutExtention)
+@implementation UIView(JDAutoLayoutExtention)
 
 - (JDViewSizeBlock)jd_size {
     return ^(CGSize size){
