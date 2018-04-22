@@ -108,6 +108,7 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 
 //为了保证语义的连贯而额外增加的方法
 @interface JDRelation (JDAutoLayoutExtention)
+
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_left;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_top;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_right;
@@ -120,11 +121,13 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 @property (nonatomic, copy, readonly) JDViewVoidBlock jd_and;
 @property (nonatomic, copy, readonly) JDVoidBlock jd_layout;
 @property (nonatomic, copy, readonly) JDVoidBlock jd_update;
+
 @end
 
 //////////////////////////////////////////////////
 //获取view的属性
 @interface UIView (JDViewAttribute)
+
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_leftAttribute;
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_topAttribute;
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_rightAttribute;
@@ -134,12 +137,15 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_centerXAttribute;
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_centerYAttribute;
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_baselineAttribute;
+
 @end
 
 
 @interface JDViewAttribute : NSObject
-@property (nonatomic, weak, readonly)   UIView *view;
+
+@property (nonatomic, weak,   readonly) UIView *view;
 @property (nonatomic, assign, readonly) NSLayoutAttribute attribute;
+
 @end
 
 NS_ASSUME_NONNULL_END

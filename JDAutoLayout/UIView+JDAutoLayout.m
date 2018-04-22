@@ -13,19 +13,29 @@
 
 //单个约束基本参数的模型
 @interface JDRelation()
+
 @property (nonatomic, weak)   UIView *firstItem;
+
 @property (nonatomic, weak)   UIView *secondItem;
+
 @property (nonatomic, assign) NSLayoutAttribute firstAttribute;
+
 @property (nonatomic, assign) NSLayoutAttribute secondAttribute;
+
 @property (nonatomic, assign) NSLayoutRelation relation;
+
 @property (nonatomic, assign) CGFloat constant;
+
 @property (nonatomic, assign) CGFloat multiplier;
+
 @property (nonatomic, assign) UILayoutPriority priority;
+
 @end
 
 @implementation JDRelation {
     @public
     BOOL _installed;
+    
     @private
     UIView *_installedView;
     NSLayoutConstraint *_constraint;
@@ -173,6 +183,7 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 //一个控件布局基本参数的模型
 @interface JDAttribute : NSObject
+
 @property (nonatomic, strong) JDRelation *left;
 @property (nonatomic, strong) JDRelation *top;
 @property (nonatomic, strong) JDRelation *right;
@@ -182,7 +193,9 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 @property (nonatomic, strong) JDRelation *aspectRatio;
 @property (nonatomic, strong) JDRelation *centerX;
 @property (nonatomic, strong) JDRelation *centerY;
+
 - (NSArray *)jd_allAttributes;
+
 @end
 
 @implementation JDAttribute
@@ -637,6 +650,7 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 
 @implementation JDViewAttribute
+
 - (instancetype)initWithView:(UIView *)view attribute:(NSLayoutAttribute)attribute {
     if (self = [super init]) {
         _view = view;
@@ -644,47 +658,48 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
     }
     return self;
 }
+
 @end
 
 @implementation UIView(JDViewAttribute)
-@dynamic jd_leftAttribute;
-@dynamic jd_topAttribute;
-@dynamic jd_rightAttribute;
-@dynamic jd_bottomAttribute;
-@dynamic jd_centerXAttribute;
-@dynamic jd_centerYAttribute;
-@dynamic jd_baselineAttribute;
-@dynamic jd_widthAttribute;
-@dynamic jd_heightAttribute;
-    
+
 #pragma mark ---------- 获取属性 -------------
 - (JDViewAttribute *)jd_leftAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeLeading];
 }
+
 - (JDViewAttribute *)jd_topAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeTop];
 }
+
 - (JDViewAttribute *)jd_rightAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeTrailing];
 }
+
 - (JDViewAttribute *)jd_bottomAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeBottom];
 }
+
 - (JDViewAttribute *)jd_widthAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeWidth];
 }
+
 - (JDViewAttribute *)jd_heightAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeHeight];
 }
+
 - (JDViewAttribute *)jd_centerXAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeCenterX];
 }
+
 - (JDViewAttribute *)jd_centerYAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeCenterY];
 }
+
 - (JDViewAttribute *)jd_baselineAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeBaseline];
 }
+
 @end
 
 
