@@ -218,7 +218,6 @@
 				694E82D02016C0D000BB8C92 /* Frameworks */,
 				694E82D12016C0D000BB8C92 /* Resources */,
 				BE83AD5C7E0B2F2CFD1D2342 /* [CP] Embed Pods Frameworks */,
-				D7D06F0E2E5C75ADFC602CD8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -374,21 +373,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D7D06F0E2E5C75ADFC602CD8 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
