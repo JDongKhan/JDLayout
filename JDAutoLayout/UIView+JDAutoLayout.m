@@ -637,11 +637,12 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 
 @implementation JDViewAttribute
-+ (instancetype)initWithView:(UIView *)view attribute:(NSLayoutAttribute)attribute {
-    JDViewAttribute *instance = [[JDViewAttribute alloc] init];
-    instance.view = view;
-    instance.attribute = attribute;
-    return instance;
+- (instancetype)initWithView:(UIView *)view attribute:(NSLayoutAttribute)attribute {
+    if (self = [super init]) {
+        _view = view;
+        _attribute = attribute;
+    }
+    return self;
 }
 @end
 
@@ -658,31 +659,31 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
     
 #pragma mark ---------- 获取属性 -------------
 - (JDViewAttribute *)jd_leftAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeLeading];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeLeading];
 }
 - (JDViewAttribute *)jd_topAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeTop];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeTop];
 }
 - (JDViewAttribute *)jd_rightAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeTrailing];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeTrailing];
 }
 - (JDViewAttribute *)jd_bottomAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeBottom];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeBottom];
 }
 - (JDViewAttribute *)jd_widthAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeWidth];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeWidth];
 }
 - (JDViewAttribute *)jd_heightAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeHeight];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeHeight];
 }
 - (JDViewAttribute *)jd_centerXAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeCenterX];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeCenterX];
 }
 - (JDViewAttribute *)jd_centerYAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeCenterY];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeCenterY];
 }
 - (JDViewAttribute *)jd_baselineAttribute {
-    return [JDViewAttribute initWithView:self attribute:NSLayoutAttributeBaseline];
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeBaseline];
 }
 @end
 

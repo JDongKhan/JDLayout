@@ -125,21 +125,21 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 //////////////////////////////////////////////////
 //获取view的属性
 @interface UIView (JDViewAttribute)
-@property (nonatomic, strong) JDViewAttribute *jd_leftAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_topAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_rightAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_bottomAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_widthAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_heightAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_centerXAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_centerYAttribute;
-@property (nonatomic, strong) JDViewAttribute *jd_baselineAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_leftAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_topAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_rightAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_bottomAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_widthAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_heightAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_centerXAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_centerYAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_baselineAttribute;
 @end
 
 
 @interface JDViewAttribute : NSObject
-@property (nonatomic, weak)   UIView *view;
-@property (nonatomic, assign) NSLayoutAttribute attribute;
+@property (nonatomic, weak, readonly)   UIView *view;
+@property (nonatomic, assign, readonly) NSLayoutAttribute attribute;
 @end
 
 NS_ASSUME_NONNULL_END
