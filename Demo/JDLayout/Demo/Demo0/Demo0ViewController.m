@@ -69,7 +69,7 @@
     self.view3
     .jd_right(self.view).jd_equal(-20).jd_and()
     .jd_top(self.view).jd_equal(100).jd_and()
-    .jd_width(nil).jd_equal(100).jd_and()
+    .jd_width(@(100)).jd_and()
     .jd_aspectRatio(2)
     .jd_layout();
     

@@ -27,7 +27,6 @@ typedef UIView     * _Nonnull (^JDViewRectBlock)(CGRect rect);
 typedef UIView     * _Nonnull (^JDViewSizeBlock)(CGSize size);
 typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
 typedef JDRelation * _Nonnull (^JDRelationAttrBlock)(id attr);
-typedef JDRelation * _Nonnull (^JDRelationNullableAttrBlock)(_Nullable id attr);
 typedef JDRelation * _Nonnull (^JDRelationFloatBlock)(CGFloat value);
 typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value);
 
@@ -43,8 +42,8 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_bottom;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerX;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerY;
-@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_width;
-@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_height;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_width;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_height;
 
 /**
  宽高比
@@ -60,6 +59,8 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
  重置约束
  */
 @property (nonatomic, copy, readonly) JDViewVoidBlock jd_reset;
+@property (nonatomic, copy, readonly) JDViewVoidBlock jd_resetHorizontal;
+@property (nonatomic, copy, readonly) JDViewVoidBlock jd_resetVertical;
 
 /**
  约束布局
@@ -69,32 +70,13 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 
 @end
 
-@interface UIView (JDAutoLayoutExtention)
-
-/**
- 对width和height的封装
- */
-@property (nonatomic, copy, readonly) JDViewSizeBlock jd_size;
-@property (nonatomic, copy, readonly) JDViewRectBlock jd_frame;
-@property (nonatomic, copy, readonly) JDViewInsetsBlock jd_insets;
-
-/**
- 子view等宽、等高
- */
-@property (nonatomic, copy, readonly) JDVoidArrayBlock jd_equalWidthSubViews;
-@property (nonatomic, copy, readonly) JDVoidArrayBlock jd_equalHeightSubViews;
-
-- (instancetype)jd_closestCommonSuperview:(UIView *)view;
-
-@end
-
 
 @interface JDRelation : NSObject
     
 /**
  倍数
  */
-@property (nonatomic, copy, readonly) JDRelationFloatBlock jd_multiplier;
+@property (nonatomic, copy, readonly) JDRelationFloatBlock    jd_multiplier;
 @property (nonatomic, copy, readonly) JDRelationPriorityBlock jd_priority;
 
 /**
@@ -103,24 +85,6 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 @property (nonatomic, copy, readonly) JDViewFloatBlock jd_equal;
 @property (nonatomic, copy, readonly) JDViewFloatBlock jd_lessThanOrEqual;
 @property (nonatomic, copy, readonly) JDViewFloatBlock jd_greaterThanOrEqual;
-
-@end
-
-//为了保证语义的连贯而额外增加的方法
-@interface JDRelation (JDAutoLayoutExtention)
-
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_left;
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_top;
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_right;
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_bottom;
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerX;
-@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerY;
-@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_width;
-@property (nonatomic, copy, readonly) JDRelationNullableAttrBlock jd_height;
-@property (nonatomic, copy, readonly) JDViewFloatBlock jd_aspectRatio;
-@property (nonatomic, copy, readonly) JDViewVoidBlock jd_and;
-@property (nonatomic, copy, readonly) JDVoidBlock jd_layout;
-@property (nonatomic, copy, readonly) JDVoidBlock jd_update;
 
 @end
 
@@ -140,12 +104,51 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 
 @end
 
-
 @interface JDViewAttribute : NSObject
 
-@property (nonatomic, weak,   readonly) UIView *view;
+@property (nonatomic, weak,   readonly) UIView            *view;
 @property (nonatomic, assign, readonly) NSLayoutAttribute attribute;
 
 @end
+
+
+@interface UIView (JDAutoLayoutExtention)
+
+/**
+ 对width和height的封装
+ */
+@property (nonatomic, copy, readonly) JDViewSizeBlock   jd_size;
+@property (nonatomic, copy, readonly) JDViewRectBlock   jd_frame;
+@property (nonatomic, copy, readonly) JDViewInsetsBlock jd_insets;
+
+/**
+ 子view等宽、等高
+ */
+@property (nonatomic, copy, readonly) JDVoidArrayBlock jd_equalWidthSubViews;
+@property (nonatomic, copy, readonly) JDVoidArrayBlock jd_equalHeightSubViews;
+
+- (instancetype)jd_closestCommonSuperview:(UIView *)view;
+
+@end
+
+
+//为了保证语义的连贯而额外增加的方法
+@interface JDRelation (JDAutoLayoutExtention)
+
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_left;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_top;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_right;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_bottom;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerX;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_centerY;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_width;
+@property (nonatomic, copy, readonly) JDRelationAttrBlock jd_height;
+@property (nonatomic, copy, readonly) JDViewFloatBlock    jd_aspectRatio;
+@property (nonatomic, copy, readonly) JDViewVoidBlock     jd_and;
+@property (nonatomic, copy, readonly) JDVoidBlock         jd_layout;
+@property (nonatomic, copy, readonly) JDVoidBlock         jd_update;
+
+@end
+
 
 NS_ASSUME_NONNULL_END

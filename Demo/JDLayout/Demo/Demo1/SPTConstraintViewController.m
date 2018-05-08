@@ -125,7 +125,7 @@
     
     label11
     .jd_left(self.view3).jd_equal(10).jd_and()
-    .jd_width(nil).jd_equal(200).jd_and()
+    .jd_width(@(200)).jd_and()
     .jd_top(self.view3).jd_equal(10)
     .jd_layout();
     

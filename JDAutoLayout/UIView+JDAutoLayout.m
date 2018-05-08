@@ -37,7 +37,7 @@
     BOOL _installed;
     
     @private
-    UIView *_installedView;
+    __weak UIView *_installedView;
     NSLayoutConstraint *_constraint;
 }
 
@@ -170,8 +170,8 @@ JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,right,id)
 JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,bottom,id)
 JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerX,id)
 JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerY,id)
-JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,width,id)
-JD_DEFINE_ATTR_METHOD(JDRelationNullableAttrBlock,height,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,width,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,height,id)
 JD_DEFINE_ATTR_METHOD(JDViewFloatBlock,aspectRatio,CGFloat)
 JD_DEFINE_ATTR_METHOD1(JDViewVoidBlock,and)
 JD_DEFINE_ATTR_METHOD1(JDVoidBlock,layout)
@@ -233,23 +233,31 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
     return allAttributes;
 }
 
-- (void)jd_clear {
+- (void)jd_resetHorizontal {
     [self.left jd_clearConstraint];
     self.left = nil;
-    [self.top jd_clearConstraint];
-    self.top = nil;
-    [self.right jd_clearConstraint];
-    self.right = nil;
-    [self.bottom jd_clearConstraint];
-    self.bottom = nil;
     [self.width jd_clearConstraint];
     self.width = nil;
-    [self.height jd_clearConstraint];
-    self.height = nil;
     [self.centerX jd_clearConstraint];
     self.centerX = nil;
+    [self.right jd_clearConstraint];
+    self.right = nil;
+}
+
+- (void)jd_resetVertical {
+    [self.top jd_clearConstraint];
+    self.top = nil;
+    [self.height jd_clearConstraint];
+    self.height = nil;
     [self.centerY jd_clearConstraint];
     self.centerY = nil;
+    [self.bottom jd_clearConstraint];
+    self.bottom = nil;
+}
+
+- (void)jd_reset {
+    [self jd_resetHorizontal];
+    [self jd_resetVertical];
     [self.aspectRatio jd_clearConstraint];
     self.aspectRatio = nil;
 }
@@ -523,7 +531,23 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 - (JDViewVoidBlock)jd_reset {
     return ^(void){
         JDAttribute *attribute = [self jd_tmpAttribute];
-        [attribute jd_clear];
+        [attribute jd_reset];
+        return self;
+    };
+}
+
+- (JDViewVoidBlock)jd_resetHorizontal {
+    return ^(void){
+        JDAttribute *attribute = [self jd_tmpAttribute];
+        [attribute jd_resetHorizontal];
+        return self;
+    };
+}
+
+- (JDViewVoidBlock)jd_resetVertical {
+    return ^(void){
+        JDAttribute *attribute = [self jd_tmpAttribute];
+        [attribute jd_resetVertical];
         return self;
     };
 }
