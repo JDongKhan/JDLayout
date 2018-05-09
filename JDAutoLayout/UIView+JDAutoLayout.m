@@ -244,42 +244,9 @@ JD_DEFINE_REMOVE_METHOD(AspectRatio,aspectRatio)
     (target);\
 })
 
-//定义位置属性方法 left默认相对view的right(superView的left)，right默认相对view的left(superView的right)以此类推其他约束
-//因为这种场景最频繁
-#define JD_DEFINE_LOCATION_METHOD(_attr,_firstAttribute,_secondAttribute) \
-- (JDRelationAttrBlock)jd_##_attr { \
-    return ^(id attr) {\
-        JDRelation *target = JD_DEFINE_GETATTR_METHOD(_attr);\
-        target.firstItem = self;\
-        target.firstAttribute = _firstAttribute;\
-        UIView *secondView = nil;\
-        NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;\
-        if ([attr isKindOfClass:[UIView class]]) {\
-            secondView = attr;\
-            if ([self isDescendantOfView:secondView]) {\
-                secondAttribute = _firstAttribute;\
-            } else {\
-                secondAttribute = _secondAttribute;\
-            }\
-        } else if ([attr isKindOfClass:[JDViewAttribute class]]) {\
-            JDViewAttribute *secondRelation = attr;\
-            secondView = secondRelation.view;\
-            secondAttribute = secondRelation.attribute;\
-        }\
-        target.secondItem = secondView;\
-        target.secondAttribute = secondAttribute;\
-        target->_installed = NO;\
-        return target;\
-    };\
-}
-
-JD_DEFINE_LOCATION_METHOD(left,NSLayoutAttributeLeading,NSLayoutAttributeTrailing)
-JD_DEFINE_LOCATION_METHOD(top,NSLayoutAttributeTop,NSLayoutAttributeBottom)
-JD_DEFINE_LOCATION_METHOD(right,NSLayoutAttributeTrailing,NSLayoutAttributeLeading)
-JD_DEFINE_LOCATION_METHOD(bottom,NSLayoutAttributeBottom,NSLayoutAttributeTop)
 
 //定义size属性方法
-#define JD_DEFINE_ONESELF_METHOD(_attr,_firstAttribute) \
+#define JD_DEFINE_AUTOLAYOUT_METHOD(_attr,_firstAttribute) \
 - (JDRelationAttrBlock)jd_##_attr {\
     return ^(id attr){\
         JDRelation *target = JD_DEFINE_GETATTR_METHOD(_attr);\
@@ -304,10 +271,14 @@ JD_DEFINE_LOCATION_METHOD(bottom,NSLayoutAttributeBottom,NSLayoutAttributeTop)
     };\
 }
 
-JD_DEFINE_ONESELF_METHOD(width,NSLayoutAttributeWidth)
-JD_DEFINE_ONESELF_METHOD(height,NSLayoutAttributeHeight)
-JD_DEFINE_ONESELF_METHOD(centerX,NSLayoutAttributeCenterX)
-JD_DEFINE_ONESELF_METHOD(centerY,NSLayoutAttributeCenterY)
+JD_DEFINE_AUTOLAYOUT_METHOD(left,NSLayoutAttributeLeading)
+JD_DEFINE_AUTOLAYOUT_METHOD(top,NSLayoutAttributeTop)
+JD_DEFINE_AUTOLAYOUT_METHOD(right,NSLayoutAttributeTrailing)
+JD_DEFINE_AUTOLAYOUT_METHOD(bottom,NSLayoutAttributeBottom)
+JD_DEFINE_AUTOLAYOUT_METHOD(width,NSLayoutAttributeWidth)
+JD_DEFINE_AUTOLAYOUT_METHOD(height,NSLayoutAttributeHeight)
+JD_DEFINE_AUTOLAYOUT_METHOD(centerX,NSLayoutAttributeCenterX)
+JD_DEFINE_AUTOLAYOUT_METHOD(centerY,NSLayoutAttributeCenterY)
 
 
 - (JDViewFloatBlock)jd_aspectRatio {
@@ -442,7 +413,7 @@ JD_DEFINE_REMOVE2_METHOD(AspectRatio)
                 .jd_layout();
             } else {
                 view
-                .jd_left(lastView).jd_equal(0)
+                .jd_left(lastView.jd_rightAttribute).jd_equal(0)
                 .jd_centerY(lastView).jd_equal(0)
                 .jd_width(lastView).jd_equal(0)
                 .jd_layout();
@@ -466,7 +437,7 @@ JD_DEFINE_REMOVE2_METHOD(AspectRatio)
                 .jd_layout();
             } else {
                 view
-                .jd_top(lastView).jd_equal(0)
+                .jd_top(lastView.jd_bottomAttribute).jd_equal(0)
                 .jd_centerX(lastView).jd_equal(0)
                 .jd_height(lastView).jd_equal(0)
                 .jd_layout();

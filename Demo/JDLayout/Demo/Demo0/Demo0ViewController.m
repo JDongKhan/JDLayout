@@ -30,9 +30,8 @@
     [self.view0 setTitle:@"点我有惊喜" forState:UIControlStateNormal];
     [self.view0 addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.view0];
-    
+    //下面的remove是无效代码，仅用于测试。
     self.view0.jd_remove();
-    
     self.view0
     .jd_removeLeft().jd_removeTop().jd_removeRight()
     .jd_removeBottom().jd_removeWidth().jd_removeHeight()
@@ -48,7 +47,7 @@
     //self.view0.jd_frame(CGRectMake(80, 0, 100, 100)).jd_layout();
     
     self.view1 = [[UIButton alloc] init];
-    self.view1.backgroundColor = [UIColor redColor];
+    self.view1.backgroundColor = [UIColor blueColor];
     [self.view1 setTitle:@"点我有惊喜" forState:UIControlStateNormal];
     [self.view1 addTarget:self action:@selector(click0:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.view1];

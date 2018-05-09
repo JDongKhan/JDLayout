@@ -84,7 +84,7 @@
     .jd_layout();
     
     label2
-    .jd_top(label1).jd_equal(0).jd_and()
+    .jd_top(label1.jd_bottomAttribute).jd_equal(0).jd_and()
     .jd_centerX(label1).jd_equal(0).jd_and()
     .jd_bottom(self.view1).jd_equal(0).jd_and()
     .jd_height(label1)
@@ -109,7 +109,7 @@
     .jd_layout();
     
     label21
-    .jd_left(label11).jd_equal(0).jd_and()
+    .jd_left(label11.jd_rightAttribute).jd_equal(0).jd_and()
     .jd_centerY(label11).jd_equal(0).jd_and()
     .jd_right(self.view2).jd_equal(0).jd_and()
     .jd_width(label11)
@@ -138,7 +138,7 @@
     label21
     .jd_left(label11.jd_leftAttribute).jd_equal(0).jd_and()
     .jd_width(label11.jd_widthAttribute).jd_equal(0).jd_and()
-    .jd_top(label11).jd_equal(10)
+    .jd_top(label11.jd_bottomAttribute).jd_equal(10)
     .jd_layout();
 }
 //简易的水平平分
