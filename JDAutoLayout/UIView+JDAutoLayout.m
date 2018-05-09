@@ -138,44 +138,11 @@
     _installed = YES;
 }
 
-- (void)jd_clearConstraint {
+- (void)jd_removeConstraint {
     if (_constraint && _installedView) {
         [_installedView removeConstraint:_constraint];
     }
 }
-
-@end
-
-
-
-@implementation JDRelation(JDAutoLayoutExtention)
-
-#define JD_DEFINE_ATTR_METHOD(_return,_method,_paramsType) \
-- (_return)jd_##_method { \
-    return ^(_paramsType attr){ \
-        return self.firstItem.jd_##_method(attr); \
-    };\
-} \
-
-#define JD_DEFINE_ATTR_METHOD1(_return,_method) \
-- (_return)jd_##_method { \
-    return ^(void){ \
-        return self.firstItem.jd_##_method(); \
-    };\
-} \
-
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,left,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,top,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,right,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,bottom,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerX,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerY,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,width,id)
-JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,height,id)
-JD_DEFINE_ATTR_METHOD(JDViewFloatBlock,aspectRatio,CGFloat)
-JD_DEFINE_ATTR_METHOD1(JDViewVoidBlock,and)
-JD_DEFINE_ATTR_METHOD1(JDVoidBlock,layout)
-JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 @end
 
@@ -233,33 +200,32 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
     return allAttributes;
 }
 
-- (void)jd_resetHorizontal {
-    [self.left jd_clearConstraint];
-    self.left = nil;
-    [self.width jd_clearConstraint];
-    self.width = nil;
-    [self.centerX jd_clearConstraint];
-    self.centerX = nil;
-    [self.right jd_clearConstraint];
-    self.right = nil;
+#define JD_DEFINE_REMOVE_METHOD(_method,_attr) \
+- (void)jd_remove##_method { \
+    [self._attr jd_removeConstraint]; \
+    self._attr = nil;\
 }
 
-- (void)jd_resetVertical {
-    [self.top jd_clearConstraint];
-    self.top = nil;
-    [self.height jd_clearConstraint];
-    self.height = nil;
-    [self.centerY jd_clearConstraint];
-    self.centerY = nil;
-    [self.bottom jd_clearConstraint];
-    self.bottom = nil;
-}
+JD_DEFINE_REMOVE_METHOD(Left,left)
+JD_DEFINE_REMOVE_METHOD(Top,top)
+JD_DEFINE_REMOVE_METHOD(Right,right)
+JD_DEFINE_REMOVE_METHOD(Bottom,bottom)
+JD_DEFINE_REMOVE_METHOD(Width,width)
+JD_DEFINE_REMOVE_METHOD(Height,height)
+JD_DEFINE_REMOVE_METHOD(CenterX,centerX)
+JD_DEFINE_REMOVE_METHOD(CenterY,centerY)
+JD_DEFINE_REMOVE_METHOD(AspectRatio,aspectRatio)
 
-- (void)jd_reset {
-    [self jd_resetHorizontal];
-    [self jd_resetVertical];
-    [self.aspectRatio jd_clearConstraint];
-    self.aspectRatio = nil;
+- (void)jd_remove {
+    [self jd_removeLeft];
+    [self jd_removeTop];
+    [self jd_removeRight];
+    [self jd_removeBottom];
+    [self jd_removeWidth];
+    [self jd_removeHeight];
+    [self jd_removeCenterX];
+    [self jd_removeCenterY];
+    [self jd_removeAspectRatio];
 }
 
 @end
@@ -268,239 +234,85 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 @implementation UIView (JDAutoLayout)
 
-- (JDRelationAttrBlock)jd_left {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].left;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].left = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeLeading;
-        
-        UIView *view = attr;
-        NSLayoutAttribute secondAttribute = 0;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        }
-        target.secondItem = view;
-        if ([self isDescendantOfView:view]) {
-            secondAttribute = NSLayoutAttributeLeading;
-        } else if (secondAttribute == 0) {
-            secondAttribute = NSLayoutAttributeTrailing;
-        }
-        target.secondAttribute = secondAttribute;
-        
-        target->_installed = NO;
-        return target;
-    };
+//获取属性
+#define JD_DEFINE_GETATTR_METHOD(_attr) ({\
+    JDRelation *target = [self jd_tmpAttribute]._attr;\
+    if (target == nil) {\
+        target = [[JDRelation alloc] init];\
+        [self jd_tmpAttribute]._attr = target;\
+    }\
+    (target);\
+})
+
+//定义位置属性方法 left默认相对view的right(superView的left)，right默认相对view的left(superView的right)以此类推其他约束
+//因为这种场景最频繁
+#define JD_DEFINE_LOCATION_METHOD(_attr,_firstAttribute,_secondAttribute) \
+- (JDRelationAttrBlock)jd_##_attr { \
+    return ^(id attr) {\
+        JDRelation *target = JD_DEFINE_GETATTR_METHOD(_attr);\
+        target.firstItem = self;\
+        target.firstAttribute = _firstAttribute;\
+        UIView *secondView = nil;\
+        NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;\
+        if ([attr isKindOfClass:[UIView class]]) {\
+            secondView = attr;\
+            if ([self isDescendantOfView:secondView]) {\
+                secondAttribute = _firstAttribute;\
+            } else {\
+                secondAttribute = _secondAttribute;\
+            }\
+        } else if ([attr isKindOfClass:[JDViewAttribute class]]) {\
+            JDViewAttribute *secondRelation = attr;\
+            secondView = secondRelation.view;\
+            secondAttribute = secondRelation.attribute;\
+        }\
+        target.secondItem = secondView;\
+        target.secondAttribute = secondAttribute;\
+        target->_installed = NO;\
+        return target;\
+    };\
 }
 
-- (JDRelationAttrBlock)jd_top {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].top;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].top = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeTop;
-        
-        UIView *view = attr;
-        NSLayoutAttribute secondAttribute = 0;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        }
-        target.secondItem = view;
-        if ([self isDescendantOfView:view]) {
-            secondAttribute = NSLayoutAttributeTop;
-        } else if (secondAttribute == 0) {
-            secondAttribute = NSLayoutAttributeBottom;
-        }
-        target.secondAttribute = secondAttribute;
-        
-        target->_installed = NO;
-        return target;
-    };
+JD_DEFINE_LOCATION_METHOD(left,NSLayoutAttributeLeading,NSLayoutAttributeTrailing)
+JD_DEFINE_LOCATION_METHOD(top,NSLayoutAttributeTop,NSLayoutAttributeBottom)
+JD_DEFINE_LOCATION_METHOD(right,NSLayoutAttributeTrailing,NSLayoutAttributeLeading)
+JD_DEFINE_LOCATION_METHOD(bottom,NSLayoutAttributeBottom,NSLayoutAttributeTop)
+
+//定义size属性方法
+#define JD_DEFINE_ONESELF_METHOD(_attr,_firstAttribute) \
+- (JDRelationAttrBlock)jd_##_attr {\
+    return ^(id attr){\
+        JDRelation *target = JD_DEFINE_GETATTR_METHOD(_attr);\
+        target.firstItem = self;\
+        target.firstAttribute = _firstAttribute;\
+        UIView *secondView = nil;\
+        NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;\
+        if ([attr isKindOfClass:[UIView class]]) {\
+            secondView = attr;\
+            secondAttribute = _firstAttribute;\
+        } else if ([attr isKindOfClass:[NSNumber class]]) {\
+            target.constant = [attr floatValue];\
+        } else if ([attr isKindOfClass:[JDViewAttribute class]]) {\
+            JDViewAttribute *secondRelation = attr;\
+            secondView = secondRelation.view;\
+            secondAttribute = secondRelation.attribute;\
+        }\
+        target.secondItem = secondView;\
+        target.secondAttribute = secondAttribute;\
+        target->_installed = NO;\
+        return target;\
+    };\
 }
 
-- (JDRelationAttrBlock)jd_right {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].right;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].right = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeTrailing;
-        
-        UIView *view = attr;
-        NSLayoutAttribute secondAttribute = 0;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        }
-        target.secondItem = view;
-        if ([self isDescendantOfView:view]) {
-            secondAttribute = NSLayoutAttributeTrailing;
-        } else if (secondAttribute == 0) {
-            secondAttribute = NSLayoutAttributeLeading;
-        }
-        target.secondAttribute = secondAttribute;
-        
-        target->_installed = NO;
-        return target;
-    };
-}
+JD_DEFINE_ONESELF_METHOD(width,NSLayoutAttributeWidth)
+JD_DEFINE_ONESELF_METHOD(height,NSLayoutAttributeHeight)
+JD_DEFINE_ONESELF_METHOD(centerX,NSLayoutAttributeCenterX)
+JD_DEFINE_ONESELF_METHOD(centerY,NSLayoutAttributeCenterY)
 
-- (JDRelationAttrBlock)jd_bottom {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].bottom;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].bottom = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeBottom;
-        
-        UIView *view = attr;
-        NSLayoutAttribute secondAttribute = 0;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        }
-        target.secondItem = view;
-        if ([self isDescendantOfView:view]) {
-            secondAttribute = NSLayoutAttributeBottom;
-        } else if (secondAttribute == 0) {
-            secondAttribute = NSLayoutAttributeTop;
-        }
-        target.secondAttribute = secondAttribute;
-        
-        target->_installed = NO;
-        return target;
-    };
-}
 
-- (JDRelationAttrBlock)jd_centerX {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].centerX;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].centerX = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeCenterX;
-        
-        UIView *view = attr;
-        NSLayoutAttribute secondAttribute = NSLayoutAttributeCenterX;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        }
-        target.secondItem = view;
-        target.secondAttribute = secondAttribute;
-        target->_installed = NO;
-        return target;
-    };
-}
-
-- (JDRelationAttrBlock)jd_centerY {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].centerY;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].centerY = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeCenterY;
-        
-        UIView *view = attr;
-        NSLayoutAttribute secondAttribute = NSLayoutAttributeCenterY;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        }
-        target.secondItem = view;
-        target.secondAttribute = secondAttribute;
-        target->_installed = NO;
-        return target;
-    };
-}
-
-- (JDRelationAttrBlock)jd_width {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].width;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].width = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeWidth;
-        
-        UIView *view = nil;
-        NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        } else if ([attr isKindOfClass:[UIView class]]) {
-            view = attr;
-            secondAttribute = NSLayoutAttributeWidth;
-        } else if ([attr isKindOfClass:[NSNumber class]]) {
-            target.constant = [attr floatValue];
-        }
-        target.secondItem = view;
-        target.secondAttribute = secondAttribute;
-        target->_installed = NO;
-        return target;
-    };
-}
-
-- (JDRelationAttrBlock)jd_height {
-    return ^(id attr){
-        JDRelation *target = [self jd_tmpAttribute].height;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].height = target;
-        }
-        target.firstItem = self;
-        target.firstAttribute = NSLayoutAttributeHeight;
-        
-        UIView *view = nil;
-        NSLayoutAttribute secondAttribute = NSLayoutAttributeNotAnAttribute;
-        if ([attr isKindOfClass:[JDViewAttribute class]]) {
-            JDViewAttribute *secondRelation = attr;
-            view = secondRelation.view;
-            secondAttribute = secondRelation.attribute;
-        } else if ([attr isKindOfClass:[UIView class]]) {
-            view = attr;
-            secondAttribute = NSLayoutAttributeHeight;
-        } else if ([attr isKindOfClass:[NSNumber class]]) {
-            target.constant = [attr floatValue];
-        }
-        target.secondItem = view;
-        target.secondAttribute = secondAttribute;
-        target->_installed = NO;
-        return target;
-    };
-}
-    
 - (JDViewFloatBlock)jd_aspectRatio {
     return ^(CGFloat ratio){
-        JDRelation *target = [self jd_tmpAttribute].aspectRatio;
-        if (target == nil) {
-            target = [[JDRelation alloc] init];
-            [self jd_tmpAttribute].aspectRatio = target;
-        }
+        JDRelation *target = JD_DEFINE_GETATTR_METHOD(aspectRatio);
         target.firstItem = self;
         target.firstAttribute = NSLayoutAttributeWidth;
         target.secondItem = self;
@@ -524,30 +336,6 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 - (JDViewVoidBlock)jd_and {
     return ^(void){
-        return self;
-    };
-}
-
-- (JDViewVoidBlock)jd_reset {
-    return ^(void){
-        JDAttribute *attribute = [self jd_tmpAttribute];
-        [attribute jd_reset];
-        return self;
-    };
-}
-
-- (JDViewVoidBlock)jd_resetHorizontal {
-    return ^(void){
-        JDAttribute *attribute = [self jd_tmpAttribute];
-        [attribute jd_resetHorizontal];
-        return self;
-    };
-}
-
-- (JDViewVoidBlock)jd_resetVertical {
-    return ^(void){
-        JDAttribute *attribute = [self jd_tmpAttribute];
-        [attribute jd_resetVertical];
         return self;
     };
 }
@@ -576,7 +364,44 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 }
     
 @end
-#pragma mark ------一 些简写的功能 ----------
+
+/****************************************************/
+/********************** 重置约束 *********************/
+/****************************************************/
+@implementation UIView(JDAutoLayoutRemoveConstraint)
+
+- (JDViewVoidBlock)jd_remove {
+    return ^(void){
+        JDAttribute *attribute = [self jd_tmpAttribute];
+        [attribute jd_remove];
+        return self;
+    };
+}
+
+#define JD_DEFINE_REMOVE2_METHOD(_method) \
+- (JDViewVoidBlock)jd_remove##_method {\
+    return ^(void){\
+        JDAttribute *attribute = [self jd_tmpAttribute];\
+        [attribute jd_remove##_method];\
+        return self;\
+    };\
+}
+
+JD_DEFINE_REMOVE2_METHOD(Left)
+JD_DEFINE_REMOVE2_METHOD(Top)
+JD_DEFINE_REMOVE2_METHOD(Right)
+JD_DEFINE_REMOVE2_METHOD(Bottom)
+JD_DEFINE_REMOVE2_METHOD(Width)
+JD_DEFINE_REMOVE2_METHOD(Height)
+JD_DEFINE_REMOVE2_METHOD(CenterX)
+JD_DEFINE_REMOVE2_METHOD(CenterY)
+JD_DEFINE_REMOVE2_METHOD(AspectRatio)
+
+@end
+
+/****************************************************/
+/*********************拓展方法************************/
+/****************************************************/
 @implementation UIView(JDAutoLayoutExtention)
 
 - (JDViewSizeBlock)jd_size {
@@ -726,4 +551,36 @@ JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
 
 @end
 
+
+@implementation JDRelation(JDAutoLayoutExtention)
+
+#define JD_DEFINE_ATTR_METHOD(_return,_method,_paramsType) \
+- (_return)jd_##_method { \
+    return ^(_paramsType attr){ \
+        return self.firstItem.jd_##_method(attr); \
+    };\
+}
+
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,left,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,top,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,right,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,bottom,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerX,id)
+JD_DEFINE_ATTR_METHOD(JDRelationAttrBlock,centerY,id)
+JD_DEFINE_ATTR_METHOD(JDRelationNullAttrBlock,width,id)
+JD_DEFINE_ATTR_METHOD(JDRelationNullAttrBlock,height,id)
+JD_DEFINE_ATTR_METHOD(JDViewFloatBlock,aspectRatio,CGFloat)
+
+#define JD_DEFINE_ATTR_METHOD1(_return,_method) \
+- (_return)jd_##_method { \
+    return ^(void){ \
+        return self.firstItem.jd_##_method(); \
+    };\
+}
+
+JD_DEFINE_ATTR_METHOD1(JDViewVoidBlock,and)
+JD_DEFINE_ATTR_METHOD1(JDVoidBlock,layout)
+JD_DEFINE_ATTR_METHOD1(JDVoidBlock,update)
+
+@end
 

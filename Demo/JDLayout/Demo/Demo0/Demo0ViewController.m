@@ -31,7 +31,14 @@
     [self.view0 addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.view0];
     
+    self.view0.jd_remove();
+    
     self.view0
+    .jd_removeLeft().jd_removeTop().jd_removeRight()
+    .jd_removeBottom().jd_removeWidth().jd_removeHeight()
+    .jd_removeCenterX().jd_removeCenterY().jd_removeAspectRatio();
+    
+    self.view0.jd_remove()
     .jd_top(self.view).jd_equal(80).jd_and()
     .jd_left(self.view).jd_equal(80).jd_and()
     .jd_width(@(100)).jd_and()
