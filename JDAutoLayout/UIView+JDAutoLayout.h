@@ -36,8 +36,6 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 
 /**
  约束基本设置
- left默认相对view的right(superView的left)，right默认相对view的left(superView的right)以此类推其他约束
- 因为这种场景最频繁
  */
 @property (nonatomic, copy, readonly) JDRelationAttrBlock     jd_left;
 @property (nonatomic, copy, readonly) JDRelationAttrBlock     jd_top;
