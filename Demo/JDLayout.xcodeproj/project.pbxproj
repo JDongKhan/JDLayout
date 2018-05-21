@@ -13,31 +13,12 @@
 		694E82E02016C0D000BB8C92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 694E82DF2016C0D000BB8C92 /* Assets.xcassets */; };
 		694E82E32016C0D000BB8C92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 694E82E12016C0D000BB8C92 /* LaunchScreen.storyboard */; };
 		694E82E62016C0D000BB8C92 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E82E52016C0D000BB8C92 /* main.m */; };
-		694E82F02016C0D000BB8C92 /* JDLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E82EF2016C0D000BB8C92 /* JDLayoutTests.m */; };
-		694E82FB2016C0D000BB8C92 /* JDLayoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E82FA2016C0D000BB8C92 /* JDLayoutUITests.m */; };
 		694E83112016C14E00BB8C92 /* SPTConstraintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 694E830E2016C14500BB8C92 /* SPTConstraintViewController.m */; };
 		694E83122016C14E00BB8C92 /* SPTConstraintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 694E830F2016C14A00BB8C92 /* SPTConstraintViewController.xib */; };
 		69FC0BFE205151AE00C6009D /* Demo0ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC0BFD205151AE00C6009D /* Demo0ViewController.m */; };
 		69FC0C022052116600C6009D /* Demo2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC0C012052116600C6009D /* Demo2ViewController.swift */; };
 		93C53D3087BD0128B041EBD1 /* Pods_JDLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67372A21F5CCF45DCDEB0B /* Pods_JDLayout.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		694E82EC2016C0D000BB8C92 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 694E82CB2016C0D000BB8C92 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 694E82D22016C0D000BB8C92;
-			remoteInfo = JDLayout;
-		};
-		694E82F72016C0D000BB8C92 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 694E82CB2016C0D000BB8C92 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 694E82D22016C0D000BB8C92;
-			remoteInfo = JDLayout;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		33BF90243D3C4B73826B8C02 /* Pods-JDLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDLayout.release.xcconfig"; path = "Pods/Target Support Files/Pods-JDLayout/Pods-JDLayout.release.xcconfig"; sourceTree = "<group>"; };
@@ -51,10 +32,8 @@
 		694E82E22016C0D000BB8C92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		694E82E42016C0D000BB8C92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		694E82E52016C0D000BB8C92 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		694E82EB2016C0D000BB8C92 /* JDLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JDLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		694E82EF2016C0D000BB8C92 /* JDLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JDLayoutTests.m; sourceTree = "<group>"; };
 		694E82F12016C0D000BB8C92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		694E82F62016C0D000BB8C92 /* JDLayoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JDLayoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		694E82FA2016C0D000BB8C92 /* JDLayoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JDLayoutUITests.m; sourceTree = "<group>"; };
 		694E82FC2016C0D000BB8C92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		694E830E2016C14500BB8C92 /* SPTConstraintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTConstraintViewController.m; sourceTree = "<group>"; };
@@ -74,20 +53,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				93C53D3087BD0128B041EBD1 /* Pods_JDLayout.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		694E82E82016C0D000BB8C92 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		694E82F32016C0D000BB8C92 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,8 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				694E82D32016C0D000BB8C92 /* JDLayout.app */,
-				694E82EB2016C0D000BB8C92 /* JDLayoutTests.xctest */,
-				694E82F62016C0D000BB8C92 /* JDLayoutUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -228,42 +191,6 @@
 			productReference = 694E82D32016C0D000BB8C92 /* JDLayout.app */;
 			productType = "com.apple.product-type.application";
 		};
-		694E82EA2016C0D000BB8C92 /* JDLayoutTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 694E83022016C0D000BB8C92 /* Build configuration list for PBXNativeTarget "JDLayoutTests" */;
-			buildPhases = (
-				694E82E72016C0D000BB8C92 /* Sources */,
-				694E82E82016C0D000BB8C92 /* Frameworks */,
-				694E82E92016C0D000BB8C92 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				694E82ED2016C0D000BB8C92 /* PBXTargetDependency */,
-			);
-			name = JDLayoutTests;
-			productName = JDLayoutTests;
-			productReference = 694E82EB2016C0D000BB8C92 /* JDLayoutTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		694E82F52016C0D000BB8C92 /* JDLayoutUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 694E83052016C0D000BB8C92 /* Build configuration list for PBXNativeTarget "JDLayoutUITests" */;
-			buildPhases = (
-				694E82F22016C0D000BB8C92 /* Sources */,
-				694E82F32016C0D000BB8C92 /* Frameworks */,
-				694E82F42016C0D000BB8C92 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				694E82F82016C0D000BB8C92 /* PBXTargetDependency */,
-			);
-			name = JDLayoutUITests;
-			productName = JDLayoutUITests;
-			productReference = 694E82F62016C0D000BB8C92 /* JDLayoutUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -277,16 +204,6 @@
 						CreatedOnToolsVersion = 9.1;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
-					};
-					694E82EA2016C0D000BB8C92 = {
-						CreatedOnToolsVersion = 9.1;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 694E82D22016C0D000BB8C92;
-					};
-					694E82F52016C0D000BB8C92 = {
-						CreatedOnToolsVersion = 9.1;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 694E82D22016C0D000BB8C92;
 					};
 				};
 			};
@@ -304,8 +221,6 @@
 			projectRoot = "";
 			targets = (
 				694E82D22016C0D000BB8C92 /* JDLayout */,
-				694E82EA2016C0D000BB8C92 /* JDLayoutTests */,
-				694E82F52016C0D000BB8C92 /* JDLayoutUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -319,20 +234,6 @@
 				694E82E02016C0D000BB8C92 /* Assets.xcassets in Resources */,
 				694E82DE2016C0D000BB8C92 /* Main.storyboard in Resources */,
 				694E83122016C14E00BB8C92 /* SPTConstraintViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		694E82E92016C0D000BB8C92 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		694E82F42016C0D000BB8C92 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,36 +292,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		694E82E72016C0D000BB8C92 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				694E82F02016C0D000BB8C92 /* JDLayoutTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		694E82F22016C0D000BB8C92 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				694E82FB2016C0D000BB8C92 /* JDLayoutUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		694E82ED2016C0D000BB8C92 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 694E82D22016C0D000BB8C92 /* JDLayout */;
-			targetProxy = 694E82EC2016C0D000BB8C92 /* PBXContainerItemProxy */;
-		};
-		694E82F82016C0D000BB8C92 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 694E82D22016C0D000BB8C92 /* JDLayout */;
-			targetProxy = 694E82F72016C0D000BB8C92 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		694E82DC2016C0D000BB8C92 /* Main.storyboard */ = {
@@ -581,64 +453,6 @@
 			};
 			name = Release;
 		};
-		694E83032016C0D000BB8C92 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = JDLayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.suning.sport.BussinessCommon.JDLayoutTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JDLayout.app/JDLayout";
-			};
-			name = Debug;
-		};
-		694E83042016C0D000BB8C92 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = JDLayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.suning.sport.BussinessCommon.JDLayoutTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JDLayout.app/JDLayout";
-			};
-			name = Release;
-		};
-		694E83062016C0D000BB8C92 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = JDLayoutUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.suning.sport.BussinessCommon.JDLayoutUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = JDLayout;
-			};
-			name = Debug;
-		};
-		694E83072016C0D000BB8C92 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = JDLayoutUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.suning.sport.BussinessCommon.JDLayoutUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = JDLayout;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -656,24 +470,6 @@
 			buildConfigurations = (
 				694E83002016C0D000BB8C92 /* Debug */,
 				694E83012016C0D000BB8C92 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		694E83022016C0D000BB8C92 /* Build configuration list for PBXNativeTarget "JDLayoutTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				694E83032016C0D000BB8C92 /* Debug */,
-				694E83042016C0D000BB8C92 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		694E83052016C0D000BB8C92 /* Build configuration list for PBXNativeTarget "JDLayoutUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				694E83062016C0D000BB8C92 /* Debug */,
-				694E83072016C0D000BB8C92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -3,7 +3,7 @@
 //  JDLayout
 //
 //  Created by JD on 2018/3/9.
-//  Copyright © 2018年 Suning. All rights reserved.
+//  Copyright © 2018年 jd. All rights reserved.
 //
 
 import Foundation
