@@ -133,7 +133,8 @@
             }
         }
     }
-    _constraint.priority = self.priority;
+    //update不支持修改priority，因为iOS8.1下修改priority会奔溃
+    //_constraint.priority = self.priority;
     _constraint.constant = self.constant;
     _installed = YES;
 }
