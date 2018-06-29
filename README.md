@@ -16,64 +16,14 @@
     self.button2.jd_left(self.button1).jd_equal(100).jd_update();
 
 ## 二、提供垂直平分 、水平平分等简易方法
-
-    //垂直平分
-    UILabel *label1 = [[UILabel alloc] init];
-    label1.text = @"我是垂直平分1";
-    label1.backgroundColor = [UIColor redColor];
-    label1.textAlignment = NSTextAlignmentCenter;
-    [self.view1 addSubview:label1];
-    
-    UILabel *label2 = [[UILabel alloc] init];
-    label2.text = @"我是垂直平分2";
-    label2.backgroundColor = [UIColor blueColor];
-    label2.textAlignment = NSTextAlignmentCenter;
-    [self.view1 addSubview:label2];
-    
-    label1
-    .jd_top(self.view1).jd_equal(0)
-    .jd_centerX(self.view1).jd_equal(0)
-    .jd_layout();
-    
-    label2
-    .jd_top(label1).jd_equal(0)
-    .jd_centerX(label1).jd_equal(0)
-    .jd_bottom(self.view1).jd_equal(0)
-    .jd_height(label1)
-    .jd_layout();
-    
-   简易的写法：
-   
-    self.view1.jd_equalHeightSubViews(@[label1,label2]);
-
-    //水平平分
-    UILabel *label11 = [[UILabel alloc] init];
-    label11.text = @"我是水平平分1";
-    label11.backgroundColor = [UIColor redColor];
-    label11.textAlignment = NSTextAlignmentCenter;
-    [self.view2 addSubview:label11];
-    UILabel *label21 = [[UILabel alloc] init];
-    label21.text = @"我是水平平分2";
-    label21.backgroundColor = [UIColor blueColor];
-    label21.textAlignment = NSTextAlignmentCenter;
-    [self.view2 addSubview:label21];
-
-    label11
-    .jd_left(self.view2).jd_equal(0)
-    .jd_centerY(self.view2).jd_equal(0)
-    .jd_layout();
-    
-    label21
-    .jd_left(label11).jd_equal(0)
-    .jd_centerY(label11).jd_equal(0)
-    .jd_right(self.view2).jd_equal(0)
-    .jd_width(label11)
-    .jd_layout();
-    
-   简易的写法
-    
-    self.view2.jd_equalWidthSubViews(@[label1,label21]);
-  
+    //垂直等高
+    self.view1.jd_equalHeightSubViews(@[label1,label2]);
+    //水平等宽
+    self.view2.jd_equalWidthSubViews(@[label1,label21]);
+    //还有对父View简易使用
+    self.view2.jd_leftToSuperView().jd_equal(10).jd_layout();
+    //对frame、insets、size的封装
+    self.view2.jd_insets(UIEdgeInsetsZero).jd_equal(10).jd_layout();
 
 ##  三、支持OC、swift调用，减少项目中约束库的引用
      //swift封装的布局类
