@@ -75,6 +75,18 @@
     self.view2.jd_equalWidthSubViews(@[label1,label21]);
   
 
+##  三、支持OC、swift调用，减少项目中约束库的引用
+     //swift封装的布局类
+     self.view1 = UIView.init()
+     self.view1.backgroundColor = UIColor.red
+     self.view.addSubview(self.view1)
+     self.view1.sf_frame(CGRect(x: 50, y: 300, width: 100, height: 100)).sf_layout()
+     
+##  四、链式调用
+
+   可以用链式的方式一致调用下去！！！
+
+     
 ### 只有一个类，以下是所有方法，支持绝大多数场景。
 
     @interface UIView (JDAutolayout)
@@ -157,9 +169,4 @@
 
     @end
     
- ##  三、支持OC、swift调用，减少项目中约束库的引用
-     //swift封装的布局类
-     self.view1 = UIView.init()
-     self.view1.backgroundColor = UIColor.red
-     self.view.addSubview(self.view1)
-     self.view1.sf_frame(CGRect(x: 50, y: 300, width: 100, height: 100)).sf_layout()
+
