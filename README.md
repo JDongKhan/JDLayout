@@ -6,12 +6,15 @@
 ## cocoapods使用
 
     pod 'JDAutoLayout', '~> 1.1.7'
+    
+# 跟其他约束库对比有以下几点优势
 
-## 一、更新现有的约束
+## 一、更容易更新现有的约束
 
-    self.button2.jd_left(self.button1).jd_equal(100).jd_reload();
+    可以简单的更新xib里面的约束，也可以更新其他途径增加的约束，而不需要xib拉一根约束线或者代码持有约束属性！
+    self.button2.jd_left(self.button1).jd_equal(100).jd_update();
 
-## 二、垂直平分
+## 二、提供垂直平分 、水平平分等简易方法
 
     //垂直平分
     UILabel *label1 = [[UILabel alloc] init];
@@ -42,8 +45,6 @@
    
     self.view1.jd_equalHeightSubViews(@[label1,label2]);
 
-## 三、水平平分
-
     //水平平分
     UILabel *label11 = [[UILabel alloc] init];
     label11.text = @"我是水平平分1";
@@ -71,37 +72,7 @@
    简易的写法
     
     self.view2.jd_equalWidthSubViews(@[label1,label21]);
-    
-## 四、对齐
-
-    //水平平分
-    UILabel *label11 = [[UILabel alloc] init];
-    label11.text = @"我是1";
-    label11.backgroundColor = [UIColor redColor];
-    label11.textAlignment = NSTextAlignmentCenter;
-    [self.view3 addSubview:label11];
-    
-    label11
-    .jd_left(self.view3).jd_equal(10)
-    .jd_top(self.view3).jd_equal(10)
-    .jd_layout();
-    
-    UILabel *label21 = [[UILabel alloc] init];
-    label21.text = @"我是2";
-    label21.backgroundColor = [UIColor blueColor];
-    label21.textAlignment = NSTextAlignmentCenter;
-    [self.view3 addSubview:label21];
-    //与label11左对齐
-    label21
-    .jd_left(label11.jd_leftAttribute).jd_equal(0)
-    .jd_top(label11).jd_equal(10)
-    .jd_layout();
-    
-    
-
-## 五、支持lessThanOrEqual、greaterThanOrEqual、equal等
-
-
+  
 
 ### 只有一个类，以下是所有方法，支持绝大多数场景。
 
@@ -185,7 +156,7 @@
 
     @end
     
- ##  六、支持swift调用
+ ##  三、支持OC、swift调用，减少项目中约束库的引用
      //swift封装的布局类
      self.view1 = UIView.init()
      self.view1.backgroundColor = UIColor.red
