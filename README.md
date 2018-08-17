@@ -1,7 +1,7 @@
 # JDAutoLayout
 超简易的约束布局
 
-![demo png](https://github.com/wangjindong/JDLayout/blob/master/demo.gif "demo")
+![demo png](https://github.com/JDongKha/JDLayout/blob/master/demo.gif "demo")
 
 ## 跟其他约束库对比有以下几点优势
 
