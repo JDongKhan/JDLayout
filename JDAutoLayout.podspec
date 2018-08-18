@@ -3,7 +3,7 @@
 Pod::Spec.new do |s|
 
     s.name         = "JDAutoLayout"
-    s.version      = '1.2.8' 
+    s.version      = '1.3.0' 
     s.summary      = "JDAutoLayout"
 
     s.description  = <<-DESC

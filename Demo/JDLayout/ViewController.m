@@ -6,6 +6,7 @@
 //  Copyright © 2018年 . All rights reserved.
 //
 
+
 #import "ViewController.h"
 #import "JDLayout-Swift.h"
 
@@ -25,6 +26,9 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.view addSubview:self.tableView];
+    
+//    [self.tableView setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+//    [self.tableView setContentCompressionResistancePriority: UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     
     self.itemsArray = [NSMutableArray array];
     [self.itemsArray addObject:@{

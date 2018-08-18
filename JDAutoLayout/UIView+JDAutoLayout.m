@@ -126,7 +126,7 @@
         NSArray *constraints = _installedView.constraints;
         for (NSLayoutConstraint *c in constraints) {
             if ([c isMemberOfClass:[NSLayoutConstraint class]]) {
-                if (c.firstAttribute == self.firstAttribute && c.firstItem == self.firstItem) {
+                if ((c.firstAttribute == self.firstAttribute && c.firstItem == self.firstItem) || (c.secondAttribute == self.firstAttribute && c.secondItem == self.firstItem)) {
                     _constraint = c;
                     break;
                 }
