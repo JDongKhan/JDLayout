@@ -133,10 +133,15 @@
             }
         }
     }
-    //update不支持修改priority，因为iOS8.1下修改priority会奔溃
-    //_constraint.priority = self.priority;
-    _constraint.constant = self.constant;
-    _installed = YES;
+    if (_constraint != nil) {
+        //update不支持修改priority，因为iOS8.1下修改priority会奔溃
+        //_constraint.priority = self.priority;
+        _constraint.constant = self.constant;
+        _installed = YES;
+        return;
+    }
+    //没找到就安装一个
+    [self jd_installConstraint];
 }
 
 - (void)jd_removeConstraint {
