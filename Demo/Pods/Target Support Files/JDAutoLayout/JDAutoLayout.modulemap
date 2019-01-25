@@ -1,0 +1,6 @@
+framework module JDAutoLayout {
+  umbrella header "JDAutoLayout-umbrella.h"
+
+  export *
+  module * { export * }
+}

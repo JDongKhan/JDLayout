@@ -197,8 +197,9 @@
 		694E82CB2016C0D000BB8C92 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = JD;
 				LastUpgradeCheck = 0910;
-				ORGANIZATIONNAME = Suning;
+				ORGANIZATIONNAME = JD;
 				TargetAttributes = {
 					694E82D22016C0D000BB8C92 = {
 						CreatedOnToolsVersion = 9.1;

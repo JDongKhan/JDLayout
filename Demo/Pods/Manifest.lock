@@ -1,0 +1,16 @@
+PODS:
+  - JDAutoLayout (1.3.1)
+
+DEPENDENCIES:
+  - JDAutoLayout (from `../`)
+
+EXTERNAL SOURCES:
+  JDAutoLayout:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  JDAutoLayout: 117696eadac4b50647ee37b9ef52a88a7af536ce
+
+PODFILE CHECKSUM: af5550fb0bd1fa62c421e2d6bc19a18822c5fcc2
+
+COCOAPODS: 1.5.3
