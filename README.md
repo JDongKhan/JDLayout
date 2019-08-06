@@ -26,7 +26,7 @@
      self.view1 = UIView.init()
      self.view1.backgroundColor = UIColor.red
      self.view.addSubview(self.view1)
-     self.view1.sf_frame(CGRect(x: 50, y: 300, width: 100, height: 100)).sf_layout()
+     self.view1.jd_frame(CGRect(x: 50, y: 300, width: 100, height: 100)).jd_layout()
      
 ###  四、链式调用
 
