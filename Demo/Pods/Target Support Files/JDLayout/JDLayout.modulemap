@@ -1,0 +1,6 @@
+framework module JDLayout {
+  umbrella header "JDLayout-umbrella.h"
+
+  export *
+  module * { export * }
+}

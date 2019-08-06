@@ -1,21 +1,30 @@
 #!/bin/sh
 
-if [[ $1 != "" ]]; then
+BASEDIR=$(dirname $0)
+cd $BASEDIR
+
+read -t 30 -p "请输入版本号:" version
+echo -e "\n"
+echo "版本号为:$version"
+
+specfilename=$(ls | grep .podspec | head -1)
+
+if [[ $version != "" ]]; then
 
     echo "======开始修改spec文件版本号======"
-    sed -i "" "s/s.version.*=.*/s.version      = '$1' /g" JDAutoLayout.podspec
+    sed -i "" "s/spec.version.*=.*/spec.version      = '$version' /g" ${specfilename}
 
     if [ $? -ne 0 ]; then
         echo "修改spec文件失败"
         exit 0
     else
-        echo "修改spec文件成功，version：$1"
-        git add -A && git commit -m "修改spec文件版本号:$1"
+        echo "修改spec文件成功，version：$version"
+        git add -A && git commit -m "修改spec文件版本号:$version"
         git push origin master
     fi
 
-    echo "======开始打tag:$1======"
-    git tag $1
+    echo "======开始打tag:$version======"
+    git tag $version
     #是否执行成功
     if [ $? -ne 0 ]; then
         echo "打tag失败"
