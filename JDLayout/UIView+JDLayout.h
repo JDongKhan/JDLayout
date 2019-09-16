@@ -26,6 +26,7 @@ typedef UIView     * _Nonnull (^JDViewFloatBlock)(CGFloat value);
 typedef UIView     * _Nonnull (^JDViewRectBlock)(CGRect rect);
 typedef UIView     * _Nonnull (^JDViewSizeBlock)(CGSize size);
 typedef UIView     * _Nonnull (^JDViewInsetsBlock)(UIEdgeInsets insets);
+typedef UIView     * _Nonnull (^JDViewPriorityBlock)(JDLayoutPriority value);
 typedef JDRelation * _Nonnull (^JDRelationAttrBlock)(id attr);
 typedef JDRelation * _Nonnull (^JDRelationNullAttrBlock)(__nullable id attr);
 typedef JDRelation * _Nonnull (^JDRelationFloatBlock)(CGFloat value);
@@ -45,6 +46,12 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 @property (nonatomic, copy, readonly) JDRelationAttrBlock     jd_centerY;
 @property (nonatomic, copy, readonly) JDRelationNullAttrBlock jd_width;
 @property (nonatomic, copy, readonly) JDRelationNullAttrBlock jd_height;
+
+@property (nonatomic, copy, readonly) JDViewPriorityBlock jd_contentHuggingPriorityForHorizontal;
+@property (nonatomic, copy, readonly) JDViewPriorityBlock jd_contentHuggingPriorityForVertical;
+@property (nonatomic, copy, readonly) JDViewPriorityBlock jd_contentCompressionPriorityForHorizontal;
+@property (nonatomic, copy, readonly) JDViewPriorityBlock jd_contentCompressionPriorityForVertical;
+
 
 /**
  宽高比

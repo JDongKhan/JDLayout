@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "NSLayoutConstraint+JDLayoutDebug.h"
 #import "UIView+JDLayout.h"
 
 FOUNDATION_EXPORT double JDLayoutVersionNumber;

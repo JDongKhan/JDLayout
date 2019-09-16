@@ -286,6 +286,33 @@ JD_DEFINE_AUTOLAYOUT_METHOD(height,NSLayoutAttributeHeight)
 JD_DEFINE_AUTOLAYOUT_METHOD(centerX,NSLayoutAttributeCenterX)
 JD_DEFINE_AUTOLAYOUT_METHOD(centerY,NSLayoutAttributeCenterY)
 
+- (JDViewPriorityBlock)jd_contentHuggingPriorityForHorizontal {
+    return ^(JDLayoutPriority value){
+        [self setContentHuggingPriority:value forAxis:UILayoutConstraintAxisHorizontal];
+        return self;
+    };
+}
+
+- (JDViewPriorityBlock)jd_contentHuggingPriorityForVertical {
+    return ^(JDLayoutPriority value){
+        [self setContentHuggingPriority:value forAxis:UILayoutConstraintAxisVertical];
+        return self;
+    };
+}
+
+- (JDViewPriorityBlock)jd_contentCompressionPriorityForHorizontal {
+    return ^(JDLayoutPriority value){
+        [self setContentCompressionResistancePriority:value forAxis:UILayoutConstraintAxisHorizontal];
+        return self;
+    };
+}
+
+- (JDViewPriorityBlock)jd_contentCompressionPriorityForVertical {
+    return ^(JDLayoutPriority value){
+        [self setContentCompressionResistancePriority:value forAxis:UILayoutConstraintAxisVertical];
+        return self;
+    };
+}
 
 - (JDViewFloatBlock)jd_aspectRatio {
     return ^(CGFloat ratio){
