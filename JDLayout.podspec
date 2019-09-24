@@ -23,6 +23,8 @@ Pod::Spec.new do |s|
     s.frameworks = 'Foundation', 'UIKit'
     s.requires_arc = true
 
+    s.preserve_path = 'module/module.modulemap'
+    s.module_map = 'module/module.modulemap'
 
     s.source_files = 'JDLayout/*.{h,m}'
     s.public_header_files = 'JDLayout/*.h'
