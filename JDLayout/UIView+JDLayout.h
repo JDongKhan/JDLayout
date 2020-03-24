@@ -17,6 +17,10 @@ static const JDLayoutPriority JDLayoutPriorityDefaultHigh = 750; // This is the 
 static const JDLayoutPriority JDLayoutPriorityDefaultLow = 250; // This is the priority level at which a button hugs its contents horizontally.
 static const JDLayoutPriority JDLayoutPriorityFittingSizeLevel = 50; // When you send -[UIView systemLayoutSizeFittingSize:], the size fitting most closely to the target size (the argument) is computed.  UILayoutPriorityFittingSizeLevel is the priority level with which the view wants to conform to the target size in that computation.  It's quite low.  It is generally not appropriate to make a constraint at exactly this priority.  You want to be higher or lower.
 
+typedef NSInteger JDAutoLayoutValue NS_TYPED_EXTENSIBLE_ENUM;
+//目前只有Intrinsic Content Size的才可以使用
+static const JDAutoLayoutValue JDAutoLayoutValueAutomatic = -9999;
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void                  (^JDVoidBlock)(void);
@@ -69,6 +73,9 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 @property (nonatomic, copy, readonly) JDVoidBlock jd_layout;
 @property (nonatomic, copy, readonly) JDVoidBlock jd_update;
 
+//隐藏view
+@property (nonatomic, assign) BOOL jd_hidden;
+
 @end
 
 
@@ -79,6 +86,11 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
  */
 @property (nonatomic, copy, readonly) JDRelationFloatBlock    jd_multiplier;
 @property (nonatomic, copy, readonly) JDRelationPriorityBlock jd_priority;
+
+/*!
+ 偏移量，用于在原有约束的基础上增加constant的偏移
+ */
+@property (nonatomic, copy, readonly) JDViewFloatBlock        jd_offset;
 
 /**
  约束关系
@@ -93,6 +105,8 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 //获取view的属性
 @interface UIView (JDViewAttribute)
 
+@property (nonatomic, strong, readonly) JDViewAttribute *(^jd_attribute)(NSLayoutAttribute attr);
+
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_leftAttribute;
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_topAttribute;
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_rightAttribute;
@@ -103,11 +117,34 @@ typedef JDRelation * _Nonnull (^JDRelationPriorityBlock)(JDLayoutPriority value)
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_centerYAttribute;
 @property (nonatomic, strong, readonly) JDViewAttribute *jd_baselineAttribute;
 
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_firstBaselineAttribute;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_lastBaselineAttribute;
+
+//safeArea iOS 11
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuide;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideLeft;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideTop;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideRight;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideBottom;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideWidth;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideHeight;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideCenterX;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_safeAreaLayoutGuideCenterY;
+
+
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_leftMargin;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_rightMargin;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_topMargin;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_bottomMargin;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_centerXWithinMargin;
+@property (nonatomic, strong, readonly) JDViewAttribute *jd_centerYWithinMargin;
+
 @end
 
 @interface JDViewAttribute : NSObject
 
 @property (nonatomic, weak,   readonly) UIView            *view;
+@property (nonatomic, weak,   readonly) id item;//safeAreaLayoutGuide
 @property (nonatomic, assign, readonly) NSLayoutAttribute attribute;
 
 @end

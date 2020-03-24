@@ -13,23 +13,16 @@
 
 //单个约束基本参数的模型
 @interface JDRelation()
-
 @property (nonatomic, weak)   UIView *firstItem;
-
 @property (nonatomic, weak)   UIView *secondItem;
-
+@property (nonatomic, weak)   id secondItemLayoutGuide;
 @property (nonatomic, assign) NSLayoutAttribute firstAttribute;
-
 @property (nonatomic, assign) NSLayoutAttribute secondAttribute;
-
 @property (nonatomic, assign) NSLayoutRelation relation;
-
 @property (nonatomic, assign) CGFloat constant;
-
+@property (nonatomic, assign) CGFloat offset; /**constant的偏移量*/
 @property (nonatomic, assign) CGFloat multiplier;
-
 @property (nonatomic, assign) UILayoutPriority priority;
-
 @end
 
 @implementation JDRelation {
@@ -57,6 +50,13 @@
     };
 }
 
+- (JDViewFloatBlock)jd_offset {
+    return ^(CGFloat offset){
+        self.offset = offset;
+        return self.firstItem;
+    };
+}
+
 -  (JDRelationPriorityBlock)jd_priority {
     return ^(JDLayoutPriority priority){
         self.priority = priority;
@@ -68,6 +68,7 @@
     return ^(CGFloat constant){
         self.relation = NSLayoutRelationEqual;
         self.constant = constant;
+        self.offset = 0;
         return self.firstItem;
     };
 }
@@ -76,6 +77,7 @@
     return ^(CGFloat constant){
         self.relation = NSLayoutRelationLessThanOrEqual;
         self.constant = constant;
+        self.offset = 0;
         return self.firstItem;
     };
 }
@@ -84,6 +86,7 @@
     return ^(CGFloat constant){
         self.relation = NSLayoutRelationGreaterThanOrEqual;
         self.constant = constant;
+        self.offset = 0;
         return self.firstItem;
     };
 }
@@ -93,6 +96,17 @@
         return;
     }
     [_installedView removeConstraint:_constraint];
+    id toItem = self.secondItem;
+    if (self.secondItemLayoutGuide) {
+        toItem = self.secondItemLayoutGuide;
+    } else {
+        NSArray *constraints = _installedView.constraints;
+        if (self.secondItem == nil && self.constant == JDAutoLayoutValueAutomatic) {
+            //判断secondItem == nil 基本上都是设置宽和高，宽高不能为负数
+            return;
+        }
+    }
+    
     NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem attribute:self.firstAttribute relatedBy:self.relation toItem:self.secondItem attribute:self.secondAttribute multiplier:self.multiplier constant:self.constant];
     if (self.secondItem) {
         UIView *closestCommonSuperview = [self.firstItem jd_closestCommonSuperview:self.secondItem];
@@ -134,9 +148,13 @@
         }
     }
     if (_constraint != nil) {
-        //update不支持修改priority，因为iOS8.1下修改priority会奔溃
-        //_constraint.priority = self.priority;
-        _constraint.constant = self.constant;
+        if (self.offset != 0 ) {
+            _constraint.constant += self.offset;
+        } else {
+            //update不支持修改priority，因为iOS8.1下修改priority会奔溃
+            //_constraint.priority = self.priority;
+            _constraint.constant = self.constant;
+        }
         _installed = YES;
         return;
     }
@@ -148,6 +166,24 @@
     if (_constraint && _installedView) {
         [_installedView removeConstraint:_constraint];
     }
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    JDRelation *r = [[[self class] allocWithZone:zone] init];
+    r.firstItem = self.firstItem;
+    r.secondItemLayoutGuide = self.secondItemLayoutGuide;
+    r.secondItem = self.secondItem;
+    r.firstAttribute = self.firstAttribute;
+    r.secondAttribute = self.secondAttribute;
+    r.relation = self.relation;
+    r.constant = self.constant;
+    r.offset = self.offset;
+    r.multiplier = self.multiplier;
+    r.priority = self.priority;
+    r->_installed = self->_installed;
+    r->_installedView = self->_installedView;
+    r->_constraint = self->_constraint;
+    return r;
 }
 
 @end
@@ -234,6 +270,22 @@ JD_DEFINE_REMOVE_METHOD(AspectRatio,aspectRatio)
     [self jd_removeAspectRatio];
 }
 
+
+- (id)copyWithZone:(NSZone *)zone {
+    JDAttribute *r = [[[self class] allocWithZone:zone] init];
+    r.left = [self.left copy];
+    r.top = [self.top copy];
+    r.right = [self.right copy];
+    r.bottom = [self.bottom copy];
+    r.width = [self.width copy];
+    r.height = [self.height copy];
+    r.aspectRatio = [self.aspectRatio copy];
+    r.centerX = [self.centerX copy];
+    r.centerY = [self.centerY copy];
+    return r;
+}
+
+
 @end
 
 #pragma mark ---------------JDLayout------------------------
@@ -269,6 +321,7 @@ JD_DEFINE_REMOVE_METHOD(AspectRatio,aspectRatio)
             JDViewAttribute *secondRelation = attr;\
             secondView = secondRelation.view;\
             secondAttribute = secondRelation.attribute;\
+            target.secondItemLayoutGuide = secondRelation.item;\
         }\
         target.secondItem = secondView;\
         target.secondAttribute = secondAttribute;\
@@ -366,6 +419,52 @@ JD_DEFINE_AUTOLAYOUT_METHOD(centerY,NSLayoutAttributeCenterY)
         }
     };
 }
+
+- (void)setJd_hidden:(BOOL)jd_hidden {
+    objc_setAssociatedObject(self, @selector(jd_hidden),@(jd_hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    self.hidden = jd_hidden;
+    if (jd_hidden) {
+        NSArray *allAttributes = [[self jd_tmpAttribute] jd_allAttributes];//当前属性
+        NSArray *copyAttributes = self.jd_copyTmpAttribute;//拷贝的属性
+        //开始更新约束
+        for (JDRelation *relation in allAttributes) {
+            //先移除当前的约束
+            [relation jd_removeConstraint];
+        }
+        for (JDRelation *copyR in copyAttributes) {
+            //再更新使用copy归来的约束
+            copyR.constant = 0;
+            copyR->_installed = NO;
+            [copyR jd_installConstraint];
+        }
+        
+    } else {
+        NSArray *allAttributes = [[self jd_tmpAttribute] jd_allAttributes];//当前属性
+        NSArray *copyAttributes = self.jd_copyTmpAttribute;//拷贝的属性
+        for (JDRelation *copyR in copyAttributes) {
+            [copyR jd_removeConstraint];
+        }
+        //开始更新约束
+        for (JDRelation *relation in allAttributes) {
+            relation->_installed = NO;
+            [relation jd_installConstraint];
+        }
+    }
+}
+
+- (BOOL)jd_hidden {
+    return objc_getAssociatedObject(self, @selector(jd_hidden));
+}
+
+- (JDAttribute *)jd_copyTmpAttribute {
+    JDAttribute *tmpAttribute = objc_getAssociatedObject(self, _cmd);
+    if (tmpAttribute == nil) {
+        tmpAttribute = [[[self jd_tmpAttribute] copy] jd_allAttributes];
+        objc_setAssociatedObject(self, _cmd, tmpAttribute, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return tmpAttribute;
+}
+
     
 @end
 
@@ -512,9 +611,24 @@ JD_DEFINE_REMOVE2_METHOD(AspectRatio)
     return self;
 }
 
+- (instancetype)initWithView:(UIView *)view item:(id)item attribute:(NSLayoutAttribute)attribute {
+    if (self = [super init]) {
+        _view = view;
+        _item = item;
+        _attribute = attribute;
+    }
+    return self;
+}
+
 @end
 
 @implementation UIView(JDViewAttribute)
+
+- (JDViewAttribute *(^)(NSLayoutAttribute))jd_attribute {
+    return ^(NSLayoutAttribute attr){
+        return [[JDViewAttribute alloc] initWithView:self attribute:attr];
+    };
+}
 
 #pragma mark ---------- 获取属性 -------------
 - (JDViewAttribute *)jd_leftAttribute {
@@ -551,6 +665,113 @@ JD_DEFINE_REMOVE2_METHOD(AspectRatio)
 
 - (JDViewAttribute *)jd_baselineAttribute {
     return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeBaseline];
+}
+
+
+- (JDViewAttribute *)jd_firstBaselineAttribute {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeFirstBaseline];
+}
+
+- (JDViewAttribute *)jd_lastBaselineAttribute {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeLastBaseline];
+}
+
+/************************* safeArea  *************************/
+- (JDViewAttribute *)jd_safeAreaLayoutGuide {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeNotAnAttribute];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideLeft {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeLeading];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideTop {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeTop];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideRight {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeTrailing];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideBottom {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeBottom];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideWidth {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeWidth];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideHeight {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeHeight];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideCenterX {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeCenterX];
+}
+
+- (JDViewAttribute *)jd_safeAreaLayoutGuideCenterY {
+    id item = nil;
+    if (@available(iOS 11.0, *)) {
+        item = self.safeAreaLayoutGuide;
+    }
+    return [[JDViewAttribute alloc] initWithView:self item:item attribute:NSLayoutAttributeCenterY];
+}
+
+
+- (JDViewAttribute *)jd_leftMargin {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeLeadingMargin];
+}
+
+- (JDViewAttribute *)jd_rightMargin {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeTrailingMargin];
+}
+
+- (JDViewAttribute *)jd_topMargin {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeTopMargin];
+}
+
+- (JDViewAttribute *)jd_bottomMargin {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeBottomMargin];
+}
+
+- (JDViewAttribute *)jd_centerXWithinMargin {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeCenterXWithinMargins];
+}
+
+- (JDViewAttribute *)jd_centerYWithinMargin {
+    return [[JDViewAttribute alloc] initWithView:self attribute:NSLayoutAttributeCenterYWithinMargins];
 }
 
 @end
